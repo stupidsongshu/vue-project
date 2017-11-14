@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+}
+
+*::after, *::before {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f1f1 !important;
+}
+
+
+a {
+  text-decoration: none;
+}
+
+h1,h2,h3,h4,h5,h6,ul,ol,li,p {
+  margin: 0;
+  padding: 0;
+}
+
+
+ul,ol,li {
+  list-style: none;
+}
+
+.pull-left {
+  float: left !important;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.clearfix {
+  display: table;
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  height: 0;
+  line-height: 0;
+  clear: both;
+  visibility: hidden;
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <!-- <script src="https://cdn.rawgit.com/chrisvfritz/5f0a639590d6e648933416f90ba7ae4e/raw/974aa47f8f9c5361c5233bd56be37db8ed765a09/currency-validator.js"></script> -->
+
+    <style>
+        .red {
+            color: red;
+        }
+
+        .font-20 {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <span v-bind:title="message">鼠标悬停几秒钟查看此处动态绑定的提示信息！</span>
+        <span :title="message">鼠标悬停几秒钟查看此处动态绑定的提示信息！</span>
+        <div v-for="(todo,index) in todos">{{index}}-{{todo.text}}</div>
+
+        <div>Original message: "{{ message }}"</div>
+        <div>Computed reversed message: "{{ reversedMessage }}"</div>
+        <button v-on:click="reverseMessage">点击试试</button>
+        <button @click="reverseMessage">点击试试</button>
+
+        <ol>
+            <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id" message="hello"></todo-item>
+        </ol>
+
+        <input type="text" v-model.lazy="a">
+        <input type="text" v-model.number="a">
+        <input type="text" v-model.trim="a">{{a}}
+
+        <div>{{rawHtml}}</div>
+        <div v-html="rawHtml"></div>
+
+        <input type="text" v-model="firstName">
+        <input type="text" v-model="lastName">
+        <div>{{fullName}}</div>
+
+        <input type="text" v-model="question">
+        <span style="color:#D30CC2;">{{answer}}</span>
+        <image v-bind:src="imageSrc">
+
+            <div class="row">
+                <div class="col-md-2" v-bind:class="{red: isActive, 'font-20': isActive}">绑定HTML Class</div>
+                <div class="col-md-2" v-bind:class="classObject">绑定一个对象</div>
+                <div class="col-md-2" v-bind:class="classObject1">绑定返回对象的计算属性</div>
+                <div class="col-md-2" v-bind:class="[isRed, font20]">绑定数组1</div>
+                <div class="col-md-2" v-bind:class="[isActive ? isRed : '', font20]">绑定数组2</div>
+                <div class="col-md-2" v-bind:class="[{red: isActive},font20]">绑定数组3</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2" v-bind:style="[{color: activeColor, fontSize: fontSize + 'px'},{transform: 'rotate(-10deg)'}]">绑定内联样式对象语法</div>
+                <div class="col-md-2" v-bind:style="[styleObject]">绑定内联样式对象语法</div>
+            </div>
+
+            <div>
+                <h1 v-if='yes'>ok</h1>
+                <h1 v-else='yes'>no</h1>
+
+                <template v-if='yes'>
+                    <h1>haha</h1>
+                    <h2>hehe</h2>
+                </template>
+
+                <div v-if='type === "A"'>A</div>
+                <div v-else-if='type === "B"'>B</div>
+                <div v-else-if="type === 'C'">C</div>
+                <div v-else>Not A/B/C</div>
+            </div>
+
+            <ul>
+                <!-- 用 v-for 通过一个对象的属性来迭代,第二个的参数为键名,第三个参数为索引 -->
+                <li v-for='(value,key,index) in forObject'>{{index}}-{{key}}-{{value}}</li>
+            </ul>
+
+            <div>
+                <span v-for="number in evenNumbers">{{number}}</span>
+            </div>
+            <div>
+                <span v-for="n in even(numbers)">{{n}}</span>
+            </div>
+            <div>
+                <span v-for="n in 10">{{n}}</span>
+            </div>
+
+            <ul>
+                <template v-for="(number,index) in numbers">
+                    <li>{{number}}</li>
+                    <li class="divider">{{index}}</li>
+                </template>
+            </ul>
+
+            <input type="text" v-model="newTodoText" v-on:keyup.enter="addNewTodo" placeholder="Add a todo">
+            <ul>
+                <li is="new-todo-item" v-for="(item,index) in todoList" v-bind:title="item.title" :key="item.id" :id="item.id" :index="index"
+                    @remove="removeTodo(index)" my-message="world" v-bind="todoObj"></li>
+            </ul>
+
+            <!-- 不能用 $on 侦听子组件释放的事件，而必须在模板里直接用 v-on 绑定 -->
+            <div>{{supCounter}}
+                <button-counter v-on:event="supIncrease"></button-counter>
+                <button-counter v-on:event="supIncrease"></button-counter>
+            </div>
+
+            <!-- <a href="" v-on:click.prevent.once="doThis">click</a> -->
+            <div style="border:1px solid #ccc;" @click.capture.self="doThat">
+                <button @click="doThis">click</button>
+            </div>
+
+            <input style="width:100%;" @keyup.enter.tab.delete.esc.space.up.down.left.right.f1.f2.f3.f4.f5="showkeyCode" placeholder="enter/tab/delete/esc/space/up/down/left/right/ctrl/alt/shift/meta">
+
+            <!-- 多个勾选框，绑定到同一个数组 -->
+            <div>
+                <h4>多个勾选框，绑定到同一个数组</h4>
+                <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+                <label for="jack">Jack</label>
+                <input type="checkbox" id="john" value="John" v-model="checkedNames">
+                <label for="john">John</label>
+                <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+                <label for="mike">Mike</label>
+                <br>
+                <span>Checked names: {{ checkedNames }}</span>
+            </div>
+
+            <div>
+                <input type="radio" id="one" value="ONE" v-model="picked">
+                <label for="one">one</label>
+                <input type="radio" id="two" value="TWO" v-model="picked">
+                <label for="two">two</label>
+                <br>
+                <span>Picked: {{ picked }}</span>
+            </div>
+
+            <!-- 单选列表 -->
+            <div>
+                <select v-model="selected">
+                    <option disabled value="">请选择</option>
+                    <option>a</option>
+                    <option value="bb">b</option>
+                    <option>c</option>
+                </select>
+                <br>
+                <span>Selected: {{ selected }}</span>
+            </div>
+            <!-- 多选列表 (绑定到一个数组) -->
+            <div>
+                <select multiple v-model="selected1">
+                    <option value="">请选择</option>
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                    <option value="c">C</option>
+                </select>
+                <br>
+                <span>Selected1: {{ selected1 }}</span>
+            </div>
+            <!-- 动态选项，用 v-for 渲染 -->
+            <div>
+                <select v-model="selected2">
+                    <option disabled value="">请选择</option>
+                    <option v-for="option in selectedOptions" v-bind:value="option.value">{{option.text}}</option>
+                </select>
+                <br>
+                <span>Selected2: {{ selected2 }}</span>
+            </div>
+
+            <div>
+                <input type="checkbox" v-model="toggle" v-bind:true-value="a" v-bind:false-value="b">
+            </div>
+
+            <currency-input1 v-model="currencyValue"></currency-input1>
+
+            <!-- <div>
+                <currency-input label="Price" v-model="price"></currency-input>
+                <currency-input label="Shipping" v-model="shipping"></currency-input>
+                <currency-input label="Handling" v-model="handling"></currency-input>
+                <currency-input label="Discount" v-model="discount"></currency-input>
+
+                <p>Total: ${{ total }}</p>
+            </div> -->
+
+            <div>
+                <h1>我是父组件的标题</h1>
+                <my-component>
+                    <p>这是一些初始内容</p>
+                    <p>这是更多的初始内容</p>
+                </my-component>
+            </div>
+
+            <!-- 具名插槽 -->
+            <!-- <slot> 元素可以用一个特殊的特性 name 来进一步配置如何分发内容。多个插槽可以有不同的名字。具名插槽将匹配内容片段中有对应 slot 特性的元素。仍然可以有一个匿名插槽，它是默认插槽，作为找不到匹配的内容片段的备用插槽。如果没有默认插槽，这些找不到匹配的内容片段将被抛弃。 -->
+            <app-layout>
+                <h1 slot="header">这里可能是一个页面标题</h1>
+                <p>主要内容的一个段落。</p>
+                <p>另一个主要段落。</p>
+                <p slot="footer">这里有一些联系信息</p>
+            </app-layout>
+
+            <!-- 作用域插槽 -->
+            <!-- 在子组件中，只需将数据传递到插槽;在父级中，具有特殊特性 scope 的 <template> 元素必须存在，表示它是作用域插槽的模板 -->
+            <div class="parent">
+                <child>
+                    <template scope="props">
+                        <span>hello from parent</span>
+                        <span>{{props.text}}</span>
+                    </template>
+                </child>
+            </div>
+
+            <my-awesome-list :items="myAwesomeItems">
+                <template slot="item" scope="scope">
+                    <li>name:{{scope.data.name}},price:{{scope.data.price}}</li>
+                </template>
+            </my-awesome-list>
+
+            <!-- 动态组件 -->
+            <!-- 通过使用保留的 <component> 元素，动态地绑定到它的 is 特性，我们让多个组件可以使用同一个挂载点，并动态切换 -->
+            <component :is="currentView"></component>
+            <button @click="goHome">home</button>
+            <button @click="goToSchool">school</button>
+            <button @click="goToCompany">company</button>
+
+
+            <div>
+                <button v-on:click="show = !show">
+                  Toggle
+                </button>
+                <transition name="bounce" enter-active-class="animated tada"
+                leave-active-class="animated bounceOutRight">
+                  <p style="display:block;" v-if="show">hello</p>
+                </transition>
+            </div>
+    </div>
+
+
+
+
+    <script src="index.js"></script>
+</body>
+
+</html>
