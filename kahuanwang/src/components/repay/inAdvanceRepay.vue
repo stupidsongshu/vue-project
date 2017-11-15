@@ -1,5 +1,5 @@
 <template>
-  <div class="inAdvanceRepay">
+  <div class="loanRepayDesc">
     <mt-header fixed class="header" title="提前还款">
       <router-link to="" slot="left">
         <mt-button icon="back"></mt-button>
@@ -54,8 +54,8 @@
   }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
-  .inAdvanceRepay
+<style lang="stylus" rel="stylesheet/stylus">
+  /*.inAdvanceRepay
     padding: 17px 15px 0 15px
     .banner
       display: flex
@@ -114,5 +114,7 @@
             background-size: 100% 100%
 
     .loan-btn
-      margin-top: 23px
+      margin-top: 23px*/
+
+  @import '../../assets/css/loanRepay.styl'
 </style>

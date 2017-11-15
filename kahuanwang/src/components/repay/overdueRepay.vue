@@ -1,5 +1,5 @@
 <template>
-  <div class="overdueRepay">
+  <div class="loanRepayDesc">
     <mt-header fixed class="header" title="按期还款">
       <router-link to="" slot="left">
         <mt-button icon="back"></mt-button>
@@ -11,7 +11,7 @@
       <div class="amount">
         <span class="icon-money"></span> 691.<span class="decimals">14</span>
       </div>
-      <div class="time">已逾期2天</div>
+      <div class="overdue-time">已逾期2天</div>
     </div>
 
     <div class="desc">
@@ -58,8 +58,8 @@
   }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
-  .overdueRepay
+<style lang="stylus" rel="stylesheet/stylus">
+  /*.overdueRepay
     padding: 17px 15px 0 15px
     .banner
       display: flex
@@ -125,5 +125,7 @@
       padding: 0 15px
       line-height: 20px
       color: #999
-      font-size: 11px
+      font-size: 11px*/
+
+  @import '../../assets/css/loanRepay.styl'
 </style>

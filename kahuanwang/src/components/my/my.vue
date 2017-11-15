@@ -15,26 +15,26 @@
     </div>
 
     <div class="nav">
-      <router-link to="">
+      <router-link to="/loanRecord">
         <div class="icon icon-loan"></div>
         <div class="name">借款记录</div>
       </router-link>
-      <router-link to="">
+      <router-link to="/repayRecord">
         <div class="icon icon-repay"></div>
         <div class="name">还款记录</div>
       </router-link>
-      <router-link to="">
+      <router-link to="/bankCard">
         <div class="icon icon-card"></div>
         <div class="name">银行卡</div>
       </router-link>
     </div>
     <div class="menu">
-      <router-link to="">
+      <router-link to="/newsCenter">
         <span class="icon icon-msg"></span>
         <span>我的消息</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </router-link>
-      <router-link to="">
+      <router-link to="/aboutUs">
         <span class="icon icon-us"></span>
         <span>关于我们</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -44,7 +44,7 @@
         <span>帮助中心</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </router-link>
-      <router-link to="">
+      <router-link to="/setting">
         <span class="icon icon-setting"></span>
         <span>安全设置</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -77,7 +77,6 @@
         position: absolute
         left: 20px
         bottom: 27px
-        width: 100%
         height: 58px
         font-size: 0
         .user-avatar

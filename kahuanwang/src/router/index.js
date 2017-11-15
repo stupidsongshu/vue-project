@@ -24,6 +24,17 @@ import RepayCode from '@/components/repay/repayCode'
 import RepayDeal from '@/components/repay/repayDeal'
 // 我的
 import My from '@/components/my/my'
+import LoanRecord from '@/components/my/loanRecord'
+import LoanDesc from '@/components/my/loanDesc'
+import RepayRecord from '@/components/my/repayRecord'
+import RepayDesc from '@/components/my/repayDesc'
+import BankCard from '@/components/my/bankCard'
+import AboutUs from '@/components/my/aboutUs'
+import Setting from '@/components/my/setting'
+import ModifyLoginPsw from '@/components/my/modifyLoginPsw'
+import ModifyPhone from '@/components/my/modifyPhone'
+import ModifyPhoneOld from '@/components/my/modifyPhoneOld'
+import ModifyPhoneNew from '@/components/my/modifyPhoneNew'
 
 Vue.use(Router)
 
@@ -119,6 +130,62 @@ export default new Router({
       path: '/my',
       name: 'my',
       component: My
+    },
+    {
+      path: '/loanRecord',
+      name: 'loanRecord',
+      component: LoanRecord
+    },
+    {
+      path: '/loanDesc',
+      name: 'loanDesc',
+      component: LoanDesc
+    },
+    {
+      path: '/repayRecord',
+      name: 'repayRecord',
+      component: RepayRecord
+    },
+    {
+      path: '/repayDesc',
+      name: 'repayDesc',
+      component: RepayDesc
+    },
+    {
+      path: '/bankCard',
+      name: 'bankCard',
+      component: BankCard
+    },
+    {
+      path: '/aboutUs',
+      name: 'aboutUs',
+      component: AboutUs
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: Setting
+    },
+    {
+      path: '/modifyLoginPsw',
+      name: 'modifyLoginPsw',
+      component: ModifyLoginPsw
+    },
+    {
+      path: '/modifyPhone',
+      component: ModifyPhone,
+      children: [
+        {
+          path: '',
+          name: 'modifyPhoneOld',
+          component: ModifyPhoneOld
+        },
+        {
+          path: 'new',
+          name: 'modifyPhoneNew',
+          component: ModifyPhoneNew
+        }
+      ]
     }
   ]
 })

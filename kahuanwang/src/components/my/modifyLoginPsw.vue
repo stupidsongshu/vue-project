@@ -1,7 +1,7 @@
 <template>
-  <div class="register">
-    <mt-header fixed class="header" title="注册">
-      <router-link to="/" slot="left">
+  <div>
+    <mt-header fixed class="header" title="修改登录密码">
+      <router-link to="" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
@@ -12,23 +12,20 @@
         <input type="number" placeholder="请输入手机号">
       </div>
       <div class="form-item">
+        <label class="icon icon-msg"></label>
+        <input type="text" placeholder="请输入短信验证码">
+        <label class="form-item-right code" @click="getCode">发送验证码</label>
+      </div>
+      <div class="reset-psw-title">请重新设置密码</div>
+      <div class="form-item">
         <label class="icon icon-password"></label>
         <input type="password" placeholder="密码为6-12位数字和字母组合" ref="psw">
         <label class="icon-password-show" v-show="showPassword" @click="toggle"></label>
         <label class="icon-password-hide" v-show="!showPassword" @click="toggle"></label>
       </div>
-      <div class="form-item">
-        <label class="icon icon-msg"></label>
-        <input type="text" placeholder="请输入短信验证码">
-        <label class="form-item-right code" @click="getCode">发送验证码</label>
-      </div>
 
       <div class="loan-btn">
-        <mt-button class="btn" @click="register">注册</mt-button>
-      </div>
-
-      <div class="hint">
-        已有账号？<router-link to="/login">登录</router-link>
+        <mt-button class="btn" @click="resetPsw">提交</mt-button>
       </div>
     </div>
   </div>
@@ -51,7 +48,7 @@
         }
       },
       getCode() {},
-      register() {}
+      resetPsw() {}
     }
   }
 </script>

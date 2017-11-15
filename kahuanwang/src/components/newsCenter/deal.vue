@@ -22,9 +22,9 @@
       <div class="deal-status">成功扣款</div>
     </div>
 
-    <div class="no-msg" v-if="false">
+    <div class="empty-content" v-if="false">
       <img src="../../assets/img/no-message.png" width="127" height="88" alt="">
-      <div>这里还是空的哦</div>
+      <div class="txt">这里还是空的哦</div>
     </div>
   </div>
 </template>
@@ -57,11 +57,11 @@
       &.has-read
         .deal-desc,.deal-time,.deal-status
           color: #999
-    .no-msg
+    .empty-content
       margin-top: 140px
       text-align: center
       color: #999
       font-size: 14px
-      div
+      .txt
         margin-top: 20px
 </style>

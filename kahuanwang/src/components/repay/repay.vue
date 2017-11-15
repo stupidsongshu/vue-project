@@ -18,8 +18,22 @@
         </div>
         <div class="card-m">
           <div class="card-m-t">691.14元</div>
-          <div class="card-m-b" v-if="!overdue">2017年08月27日</div>
-          <div class="overdue" v-if="overdue">已逾期</div>
+          <div class="card-m-b">2017年08月27日</div>
+          <!--<div class="card-m-b" v-if="!overdue">2017年08月27日</div>
+          <div class="overdue" v-if="overdue">已逾期</div>-->
+        </div>
+        <div class="card-r">
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="card" @click="overdueTimeRepay">
+        <div class="card-l">
+          <div class="card-l-t">按期还款</div>
+          <div class="card-l-b">还款日将自动还款</div>
+        </div>
+        <div class="card-m">
+          <div class="card-m-t">691.14元</div>
+          <div class="overdue">已逾期</div>
         </div>
         <div class="card-r">
           <i class="fa fa-angle-right"></i>
@@ -59,11 +73,15 @@
     },
     methods: {
       onTimeRepay() {
-        if (!this.overdue) {
+        /* if (!this.overdue) {
           this.$router.push('/onTimeRepay')
         } else {
           this.$router.push('/overdueRepay')
-        }
+        } */
+        this.$router.push('/onTimeRepay')
+      },
+      overdueTimeRepay() {
+        this.$router.push('/overdueRepay')
       },
       inAdvanceRepay() {
         this.$router.push('/inAdvanceRepay')
