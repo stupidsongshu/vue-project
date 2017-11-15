@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
     <div class="content">
-      <div class="content-left">
+      <div class="content-left" @click="toggleCart">
         <div class="logo-wrapper">
           <div class="logo" :class="{highlight: totalCount > 0}">
             <i class="icon-shopping_cart" :class="{highlight: totalCount > 0}"></i>
@@ -13,10 +13,32 @@
       </div>
       <div class="content-right" :class="payClass">{{payDesc}}</div>
     </div>
+
+    <transition name="toggle">
+      <div class="cart-list" v-show="listShow">
+        <div class="list-header">
+          <h1 class="title">购物车</h1>
+          <span class="empty">清空</span>
+        </div>
+        <div class="list-content">
+          <ul>
+            <li class="food" v-for="food in selectedFoods">
+              <span class="name">{{food.name}}</span>
+              <div class="cartcontrol-wrapper">
+                <span class="price">￥{{food.price * food.count}}</span>
+                <cartcontrol :food="food"></cartcontrol>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import cartcontrol from '../cartcontrol/cartcontrol';
+
   export default {
     props: {
       deliveryPrice: {
@@ -33,6 +55,12 @@
           return [];
         }
       }
+    },
+    data() {
+      return {
+        listShow: false,
+        fold: true // 购物车详情是否折叠
+      };
     },
     computed: {
       totalPrice() {
@@ -65,6 +93,16 @@
           return 'enough';
         }
       }
+    },
+    components: {
+      cartcontrol
+    },
+    methods: {
+      toggleCart() {
+        if (this.selectedFoods.length > 0) {
+          this.listShow = !this.listShow;
+        }
+      }
     }
   };
 </script>
@@ -75,6 +113,7 @@
     left: 0
     right: 0
     bottom: 0
+    z-index: 0
     width: 100%
     height: 48px
     background-color: #141d27
@@ -154,5 +193,56 @@
           background-color: #2b333b
         &.enough
           color: #fff
-          background-color: blue
+          background-color: rgb(0,160,220)
+
+    .cart-list
+      position: absolute
+      left: 0
+      bottom: 48px
+      z-index: -999
+      width: 100%
+      &.toggle-enter, &.toggle-leave-to
+        transform: translate3d(0,100%,0)
+      &.toggle-enter-active, &.toggle-leave-active
+        transition: all 1s ease
+      .list-header
+        display: flex
+        justify-content: space-between
+        width: 100%
+        height: 40px
+        padding: 0 18px
+        line-height: 40px
+        border-bottom: 1px solid rgba(7,17,27,.1)
+        background-color: #f3f5f7
+        .title
+          color: rgb(7,17,27)
+          font-size: 14px
+          font-weight: normal
+        .empty
+          color: rgb(0,160,220)
+          font-size: 12px
+      .list-content
+        width: 100%
+        padding: 0 18px
+        max-height: 217px
+        background-color: #fff
+        overflow: scroll
+        .food
+          display: flex
+          justify-content: space-between
+          align-items: center
+          width: 100%
+          height: 48px
+          border-bottom: 1px solid rgba(7,17,27,.1)
+          .name
+            color: rgb(7,17,27)
+            font-size: 14px
+          .cartcontrol-wrapper
+            display: flex
+            align-items: center
+            .price
+              margin-right: 12px
+              color: rgb(240,20,20)
+              font-size: 14px
+              font-weight: 700
 </style>
