@@ -11,7 +11,7 @@
       <label class="form-item-right code" @click="getCode">发送验证码</label>
     </div>
 
-    <div class="loan-btn">
+    <div class="loan-btn form-btn">
       <mt-button class="btn" @click="submit">提交</mt-button>
     </div>
   </div>

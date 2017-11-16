@@ -94,7 +94,7 @@
     width: 100%
     height: 238px
     font-size: 20px
-    background-size: 100%
+    background-size: 100% 238px
     background-repeat: no-repeat
     background-image: url("../assets/img/bg-header.png")
     .title
@@ -126,7 +126,7 @@
         height: 100%
         padding-right: 22px
         color: #fff
-        background: url("../assets/img/card1.png") no-repeat
+        background: url("../assets/img/card.png") no-repeat
         background-size: 100% 200px
         border-radius: 10px
         box-shadow: 2px 0 12px #e5e3e2,-2px 0 12px #e5e3e2

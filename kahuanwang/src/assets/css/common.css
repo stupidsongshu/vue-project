@@ -10,18 +10,20 @@ body {
   background-color: #f1f1f1 !important;
 }
 
-
 a {
   text-decoration: none;
 }
 
-h1,h2,h3,h4,h5,h6,ul,ol,li,p {
+h1, h2, h3, h4, h5, h6, ul, ol, li, p {
   margin: 0;
   padding: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
 
-ul,ol,li {
+ul, ol, li {
   list-style: none;
 }
 
@@ -44,4 +46,8 @@ ul,ol,li {
   line-height: 0;
   clear: both;
   visibility: hidden;
+}
+
+.border-none {
+  border: none !important;
 }

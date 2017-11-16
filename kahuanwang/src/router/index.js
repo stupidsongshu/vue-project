@@ -30,11 +30,14 @@ import RepayRecord from '@/components/my/repayRecord'
 import RepayDesc from '@/components/my/repayDesc'
 import BankCard from '@/components/my/bankCard'
 import AboutUs from '@/components/my/aboutUs'
+import Help from '@/components/my/help'
 import Setting from '@/components/my/setting'
 import ModifyLoginPsw from '@/components/my/modifyLoginPsw'
 import ModifyPhone from '@/components/my/modifyPhone'
 import ModifyPhoneOld from '@/components/my/modifyPhoneOld'
 import ModifyPhoneNew from '@/components/my/modifyPhoneNew'
+// 个人认证 身份信息
+import Identity from '@/components/personalCertificate/identity'
 
 Vue.use(Router)
 
@@ -162,6 +165,11 @@ export default new Router({
       component: AboutUs
     },
     {
+      path: '/help',
+      name: 'help',
+      component: Help
+    },
+    {
       path: '/setting',
       name: 'setting',
       component: Setting
@@ -186,6 +194,11 @@ export default new Router({
           component: ModifyPhoneNew
         }
       ]
+    },
+    {
+      path: '/identity',
+      name: 'identity',
+      component: Identity
     }
   ]
 })

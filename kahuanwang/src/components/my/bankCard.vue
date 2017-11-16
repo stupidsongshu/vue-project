@@ -6,7 +6,7 @@
       </router-link>
     </mt-header>
 
-    <div class="card-wrapper">
+    <div class="bank-card-wrapper">
       <div class="title">还款借记卡</div>
       <div class="card">
         <div class="card-info">
@@ -49,7 +49,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  .card-wrapper
+  .bank-card-wrapper
     margin-top: 12px
     padding: 0 15px 19px 15px
     background-color: #fff

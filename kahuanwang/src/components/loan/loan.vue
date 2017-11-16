@@ -191,7 +191,7 @@
       text-align: center
       color: main-color
     .loan-btn
-      margin-bottom: 16px
+      margin: 0 0 16px 0
 
     .picker-nav
       display: flex

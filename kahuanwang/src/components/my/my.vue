@@ -39,7 +39,7 @@
         <span>关于我们</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </router-link>
-      <router-link to="">
+      <router-link to="/help">
         <span class="icon icon-help"></span>
         <span>帮助中心</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>

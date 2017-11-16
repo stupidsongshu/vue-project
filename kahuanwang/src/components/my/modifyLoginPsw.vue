@@ -24,7 +24,7 @@
         <label class="icon-password-hide" v-show="!showPassword" @click="toggle"></label>
       </div>
 
-      <div class="loan-btn">
+      <div class="loan-btn form-btn">
         <mt-button class="btn" @click="resetPsw">提交</mt-button>
       </div>
     </div>

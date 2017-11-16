@@ -22,7 +22,7 @@
           <input type="password" placeholder="请输入密码">
           <router-link class="form-item-right" to="/forgetPsw">忘记密码？</router-link>
         </div>
-        <div class="loan-btn">
+        <div class="loan-btn form-btn">
           <mt-button class="btn" @click="loginPsw">登录</mt-button>
         </div>
       </div>
@@ -37,7 +37,7 @@
           <input type="text" placeholder="请输入短信验证码">
           <label class="form-item-right code" @click="getCode">发送验证码</label>
         </div>
-        <div class="loan-btn">
+        <div class="loan-btn form-btn">
           <mt-button class="btn" @click="loginCode">登录</mt-button>
         </div>
       </div>
