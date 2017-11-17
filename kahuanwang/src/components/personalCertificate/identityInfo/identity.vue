@@ -13,13 +13,13 @@
       <ul class="shot-wrapper">
         <li class="shot-item" @click="showExampleL">
           <div>
-            <img src="../../assets/img/shot_face.png" alt="">
+            <img src="../../../assets/img/shot_face.png" alt="">
           </div>
           <span class="explain">身份证正面</span>
         </li>
         <li class="shot-item" @click="showExampleR">
           <div>
-            <img src="../../assets/img/shot_back.png" alt="">
+            <img src="../../../assets/img/shot_back.png" alt="">
           </div>
           <span class="explain">身份证反面</span>
         </li>
@@ -49,7 +49,7 @@
     </div>
 
     <div style="margin-top: 17px;">
-      <div class="input-item border-none">
+      <router-link class="input-item border-none" to="/faceRecognition">
         <div class="input-item-l">
           <span class="name">拍摄人脸</span>
           <input class="input" type="text" placeholder="前往拍摄" readonly>
@@ -58,47 +58,47 @@
           <i class="fa fa-angle-right"></i>
           <i class="icon-shoot-success"></i>
         </div>
-      </div>
+      </router-link>
     </div>
 
-    <div class="loan-btn">
+    <div class="loan-btn" style="margin-top: 42px;">
       <mt-button class="btn" @click="submit">提交</mt-button>
     </div>
 
-    <mt-popup v-model="popupVisibleL" closeOnClickModal="true">
+    <mt-popup v-model="popupVisibleL" popup-transition="popup-fade" closeOnClickModal="true">
       <div class="sample-correct">
         <span class="title">正确示例</span>
-        <img class="correct-img" src="../../assets/img/sample_face_correct.png" alt="">
+        <img class="correct-img" src="../../../assets/img/sample_face_correct.png" alt="">
       </div>
       <div class="sample-error">
         <span class="title">错误示例</span>
         <div class="error-img-wrapper">
           <div class="error-img-wrapper-l">
-            <img class="error-img" src="../../assets/img/sample_face_wrong_1.png" alt="">
+            <img class="error-img" src="../../../assets/img/sample_face_wrong_1.png" alt="">
             <div class="txt">图像模糊</div>
           </div>
           <div class="error-img-wrapper-r">
-            <img class="error-img" src="../../assets/img/sample_face_wrong_2.png" alt="">
+            <img class="error-img" src="../../../assets/img/sample_face_wrong_2.png" alt="">
             <div class="txt">图像不全</div>
           </div>
         </div>
       </div>
       <div class="to-shoot">前往拍摄>></div>
     </mt-popup>
-    <mt-popup v-model="popupVisibleR" closeOnClickModal="true">
+    <mt-popup v-model="popupVisibleR" popup-transition="popup-fade" closeOnClickModal="true">
       <div class="sample-correct">
         <span class="title">正确示例</span>
-        <img class="correct-img" src="../../assets/img/sample_back_correct.png" alt="">
+        <img class="correct-img" src="../../../assets/img/sample_back_correct.png" alt="">
       </div>
       <div class="sample-error">
         <span class="title">错误示例</span>
         <div class="error-img-wrapper">
           <div class="error-img-wrapper-l">
-            <img class="error-img" src="../../assets/img/sample_back_wrong_1.png" alt="">
+            <img class="error-img" src="../../../assets/img/sample_back_wrong_1.png" alt="">
             <div class="txt">图像模糊</div>
           </div>
           <div class="error-img-wrapper-r">
-            <img class="error-img" src="../../assets/img/sample_back_wrong_2.png" alt="">
+            <img class="error-img" src="../../../assets/img/sample_back_wrong_2.png" alt="">
             <div class="txt">图像不全</div>
           </div>
         </div>
@@ -109,7 +109,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import pcNavHeader from '../common/pcNavHeader'
+  import pcNavHeader from '../../common/pcNavHeader'
 
   export default {
     data() {
@@ -134,8 +134,8 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import '../../assets/css/base.styl'
-  @import '../../assets/css/form.styl'
+  @import '../../../assets/css/base.styl'
+  @import '../../../assets/css/identity/personalCertificate.styl'
 
   .id-card
     margin-top: 13px
@@ -176,19 +176,17 @@
         display: inline-block
         width: 12px
         height: 12px
-        margin-right: 2px
-        background: url("../../assets/img/icon_caution1.png") no-repeat
+        margin-right: 4px
+        background: url("../../../assets/img/icon_caution.png") no-repeat
         background-size: 12px 12px
     .modify-phone-r
       a
         color: main-color
       .arrow-right
-        margin-left: 2px
+        margin-left: 4px
         color: #999
         font-size: 12px
 
-  .loan-btn
-    margin-top: 42px
   .mint-popup
     width: 88.8%
     padding: 10px 20px

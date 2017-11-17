@@ -37,7 +37,13 @@ import ModifyPhone from '@/components/my/modifyPhone'
 import ModifyPhoneOld from '@/components/my/modifyPhoneOld'
 import ModifyPhoneNew from '@/components/my/modifyPhoneNew'
 // 个人认证 身份信息
-import Identity from '@/components/personalCertificate/identity'
+import Identity from '@/components/personalCertificate/identityInfo/identity'
+import FaceRecognition from '@/components/personalCertificate/identityInfo/faceRecognition'
+import FaceRecognitionS from '@/components/personalCertificate/identityInfo/faceRecognitionS'
+import FaceRecognitionF from '@/components/personalCertificate/identityInfo/faceRecognitionF'
+import Shot from '@/components/personalCertificate/identityInfo/shot'
+import BankCardInfo from '@/components/personalCertificate/bankCardInfo/bankCard'
+import AddDebitCard from '@/components/personalCertificate/bankCardInfo/addDebitCard'
 
 Vue.use(Router)
 
@@ -199,6 +205,36 @@ export default new Router({
       path: '/identity',
       name: 'identity',
       component: Identity
+    },
+    {
+      path: '/faceRecognition',
+      name: 'faceRecognition',
+      component: FaceRecognition
+    },
+    {
+      path: '/faceRecognitionS',
+      name: 'faceRecognitionS',
+      component: FaceRecognitionS
+    },
+    {
+      path: '/faceRecognitionF',
+      name: 'faceRecognitionF',
+      component: FaceRecognitionF
+    },
+    {
+      path: '/shot',
+      name: 'shot',
+      component: Shot
+    },
+    {
+      path: '/bankCardInfo',
+      name: 'bankCardInfo',
+      component: BankCardInfo
+    },
+    {
+      path: '/addDebitCard',
+      name: 'addDebitCard',
+      component: AddDebitCard
     }
   ]
 })

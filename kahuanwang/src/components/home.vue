@@ -8,6 +8,9 @@
       </div>-->
 
       <mt-header class="title" title="卡还王">
+        <router-link to="/identity" slot="left">
+          <mt-button icon="back"></mt-button>
+        </router-link>
         <router-link class="icon-news" to="/newsCenter" slot="right"></router-link>
       </mt-header>
 
