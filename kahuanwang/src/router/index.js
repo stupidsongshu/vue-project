@@ -44,6 +44,10 @@ import FaceRecognitionF from '@/components/personalCertificate/identityInfo/face
 import Shot from '@/components/personalCertificate/identityInfo/shot'
 import BankCardInfo from '@/components/personalCertificate/bankCardInfo/bankCard'
 import AddDebitCard from '@/components/personalCertificate/bankCardInfo/addDebitCard'
+import AddCreditCard from '@/components/personalCertificate/bankCardInfo/addCreditCard'
+import BaseInfo from '@/components/personalCertificate/baseInfo/base'
+import WriteStandard from '@/components/personalCertificate/baseInfo/writeStandard'
+import Linkman from '@/components/personalCertificate/linkmanInfo/linkman'
 
 Vue.use(Router)
 
@@ -235,6 +239,26 @@ export default new Router({
       path: '/addDebitCard',
       name: 'addDebitCard',
       component: AddDebitCard
+    },
+    {
+      path: '/addCreditCard',
+      name: 'addCreditCard',
+      component: AddCreditCard
+    },
+    {
+      path: '/baseInfo',
+      name: 'baseInfo',
+      component: BaseInfo
+    },
+    {
+      path: '/writeStandard',
+      name: 'writeStandard',
+      component: WriteStandard
+    },
+    {
+      path: '/linkman',
+      name: 'linkman',
+      component: Linkman
     }
   ]
 })

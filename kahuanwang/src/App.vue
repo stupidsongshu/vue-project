@@ -1,7 +1,7 @@
 <template>
   <div id="app" :class="{'has-footer': hasFooter}">
     <router-view/>
-    <!--<tab-bar :hasFooter="hasFooter"></tab-bar>-->
+    <tab-bar :hasFooter="hasFooter"></tab-bar>
   </div>
 </template>
 

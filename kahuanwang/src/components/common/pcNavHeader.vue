@@ -9,7 +9,7 @@
     <li @click="baseInfo">
       <span :class="{curProgress: curProgress >= 3, active: curProgress === 3}">基本信息</span>
     </li>
-    <li @click="link">
+    <li @click="linkman">
       <span :class="{curProgress: curProgress >= 4, active: curProgress === 4}">联系人信息</span>
     </li>
   </ul>
@@ -33,8 +33,8 @@
       baseInfo() {
         this.$router.push('/baseInfo')
       },
-      link() {
-        this.$router.push('/link')
+      linkman() {
+        this.$router.push('/linkman')
       }
     }
   }

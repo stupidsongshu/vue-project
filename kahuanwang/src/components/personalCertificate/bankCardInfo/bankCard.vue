@@ -24,10 +24,10 @@
         <div class="card-num">**** **** **** 5391</div>
       </div>
       <router-link to="/addDebitCard" class="add-credit-card" v-if="!hasDebitCard">
-        <img src="../../../assets/img/icon_card_add.png" width="40" height="30" alt=""><span>添加信用卡</span>
+        <img src="../../../assets/img/icon_card_add.png" width="40" height="30" alt=""><span>添加借记卡</span>
       </router-link>
 
-      <div class="title">代还信用卡</div>
+      <!--<div class="title">代还信用卡</div>
       <ul v-if="hasReplaceRepayCard">
         <li class="card">
           <div class="card-info">
@@ -43,9 +43,9 @@
           <div class="card-num">**** **** **** 5391</div>
         </li>
       </ul>
-      <div class="add-credit-card" v-if="!hasReplaceRepayCard">
+      <router-link v-if="!hasReplaceRepayCard" to="/addCreditCard" class="add-credit-card">
         <img src="../../../assets/img/icon_card_add.png" width="40" height="30" alt=""><span>添加信用卡</span>
-      </div>
+      </router-link>-->
     </div>
 
     <div class="loan-btn" style="margin-top: 106px;">

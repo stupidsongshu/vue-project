@@ -78,7 +78,7 @@
         purpose: '',
         yearSlot: [{
           flex: 1,
-          values: ['家装', '婚庆', '旅游', '教育', '汽车周边', '电子数码产品', '医疗', '家用电器', '家具家居', '其他'],
+          values: ['', '家装', '婚庆', '旅游', '教育', '汽车周边', '电子数码产品', '医疗', '家用电器', '家具家居', '其他'],
           className: 'slot1'
         }]
       }
@@ -90,7 +90,7 @@
       ensure() {
         this.popupVisible = false
       },
-//      change 事件有两个参数，分别为当前 picker 的 vue 实例和各 slot 被选中的值组成的数组
+      // change 事件有两个参数，分别为当前 picker 的 vue 实例和各 slot 被选中的值组成的数组
       onChange(picker, values) {
         this.purpose = values[0]
       },

@@ -26,12 +26,20 @@
       </ul>
     </div>
 
-    <div class="modify-phone">
+    <!--<div class="modify-phone">
       <div class="modify-phone-l">
         <span class="icon-caution"></span><span>请确保身份证和登录手机号码实名认证一致</span>
       </div>
       <div class="modify-phone-r">
         <router-link to="">修改手机号</router-link><i class="fa fa-angle-right arrow-right"></i>
+      </div>
+    </div>-->
+    <div class="input-item-hint">
+      <div>
+        <span class="icon-caution"></span><span>请确保身份证和登录手机号码实名认证一致</span>
+      </div>
+      <div class="arrow-wrapper">
+        <router-link to="" style="color: #daab5b;">修改手机号</router-link> <span class="fa fa-angle-right arrow-right"></span>
       </div>
     </div>
 
@@ -133,7 +141,7 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style scoped lang="stylus" rel="stylesheet/stylus">
   @import '../../../assets/css/base.styl'
   @import '../../../assets/css/identity/personalCertificate.styl'
 
@@ -161,7 +169,7 @@
           margin: 10px 0 15px 0
           color: #999
           font-size: 13px
-  .modify-phone
+  /*.modify-phone
     display: flex
     justify-content: space-between
     align-items: center
@@ -185,7 +193,7 @@
       .arrow-right
         margin-left: 4px
         color: #999
-        font-size: 12px
+        font-size: 12px*/
 
   .mint-popup
     width: 88.8%

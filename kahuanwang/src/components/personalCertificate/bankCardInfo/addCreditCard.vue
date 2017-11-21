@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mt-header fixed class="header" title="添加借记卡">
+    <mt-header fixed class="header" title="添加信用卡">
       <router-link to="" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -9,7 +9,7 @@
     <div class="input-item" style="margin-top: 17px;">
       <div class="input-item-l">
         <span class="name">卡片类型</span>
-        <span>借记卡</span>
+        <span>信用卡</span>
       </div>
     </div>
     <div class="input-item">
@@ -24,47 +24,55 @@
     <div class="input-item" @click="selectDepositBank">
       <div class="input-item-l">
         <span class="name">开户银行</span>
-        <!--<input class="input" type="text" placeholder="请选择" readonly v-model="purpose">-->
-        <span class="color999">{{purpose || '请选择'}}</span>
+        <input class="input" type="text" placeholder="请选择" readonly v-model="purpose">
+        <!--<span class="color999">请选择</span>-->
       </div>
       <div class="input-item-r">
         <i class="fa fa-angle-right"></i>
       </div>
     </div>
-    <div class="input-item" @click="show">
+    <div class="input-item">
       <div class="input-item-l">
-        <span class="name">开户城市</span>
-        <!--<input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">-->
-        <span class="color999">{{selectedCity || '请选择'}}</span>
+        <span class="name">有效期</span>
+        <!--<input class="input" type="number" placeholder="请选择">-->
+        <span class="color999">选择信用卡有效期</span>
+      </div>
+      <div class="input-item-r">
+        <i class="fa fa-angle-right"></i>
+      </div>
+    </div>
+    <div class="input-item">
+      <div class="input-item-l">
+        <span class="name">还款日</span>
+        <!--<input class="input" type="number" placeholder="请选择">-->
+        <span class="color999">选择还款日期</span>
       </div>
       <div class="input-item-r">
         <i class="fa fa-angle-right"></i>
       </div>
     </div>
 
-    <div class="input-item-hint" style="margin-bottom: 20px;">
-      <div>
-        <span class="icon-caution"></span><span>请绑定常用借记卡，用于还款，绑定不会产生费用</span>
-      </div>
+    <div class="input-item-hint">
+      <span class="icon-caution"></span><span>请绑定常用的信用卡，用于借款</span>
     </div>
 
     <div class="loan-btn">
-      <mt-button class="btn" @click="addDebitCard">添加借记卡</mt-button>
+      <mt-button class="btn" @click="addCreditCard">添加信用卡</mt-button>
     </div>
 
     <div class="warm-prompt">
-      <span class="title">温馨提示：<span style="color: #f00;">当前仅支持以下银行</span>，请勿绑定其他银行</span>
+      <span class="title">温馨提示：当前仅支持以下银行，请勿绑定其他银行，以免导致借款不成功，<router-link to="" style="color: #f00;">查看全部银行列表>></router-link></span>
     </div>
     <ul class="bank-support-list">
       <li class="item">1、中国银行</li>
-      <li class="item">2、工商银行</li>
-      <li class="item">3、农业银行</li>
+      <li class="item">2、农业银行</li>
+      <li class="item">3、工商银行</li>
       <li class="item">4、建设银行</li>
-      <li class="item">5、光大银行</li>
-      <li class="item">6、兴业银行</li>
-      <li class="item">7、中信银行</li>
+      <li class="item">5、中信银行</li>
+      <li class="item">6、光大银行</li>
+      <li class="item">7、兴业银行</li>
       <li class="item">8、平安银行</li>
-      <li class="item">9、宁波银行</li>
+      <li class="item">9、招商银行</li>
     </ul>
 
     <mt-popup
@@ -80,34 +88,26 @@
         <div class="ensure-btn" @click="ensure">确定</div>
         <!--<mt-button @click="ensure">确定</mt-button>-->
       </div>
-      <mt-picker :slots="yearSlot" @change="onChange" :visible-item-count="3"></mt-picker>
+      <mt-picker :slots="bankSlot" @change="onChange" :visible-item-count="3"></mt-picker>
     </mt-popup>
-
-    <vue-city-picker ref="picker" @select="select" :title="title" :cancel-txt="cancelTxt" :confirm-txt="confirmTxt"></vue-city-picker>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import vueCityPicker from 'vue-city-bspicker'
-
   export default {
     data() {
       return {
         popupVisible: false,
         purpose: '',
-        yearSlot: [{
+        bankSlot: [{
           flex: 1,
           values: ['', '中国银行', '农业银行', '工商银行', '建设银行', '中信银行', '光大银行', '兴业银行', '平安银行', '招商银行'],
           className: 'slot1'
-        }],
-        title: '选择居住地',
-        cancelTxt: '取消',
-        confirmTxt: '确定',
-        selectedCity: ''
+        }]
       }
     },
     methods: {
-      addDebitCard() {
+      addCreditCard() {
       },
       selectDepositBank() {
         this.popupVisible = true
@@ -119,17 +119,7 @@
       },
       ensure() {
         this.popupVisible = false
-      },
-      show() {
-        this.$refs['picker'].show()
-      },
-      select() {
-        console.log(arguments)
-        this.selectedCity = arguments[2][0] + ' ' + arguments[2][1] + ' ' + arguments[2][2]
       }
-    },
-    components: {
-      vueCityPicker
     }
   }
 </script>
@@ -145,8 +135,8 @@
     font-size: 12px
     .title
       display: block
-      width: 100%
       padding: 13px 0
+      line-height: 20px
       border-bottom: 1px solid #d9d9d9
   .bank-support-list
     display: flex
@@ -193,39 +183,4 @@
         color: #fff
         font-size: 12px
         background-color: main-color
-</style>
-
-<style lang="stylus" rel="stylesheet/stylus">
-  @import '../../../assets/css/base.styl'
-
-  .picker
-    .picker--panel
-      /*background-color: #f1f1f1 !important*/
-    .picker--choose
-      height: 45px !important
-      padding: 0 15px
-      /*background-color: #fff !important*/
-      .cancel
-        padding: 0
-        width: 56px
-        height: 25px
-        line-height: 25px
-        text-align: center
-        border: 1px solid #999
-        border-radius: 4px
-        font-size: 12px
-      .confirm
-        padding: 0
-        width: 56px
-        height: 25px
-        line-height: 25px
-        text-align: center
-        border-radius: 4px
-        color: #fff !important
-        font-size: 12px
-        background-color: main-color
-      h4
-        font-size: 15px !important
-    .picker--content
-      font-size: 15px !important
 </style>
