@@ -97,9 +97,9 @@
     width: 100%
     height: 238px
     font-size: 20px
-    background-size: 100% 238px
-    background-repeat: no-repeat
     background-image: url("../assets/img/bg-header.png")
+    background-repeat: no-repeat
+    background-size: 100% 238px
     .title
       display: flex
       justify-content: space-between
@@ -112,10 +112,10 @@
         display: inline-block
         width: 22px
         height: 45px
-        background-size: 22px 23px
+        background-image: url("../assets/img/icon_news.png")
         background-repeat: no-repeat
         background-position: center
-        background-image: url("../assets/img/icon_news.png")
+        background-size: 22px 23px
     .card-wrapper
       position: absolute
       top: 80px
@@ -128,12 +128,12 @@
         width: 100%
         height: 100%
         padding-right: 22px
+        text-align: right
         color: #fff
+        border-radius: 10px
         background: url("../assets/img/card.png") no-repeat
         background-size: 100% 200px
-        border-radius: 10px
         box-shadow: 2px 0 12px #e5e3e2,-2px 0 12px #e5e3e2
-        text-align: right
         .loan-amount
           display: table-cell
           vertical-align: middle
@@ -194,7 +194,7 @@
 
   .footer-txt
     line-height: 44px
+    text-align: center
     color: #999
     font-size: 12px
-    text-align: center
 </style>

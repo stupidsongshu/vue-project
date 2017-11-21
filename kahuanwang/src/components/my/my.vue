@@ -1,5 +1,5 @@
 <template>
-  <div class="my">
+  <div class="my no-header">
     <div class="banner">
       <mt-header class="title" title="我的"></mt-header>
 
@@ -62,7 +62,7 @@
 
   .my
     position: relative
-    top: -45px
+    /*margin-top: -45px*/
     .banner
       position: relative
       width: 100%
