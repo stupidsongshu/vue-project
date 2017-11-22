@@ -11,7 +11,22 @@ body {
   background-color: #f1f1f1 !important;
 }
 
-a {
+html, body {
+  height: 100%;
+
+  /*  touch当手指从触摸屏上移开，会保持一段时间的滚动
+      auto当手指从触摸屏上移开，滚动会立即停止
+  */
+  -webkit-overflow-scrolling: touch;
+  /* 设置点击链接的时候出现的高亮颜色。显示给用户的高光是他们成功点击的标识，以及暗示了他们点击的元素 */
+  -webkit-tap-highlight-color: transparent;
+}
+/* 隐藏滚轮 */
+::-webkit-scrollbar {
+  display: none;
+}
+
+a, a:hover {
   text-decoration: none;
 }
 
