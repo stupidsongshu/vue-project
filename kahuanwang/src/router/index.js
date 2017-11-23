@@ -48,6 +48,8 @@ import AddCreditCard from '@/components/personalCertificate/bankCardInfo/addCred
 import BaseInfo from '@/components/personalCertificate/baseInfo/base'
 import WriteStandard from '@/components/personalCertificate/baseInfo/writeStandard'
 import Linkman from '@/components/personalCertificate/linkmanInfo/linkman'
+import VideoAuth from '@/components/personalCertificate/videoAuth/videoAuth'
+import ReadAloud from '@/components/personalCertificate/videoAuth/readAloud'
 import AgreeAuth from '@/components/personalCertificate/agreeAuth/agreeAuth'
 import WaitAudit from '@/components/personalCertificate/waitAudit/waitAudit'
 
@@ -261,6 +263,16 @@ export default new Router({
       path: '/linkman',
       name: 'linkman',
       component: Linkman
+    },
+    {
+      path: '/videoAuth',
+      name: 'videoAuth',
+      component: VideoAuth
+    },
+    {
+      path: '/readAloud',
+      name: 'readAloud',
+      component: ReadAloud
     },
     {
       path: '/agreeAuth',

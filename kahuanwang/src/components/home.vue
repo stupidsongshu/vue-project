@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="index no-header">
     <div class="bg-header">
       <!--<div class="title">
         <div></div>
@@ -77,15 +77,15 @@
 
 <style lang="stylus">
   .mt-range-runway
-    border: 3px solid #d9d9d9
+    border: 3px solid #d9d9d9 !important
     border-radius: 3px
   .mt-range-progress
     border: 3px solid #4e433d
     border-top-left-radius: 3px
     border-bottom-left-radius: 3px
   .mt-range-thumb
-    width: 33px
-    height: 33px
+    width: 33px !important
+    height: 33px !important
     background-image: url("../assets/img/slider_money.png")
     background-size: 33px 33px
 </style>
@@ -93,7 +93,7 @@
 <style scoped lang="stylus">
   .bg-header
     position: relative
-    top: -45px
+    /*top: -45px*/
     width: 100%
     height: 238px
     font-size: 20px
@@ -133,7 +133,7 @@
         border-radius: 10px
         background: url("../assets/img/card.png") no-repeat
         background-size: 100% 200px
-        box-shadow: 2px 0 12px #e5e3e2,-2px 0 12px #e5e3e2
+        /*box-shadow: 2px 0 12px #e5e3e2,-2px 0 12px #e5e3e2*/
         .loan-amount
           display: table-cell
           vertical-align: middle

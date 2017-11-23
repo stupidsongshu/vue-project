@@ -46,13 +46,13 @@
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">姓名</span>
-        <input class="input" type="text" placeholder="输入真实姓名">
+        <input class="input" type="text" placeholder="输入真实姓名" readonly>
       </div>
     </div>
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">身份证号</span>
-        <input class="input" type="text" placeholder="输入身份证号码">
+        <input class="input" type="text" placeholder="输入身份证号码" readonly>
       </div>
     </div>
 

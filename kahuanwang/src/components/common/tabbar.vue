@@ -47,12 +47,13 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   .mint-tabbar
+    /*bottom: 20px !important*/
     color: #d2d1d1
-    background-color: #fff
+    background-color: #fff !important
     background-image: none
     border-top: 1px solid #d9d9d9
     .mint-tab-item
       &.is-selected
-        color: #daab5b
-        background-color: #fff
+        color: #daab5b !important
+        background-color: #fff !important
 </style>

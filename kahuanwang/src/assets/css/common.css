@@ -78,6 +78,12 @@ ul, ol, li {
 .color999 {
   color: #999;
 }
+.main-color {
+  color: #daab5b;
+}
+.main-bgColor {
+  color: #daab5b;
+}
 
 /* common page */
 .header {
