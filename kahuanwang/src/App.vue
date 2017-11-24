@@ -1,21 +1,36 @@
 <template>
-  <div id="app" :class="{'has-footer': hasFooter}" ref="app">
-    <router-view/>
+  <div id="app" :class="{'has-footer': hasFooter}">
+    <!--<mt-header class="header" title="卡还王">
+      <router-link to="/identity" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+      <router-link class="icon-news" to="/newsCenter" slot="right"></router-link>
+    </mt-header>-->
+
+    <transition :name="transitionName">
+      <router-view></router-view>
+    </transition>
     <tab-bar :hasFooter="hasFooter"></tab-bar>
   </div>
 </template>
 
 <script>
   import tabBar from './components/common/tabbar.vue'
+
   export default {
     name: 'app',
     data() {
       return {
-        hasFooter: true
+        hasFooter: true,
+        transitionName: 'slide-left'
       }
     },
     components: {
       'tab-bar': tabBar
+    },
+    created() {
+      /*  eslint-disable no-undef */
+      console.log(app)
     },
     mounted() {
       /* var w = document.documentElement.clientWidth
@@ -23,6 +38,19 @@
       console.log(w, h)
       this.$refs.app.style.width = w + 'px'
       this.$refs.app.style.minHeight = h + 'px' */
+    },
+    // dynamically set transition based on route change
+    watch: {
+      '$route'(to, from) {
+        const toDepth = to.path.split('/').length
+        const fromDepth = from.path.split('/').length
+        this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+        console.log(this.transitionName)
+        // 有个bug,刷新页面后watch $route不会执行
+        /* if (to.meta.headerTitle !== undefined) {
+          this.headerTitle = to.meta.headerTitle
+        } */
+      }
     }
   }
 </script>

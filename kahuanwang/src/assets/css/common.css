@@ -120,3 +120,47 @@ ul, ol, li {
   border-radius: 6px;
   background-color: #4e433d;
 }
+
+/* animation */
+/*
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+.child-view {
+  position: absolute;
+  transition: all .5s cubic-bezier(.55,0,.1,1);
+}
+.slide-left-enter, .slide-right-leave-active {
+  opacity: 0;
+  -webkit-transform: translate(30px, 0);
+  transform: translate(30px, 0);
+}
+.slide-left-leave-active, .slide-right-enter {
+  transition: all .5s cubic-bezier(.55,0,.1,1);
+  opacity: 0;
+  -webkit-transform: translate(-30px, 0);
+  transform: translate(-30px, 0);
+}
+*/
+
+
+
+/*.slide-left-enter-active, .slide-left-leave-active {
+  transition: opacity .1s ease-in
+}
+.slide-left-enter, .slide-left-leave-to !* .fade-leave-active in below version 2.1.8 *! {
+  opacity: 0
+}*/
+
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all .1s cubic-bezier(.55,0,.1,1);
+  opacity: 0;
+}
+.slide-left-enter,
+.slide-left-leave-to {
+  opacity: 0;
+}

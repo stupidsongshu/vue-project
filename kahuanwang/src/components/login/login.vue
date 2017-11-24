@@ -1,9 +1,9 @@
 <template>
   <div class="login">
     <mt-header fixed class="header" title="登录">
-      <router-link to="/" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="form">
@@ -57,6 +57,9 @@
       }
     },
     methods: {
+      back() {
+        this.goback()
+      },
       selectLoginType(index) {
         this.loginIndex = index
       },

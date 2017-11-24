@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Vuex from 'vuex'
 import axios from 'axios'
 import MintUI, {Indicator} from 'mint-ui'
 import 'mint-ui/lib/style.css'
@@ -12,12 +13,21 @@ import './assets/css/base.styl'
 import './assets/font-awesome-4.7.0/css/font-awesome.min.css'
 
 Vue.config.productionTip = false
+Vue.use(Vuex)
 Vue.use(MintUI)
+
+const store = new Vuex.Store({
+  state: {
+  },
+  mutations: {
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {App},
   created() {

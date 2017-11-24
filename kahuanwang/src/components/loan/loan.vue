@@ -1,12 +1,12 @@
 <template>
   <div class="loan">
     <mt-header fixed class="header" title="立即借款">
-      <router-link to="/" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
-    <div class="banner-wrapper">
+    <div class="banner-wrapper" @click="back">
       <div class="banner-container">
         <div class="title"><i class="icon-rate"></i><span>借款金额</span></div>
         <div>
@@ -39,7 +39,7 @@
       </div>
       <div class="item">
         <div class="agreement-wrapper">
-          <input type="checkbox" id="agreementInput">
+          <input type="checkbox" id="agreementInput" checked>
           <label for="agreementInput">我同意并知晓</label><router-link class="agreement" to="">《借款补充协议》</router-link>
         </div>
       </div>
@@ -84,6 +84,9 @@
       }
     },
     methods: {
+      back() {
+        this.goback()
+      },
       selectPurpose() {
         this.popupVisible = true
       },

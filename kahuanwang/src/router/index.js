@@ -56,6 +56,7 @@ import WaitAudit from '@/components/personalCertificate/waitAudit/waitAudit'
 Vue.use(Router)
 
 export default new Router({
+// const route = new Router({
   routes: [
     {
       path: '/',
@@ -65,7 +66,10 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: {
+        headerTitle: '登录11'
+      }
     },
     {
       path: '/forgetPsw',
@@ -119,27 +123,27 @@ export default new Router({
       component: Repay
     },
     {
-      path: '/onTimeRepay',
+      path: '/repay/onTimeRepay',
       name: 'onTimeRepay',
       component: OnTimeRepay
     },
     {
-      path: '/overdueRepay',
+      path: '/repay/overdueRepay',
       name: 'overdueRepay',
       component: OverdueRepay
     },
     {
-      path: '/inAdvanceRepay',
+      path: '/repay/inAdvanceRepay',
       name: 'inAdvanceRepay',
       component: InAdvanceRepay
     },
     {
-      path: '/repayCode',
+      path: '/repay/repayCode',
       name: 'repayCode',
       component: RepayCode
     },
     {
-      path: '/repayDeal',
+      path: '/repay/repayDeal',
       name: 'repayDeal',
       component: RepayDeal
     },

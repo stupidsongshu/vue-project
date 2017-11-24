@@ -48,7 +48,7 @@
   export default {
     methods: {
       inAdvanceRepayBtn() {
-        this.$router.push('/repayCode')
+        this.$router.push('/repay/repayCode')
       }
     }
   }

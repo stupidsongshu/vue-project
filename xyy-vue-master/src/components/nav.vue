@@ -36,7 +36,7 @@
 export default {
 	data() {
 		return {
-			
+
 		}
 	}
 }
@@ -78,11 +78,11 @@ export default {
 				font-size: 22px;
 				margin: 0 auto;
 				border-radius: 45%;
-                margin-bottom: px2rem(15px);
+        margin-bottom: px2rem(15px);
 			}
-            span {
-                font-size: 13px;
-            }
+      span {
+        font-size: 13px;
+      }
 		}
 	}
 }

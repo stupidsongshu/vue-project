@@ -78,13 +78,13 @@
         } else {
           this.$router.push('/overdueRepay')
         } */
-        this.$router.push('/onTimeRepay')
+        this.$router.push('/repay/onTimeRepay')
       },
       overdueTimeRepay() {
-        this.$router.push('/overdueRepay')
+        this.$router.push('/repay/overdueRepay')
       },
       inAdvanceRepay() {
-        this.$router.push('/inAdvanceRepay')
+        this.$router.push('/repay/inAdvanceRepay')
       }
     }
   }

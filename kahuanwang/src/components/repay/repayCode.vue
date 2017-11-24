@@ -35,7 +35,7 @@
   export default {
     methods: {
       loanConfirm() {
-        this.$router.push('repayDeal')
+        this.$router.push('/repay/repayDeal')
       }
     }
   }
