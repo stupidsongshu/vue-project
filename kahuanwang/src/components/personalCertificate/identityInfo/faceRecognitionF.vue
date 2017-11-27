@@ -1,9 +1,9 @@
 <template>
   <div>
     <mt-header fixed class="header" title="人脸识别">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="faceRecognition">
@@ -31,6 +31,9 @@
 <script type="text/ecmascript-6">
   export default {
     methods: {
+      back() {
+        this.goback()
+      },
       nextStep() {}
     }
   }

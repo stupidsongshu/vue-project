@@ -3,7 +3,7 @@
     <div class="banner">
       <mt-header class="title" title="我的"></mt-header>
 
-      <div class="user">
+      <!--<div class="user">
         <div class="user-avatar">
           <img src="./../../assets/img/head.png" alt="">
         </div>
@@ -11,7 +11,17 @@
           <div>您好！</div>
           <div>182******57</div>
         </div>
-      </div>
+      </div>-->
+      <router-link to="/register" class="user">
+        <div class="user-avatar">
+          <img src="./../../assets/img/head.png" alt="">
+        </div>
+        <div class="user-phone">
+          <div>您好！</div>
+          <div>182******57</div>
+        </div>
+      </router-link>
+
     </div>
 
     <div class="nav">

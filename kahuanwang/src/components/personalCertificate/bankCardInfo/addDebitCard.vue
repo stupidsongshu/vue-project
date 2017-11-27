@@ -1,9 +1,9 @@
 <template>
   <div>
     <mt-header fixed class="header" title="添加借记卡">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="input-item" style="margin-top: 17px;">
@@ -14,8 +14,14 @@
     </div>
     <div class="input-item">
       <div class="input-item-l">
-        <span class="name">借记卡号</span>
-        <input class="input" type="number" placeholder="借记卡号">
+        <span class="name">手机号码</span>
+        <input class="input" type="number" placeholder="请输入借记卡绑定手机号" v-model="phoneNo">
+      </div>
+    </div>
+    <div class="input-item">
+      <div class="input-item-l">
+        <span class="name">借记卡号<i class="fa fa-star required"></i></span>
+        <input class="input" type="number" placeholder="借记卡号" v-model="debitCardno">
       </div>
       <!--<div class="input-item-r">
         <i class="fa fa-angle-right"></i>
@@ -23,9 +29,9 @@
     </div>
     <div class="input-item" @click="selectDepositBank">
       <div class="input-item-l">
-        <span class="name">开户银行</span>
+        <span class="name">开户银行<i class="fa fa-star required"></i></span>
         <!--<input class="input" type="text" placeholder="请选择" readonly v-model="purpose">-->
-        <span class="color999">{{purpose || '请选择'}}</span>
+        <span class="color999">{{openBank || '请选择'}}</span>
       </div>
       <div class="input-item-r">
         <i class="fa fa-angle-right"></i>
@@ -33,7 +39,7 @@
     </div>
     <div class="input-item" @click="show">
       <div class="input-item-l">
-        <span class="name">开户城市</span>
+        <span class="name">开户城市<i class="fa fa-star required"></i></span>
         <!--<input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">-->
         <span class="color999">{{selectedCity || '请选择'}}</span>
       </div>
@@ -80,7 +86,7 @@
         <div class="ensure-btn" @click="ensure">确定</div>
         <!--<mt-button @click="ensure">确定</mt-button>-->
       </div>
-      <mt-picker :slots="yearSlot" @change="onChange" :visible-item-count="3"></mt-picker>
+      <mt-picker :slots="bankListSlot" @change="onChange" :visible-item-count="3" value-key="bankName"></mt-picker>
     </mt-popup>
 
     <vue-city-picker ref="picker" @select="select" :title="title" :cancel-txt="cancelTxt" :confirm-txt="confirmTxt"></vue-city-picker>
@@ -88,16 +94,70 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { Toast } from 'mint-ui'
   import vueCityPicker from 'vue-city-bspicker'
 
   export default {
     data() {
       return {
+        // 借记卡号
+        debitCardno: '',
+        // 借记卡绑定手机号
+        phoneNo: '',
+        // 开户行名称
+        openBank: '',
+        // 开户行编号
+        openBankId: '',
+        // 开户行所在省
+        prov: '',
+        // 开户行所在市
+        city: '',
         popupVisible: false,
-        purpose: '',
-        yearSlot: [{
+        bankListSlot: [{
           flex: 1,
-          values: ['', '中国银行', '农业银行', '工商银行', '建设银行', '中信银行', '光大银行', '兴业银行', '平安银行', '招商银行'],
+          // values: ['', '中国银行', '农业银行', '工商银行', '建设银行', '中信银行', '光大银行', '兴业银行', '平安银行', '招商银行'],
+          values: [
+            {
+              bankId: '0000',
+              bankName: ' '
+            },
+            {
+              bankId: '0102',
+              bankName: '工商银行'
+            },
+            {
+              bankId: '0103',
+              bankName: '农业银行'
+            },
+            {
+              bankId: '0105',
+              bankName: '建设银行'
+            },
+            {
+              bankId: '0302',
+              bankName: '中信银行'
+            },
+            {
+              bankId: '0303',
+              bankName: '光大银行'
+            },
+            {
+              bankId: '0309',
+              bankName: '兴业银行'
+            },
+            {
+              bankId: '0410',
+              bankName: '平安银行'
+            },
+            {
+              bankId: '0408',
+              bankName: '宁波银行'
+            },
+            {
+              bankId: '0104',
+              bankName: '中国银行'
+            }
+          ],
           className: 'slot1'
         }],
         title: '选择居住地',
@@ -107,15 +167,23 @@
       }
     },
     methods: {
-      addDebitCard() {
+      back() {
+        this.goback()
       },
       selectDepositBank() {
         this.popupVisible = true
       },
       // change 事件有两个参数，分别为当前 picker 的 vue 实例和各 slot 被选中的值组成的数组
       onChange(picker, values) {
-        this.purpose = values[0]
-        console.log(this.purpose)
+        let openBankInfo = values[0]
+        console.log(openBankInfo)
+        if (openBankInfo !== undefined) {
+          this.openBank = openBankInfo.bankName
+          this.openBankId = openBankInfo.bankId
+          if (openBankInfo.bankName === ' ') {
+            this.openBank = ''
+          }
+        }
       },
       ensure() {
         this.popupVisible = false
@@ -126,6 +194,42 @@
       select() {
         console.log(arguments)
         this.selectedCity = arguments[2][0] + ' ' + arguments[2][1] + ' ' + arguments[2][2]
+        this.prov = arguments[2][0]
+        this.city = arguments[2][1]
+      },
+      addDebitCard() {
+//        alert(this.phoneNo)
+//        alert(this.debitCardno)
+//        alert(this.openBank)
+//        alert(this.openBankId)
+//        alert(this.prov)
+//        alert(this.city)
+        if (!this.debitCardno) {
+          Toast({
+            message: '借记卡号不能为空',
+            duration: 3000
+          })
+          return
+        }
+        if (!this.openBank) {
+          Toast({
+            message: '开户银行不能为空',
+            duration: 3000
+          })
+          return
+        }
+        if (!this.prov) {
+          Toast({
+            message: '开户城市不能为空',
+            duration: 3000
+          })
+          return
+        }
+        this.app.DebitCard(this.debitCardno, this.phoneNo, this.openBank, this.openBankId, this.prov, this.city)
+        this.DebitCardCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+        }
       }
     },
     components: {

@@ -15,15 +15,15 @@
       <div v-if="loginIndex == 1">
         <div class="form-item">
           <label class="icon icon-phone"></label>
-          <input class="border-1px" type="number" placeholder="请输入手机号">
+          <input class="border-1px" type="number" placeholder="请输入手机号" v-model="mobileno">
         </div>
         <div class="form-item">
           <label class="icon icon-password"></label>
-          <input type="password" placeholder="请输入密码">
+          <input type="password" placeholder="请输入密码" v-model="pwd">
           <router-link class="form-item-right" to="/forgetPsw">忘记密码？</router-link>
         </div>
         <div class="loan-btn form-btn">
-          <mt-button class="btn" @click="loginPsw">登录</mt-button>
+          <mt-button class="btn" @click="loginPwd">登录</mt-button>
         </div>
       </div>
 
@@ -50,10 +50,14 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { Toast } from 'mint-ui'
+
   export default {
     data() {
       return {
-        loginIndex: 1
+        loginIndex: 1,
+        mobileno: '',
+        pwd: ''
       }
     },
     methods: {
@@ -64,8 +68,23 @@
         this.loginIndex = index
       },
       getCode() {},
-      loginPsw() {},
-      loginCode() {}
+      loginPwd() {
+        let that = this
+        this.app.login(this.mobileno, this.pwd)
+        this.app.loginCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+          Toast({
+            message: json.Msg,
+            duration: 3000
+          })
+          if (json.Result === 0) {
+            that.$router.push('/identity')
+          }
+        }
+      },
+      loginCode() {
+      }
     }
   }
 </script>

@@ -15,6 +15,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import tabBar from './components/common/tabbar.vue'
 
   export default {
@@ -29,15 +30,9 @@
       'tab-bar': tabBar
     },
     created() {
-      /*  eslint-disable no-undef */
-      console.log(app)
-    },
-    mounted() {
-      /* var w = document.documentElement.clientWidth
-      var h = document.documentElement.clientHeight
-      console.log(w, h)
-      this.$refs.app.style.width = w + 'px'
-      this.$refs.app.style.minHeight = h + 'px' */
+      /* eslint-disable no-undef */
+      Vue.prototype.app = app
+      console.log(this.app)
     },
     // dynamically set transition based on route change
     watch: {
@@ -50,6 +45,11 @@
         /* if (to.meta.headerTitle !== undefined) {
           this.headerTitle = to.meta.headerTitle
         } */
+      }
+    },
+    methods: {
+      isLogin() {
+        console.log(this.app.isLogin())
       }
     }
   }

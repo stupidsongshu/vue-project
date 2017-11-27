@@ -8,7 +8,7 @@
 
     <pc-nav-header :curProgress="5"></pc-nav-header>
 
-    <div class="faceRecognition" @click="fail">
+    <div class="faceRecognition">
       <h1 class="title">请按照界面提示，读一段文字，完成认证视频录制</h1>
       <div class="shot-video" @click="showPopup"></div>
       <p>点击图标进行视频认证</p>
@@ -32,7 +32,8 @@
         <li class="sup-item">2.视频模糊（如：环境光线暗、反光）</li>
       </ul>
 
-      <router-link to="/readAloud" class="to-shoot">前往拍摄>></router-link>
+      <!--<router-link to="/readAloud" class="to-shoot">前往拍摄>></router-link>-->
+      <div class="to-shoot" @click="toShoot">前往拍摄>></div>
     </mt-popup>
   </div>
 </template>
@@ -53,7 +54,14 @@
       showPopup() {
         this.popupVisible = true
       },
-      fail() {},
+      toShoot() {
+        console.log(this.app)
+        this.app.vedio()
+        this.app.CheckCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+        }
+      },
       submit() {}
     }
   }

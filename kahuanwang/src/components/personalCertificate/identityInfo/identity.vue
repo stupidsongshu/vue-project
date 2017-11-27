@@ -1,9 +1,9 @@
 <template>
   <div>
     <mt-header fixed class="header" title="个人认证">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <pc-nav-header :curProgress="1"></pc-nav-header>
@@ -91,7 +91,7 @@
           </div>
         </div>
       </div>
-      <div class="to-shoot">前往拍摄>></div>
+      <div class="to-shoot" @click="idcardFront">前往拍摄>></div>
     </mt-popup>
     <mt-popup v-model="popupVisibleR" popup-transition="popup-fade" closeOnClickModal="true">
       <div class="sample-correct">
@@ -111,7 +111,7 @@
           </div>
         </div>
       </div>
-      <div class="to-shoot">前往拍摄>></div>
+      <div class="to-shoot" @click="idcardBack">前往拍摄>></div>
     </mt-popup>
   </div>
 </template>
@@ -130,11 +130,25 @@
       pcNavHeader
     },
     methods: {
+      back() {
+        this.goback()
+      },
       showExampleL() {
         this.popupVisibleL = true
       },
       showExampleR() {
         this.popupVisibleR = true
+      },
+      idcardFront() {
+        this.app.idcardFront()
+        this.app.CheckCallBack(function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+        })
+      },
+      idcardBack() {
+        this.app.idcardBack()
+        console.log(this.app)
       },
       submit() {}
     }

@@ -9,17 +9,17 @@
     <div class="form">
       <div class="form-item">
         <label class="icon icon-phone"></label>
-        <input type="number" placeholder="请输入手机号">
+        <input type="number" placeholder="请输入手机号" v-model="mobileno">
       </div>
       <div class="form-item">
         <label class="icon icon-password"></label>
-        <input type="password" placeholder="密码为6-12位数字和字母组合" ref="psw">
+        <input type="password" placeholder="密码为6-12位数字和字母组合" ref="psw" v-model="pwd">
         <label class="icon-password-show" v-show="showPassword" @click="toggle"></label>
         <label class="icon-password-hide" v-show="!showPassword" @click="toggle"></label>
       </div>
       <div class="form-item">
         <label class="icon icon-msg"></label>
-        <input type="text" placeholder="请输入短信验证码">
+        <input type="text" placeholder="请输入短信验证码" v-model="vcode">
         <label class="form-item-right code" @click="getCode">发送验证码</label>
       </div>
 
@@ -35,10 +35,16 @@
 </template>
 
 <script type="text/ecmascript-6">
+//  import axios from 'axios'
+  import { Toast } from 'mint-ui'
+
   export default {
     data() {
       return {
-        showPassword: false
+        showPassword: false,
+        mobileno: '',
+        pwd: '',
+        vcode: ''
       }
     },
     methods: {
@@ -53,8 +59,45 @@
           this.$refs.psw.type = 'password'
         }
       },
-      getCode() {},
-      register() {}
+      getCode() {
+        this.app.Vcode(this.mobileno)
+        this.app.VcodeCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+          if (json.returnCode === '000000') {
+            Toast({
+              message: '验证码获取成功',
+              duration: 3000
+            })
+          } else {
+            Toast({
+              message: json.returnMsg,
+              duration: 3000
+            })
+          }
+        }
+      },
+      register() {
+        this.app.register(this.mobileno, this.pwd, this.vcode, 'maimob')
+        this.app.registerCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+          Toast({
+            message: json.Msg,
+            duration: 3000
+          })
+        }
+//        axios.post('http://xfjr.ledaikuan.cn:9191/khw/c/a', {
+//          mobileNo: this.mobileno,
+//          password: this.pwd,
+//          yzm: this.vcode,
+//          channel: 'maimob'
+//        }).then(function(response) {
+//          console.log(response)
+//        }).catch(function(error) {
+//          console.log(error)
+//        })
+      }
     }
   }
 </script>

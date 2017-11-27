@@ -1,12 +1,12 @@
 <template>
   <div>
     <mt-header fixed class="header" title="人脸识别">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
-    <div class="faceRecognition" @click="fail">
+    <div class="faceRecognition" @click="shot">
       <h1 class="title">为确保本人操作，来刷个脸吧！</h1>
       <div class="shot-frame">
         <div class="shot"></div>
@@ -24,12 +24,18 @@
 <script type="text/ecmascript-6">
   export default {
     methods: {
-      nextStep() {
-//        this.$router.push('/faceRecognitionS')
-        this.$router.push('/shot')
+      back() {
+        this.goback()
       },
-      fail() {
-        this.$router.push('/faceRecognitionF')
+      nextStep() {
+      },
+      shot() {
+//        this.$router.push('/shot')
+        this.app.livingCheck()
+        this.app.CheckCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+        }
       }
     }
   }

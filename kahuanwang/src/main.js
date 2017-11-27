@@ -31,6 +31,9 @@ new Vue({
   template: '<App/>',
   components: {App},
   created() {
+    // axios.create({
+    //   baseURL: 'http://xfjr.ledaikuan.cn:9191/'
+    // })
     axios.interceptors.request.use((config) => {
       Indicator.open({
         text: '加载中...',
