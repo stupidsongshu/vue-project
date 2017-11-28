@@ -1,12 +1,10 @@
 <template>
   <div>
-    <mt-header fixed class="header" title="个人认证">
-      <router-link to="" slot="left">
+    <mt-header fixed class="header" title="视频认证">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
-
-    <pc-nav-header :curProgress="5"></pc-nav-header>
 
     <div class="faceRecognition">
       <h1 class="title">请按照界面提示，读一段文字，完成认证视频录制</h1>
@@ -29,7 +27,7 @@
           </ul>
         </li>
         <li class="sup-item">2.五官不全、衣冠不整（如：赤膊等）</li>
-        <li class="sup-item">2.视频模糊（如：环境光线暗、反光）</li>
+        <li class="sup-item">3.视频模糊（如：环境光线暗、反光）</li>
       </ul>
 
       <!--<router-link to="/readAloud" class="to-shoot">前往拍摄>></router-link>-->
@@ -51,6 +49,9 @@
       pcNavHeader
     },
     methods: {
+      back() {
+        this.goback()
+      },
       showPopup() {
         this.popupVisible = true
       },

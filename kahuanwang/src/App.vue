@@ -32,7 +32,8 @@
     created() {
       /* eslint-disable no-undef */
       Vue.prototype.app = app
-      console.log(this.app)
+      Vue.prototype.retreat = app.back
+      console.log(app)
     },
     // dynamically set transition based on route change
     watch: {

@@ -12,9 +12,9 @@
     <li @click="linkman">
       <span :class="{curProgress: curProgress >= 4, active: curProgress === 4}">联系人信息</span>
     </li>
-    <li @click="videoAuth">
+    <!--<li @click="videoAuth">
       <span :class="{curProgress: curProgress >= 5, active: curProgress === 5}">视频认证</span>
-    </li>
+    </li>-->
   </ul>
 </template>
 

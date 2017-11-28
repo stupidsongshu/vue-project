@@ -14,13 +14,17 @@
     </div>
     <div class="input-item">
       <div class="input-item-l">
-        <span class="name">手机号码</span>
+        <div class="name">
+          <span>手机号码</span>
+        </div>
         <input class="input" type="number" placeholder="请输入借记卡绑定手机号" v-model="phoneNo">
       </div>
     </div>
     <div class="input-item">
       <div class="input-item-l">
-        <span class="name">借记卡号<i class="fa fa-star required"></i></span>
+        <div class="name">
+          <span class="required">借记卡号</span>
+        </div>
         <input class="input" type="number" placeholder="借记卡号" v-model="debitCardno">
       </div>
       <!--<div class="input-item-r">
@@ -29,7 +33,9 @@
     </div>
     <div class="input-item" @click="selectDepositBank">
       <div class="input-item-l">
-        <span class="name">开户银行<i class="fa fa-star required"></i></span>
+        <div class="name">
+          <span class="required">开户银行</span>
+        </div>
         <!--<input class="input" type="text" placeholder="请选择" readonly v-model="purpose">-->
         <span class="color999">{{openBank || '请选择'}}</span>
       </div>
@@ -39,7 +45,9 @@
     </div>
     <div class="input-item" @click="show">
       <div class="input-item-l">
-        <span class="name">开户城市<i class="fa fa-star required"></i></span>
+        <div class="name">
+          <span class="required">开户城市</span>
+        </div>
         <!--<input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">-->
         <span class="color999">{{selectedCity || '请选择'}}</span>
       </div>
@@ -49,7 +57,7 @@
     </div>
 
     <div class="input-item-hint" style="margin-bottom: 20px;">
-      <div>
+      <div class="caution-wrapper">
         <span class="icon-caution"></span><span>请绑定常用借记卡，用于还款，绑定不会产生费用</span>
       </div>
     </div>

@@ -43,6 +43,19 @@ ul, ol, li {
   list-style: none;
 }
 
+input::-webkit-input-placeholder { /* WebKit browsers*/
+  color: #999;
+}
+input:-moz-placeholder {  /* Mozilla Firefox 4 to 18*/
+  color: #999;
+}
+input::-moz-placeholder {  /* Mozilla Firefox 19+*/
+  color: #999;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10+*/
+  color: #999;
+}
+
 /* tool */
 .pull-left {
   float: left !important;

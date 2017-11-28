@@ -1,9 +1,9 @@
 <template>
   <div class="modifyPhone">
     <mt-header fixed class="header" title="修改手机号">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <router-view></router-view>
@@ -18,6 +18,9 @@
       }
     },
     methods: {
+      back() {
+        this.goback()
+      },
       toggle() {
         this.showPassword = !this.showPassword
         if (this.showPassword) {

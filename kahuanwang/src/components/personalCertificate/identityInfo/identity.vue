@@ -26,20 +26,12 @@
       </ul>
     </div>
 
-    <!--<div class="modify-phone">
-      <div class="modify-phone-l">
-        <span class="icon-caution"></span><span>请确保身份证和登录手机号码实名认证一致</span>
-      </div>
-      <div class="modify-phone-r">
-        <router-link to="">修改手机号</router-link><i class="fa fa-angle-right arrow-right"></i>
-      </div>
-    </div>-->
     <div class="input-item-hint">
-      <div>
+      <div class="caution-wrapper">
         <span class="icon-caution"></span><span>请确保身份证和登录手机号码实名认证一致</span>
       </div>
       <div class="arrow-wrapper">
-        <router-link to="" style="color: #daab5b;">修改手机号</router-link> <span class="fa fa-angle-right arrow-right"></span>
+        <router-link to="/modifyPhone" class="main-color">修改手机号</router-link> <span class="fa fa-angle-right arrow-right"></span>
       </div>
     </div>
 
@@ -56,18 +48,26 @@
       </div>
     </div>
 
-    <div style="margin-top: 17px;">
-      <router-link class="input-item border-none" to="/faceRecognition">
-        <div class="input-item-l">
-          <span class="name">拍摄人脸</span>
-          <input class="input" type="text" placeholder="前往拍摄" readonly>
-        </div>
-        <div class="input-item-r">
-          <i class="fa fa-angle-right"></i>
-          <i class="icon-shoot-success"></i>
-        </div>
-      </router-link>
-    </div>
+    <router-link class="input-item" to="/faceRecognition" style="margin-top: 17px;">
+      <div class="input-item-l">
+        <span class="name">拍摄人脸</span>
+        <input class="input" type="text" placeholder="前往拍摄" readonly>
+      </div>
+      <div class="input-item-r">
+        <i class="fa fa-angle-right"></i>
+        <!--<i class="icon-shoot-success"></i>-->
+      </div>
+    </router-link>
+    <router-link class="input-item" to="/videoAuth">
+      <div class="input-item-l">
+        <span class="name">视频认证</span>
+        <input class="input" type="text" placeholder="前往认证" readonly>
+      </div>
+      <div class="input-item-r">
+        <i class="fa fa-angle-right"></i>
+        <!--<i class="icon-shoot-success"></i>-->
+      </div>
+    </router-link>
 
     <div class="loan-btn" style="margin-top: 42px;">
       <mt-button class="btn" @click="submit">提交</mt-button>
@@ -141,16 +141,17 @@
       },
       idcardFront() {
         this.app.idcardFront()
-        this.app.CheckCallBack(function(json) {
-          json = JSON.parse(json)
-          console.log(json)
-        })
+        console.log(this.app)
+//        this.app.CheckCallBack(function(json) {
+//          json = JSON.parse(json)
+//          console.log(json)
+//        })
       },
       idcardBack() {
         this.app.idcardBack()
-        console.log(this.app)
       },
-      submit() {}
+      submit() {
+      }
     }
   }
 </script>
@@ -183,31 +184,6 @@
           margin: 10px 0 15px 0
           color: #999
           font-size: 13px
-  /*.modify-phone
-    display: flex
-    justify-content: space-between
-    align-items: center
-    height: 30px
-    padding: 0 15px
-    font-size: 11px
-    .modify-phone-l
-      display: flex
-      align-items: center
-      color: #999
-      .icon-caution
-        display: inline-block
-        width: 12px
-        height: 12px
-        margin-right: 4px
-        background: url("../../../assets/img/icon_caution.png") no-repeat
-        background-size: 12px 12px
-    .modify-phone-r
-      a
-        color: main-color
-      .arrow-right
-        margin-left: 4px
-        color: #999
-        font-size: 12px*/
 
   .mint-popup
     width: 88.8%

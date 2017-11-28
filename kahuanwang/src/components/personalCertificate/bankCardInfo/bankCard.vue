@@ -1,9 +1,9 @@
 <template>
   <div class="bankCard">
     <mt-header fixed class="header" title="个人认证">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <pc-nav-header :curProgress="2"></pc-nav-header>
@@ -70,6 +70,9 @@
       pcNavHeader
     },
     methods: {
+      back() {
+        this.goback()
+      },
       submit() {}
     }
   }

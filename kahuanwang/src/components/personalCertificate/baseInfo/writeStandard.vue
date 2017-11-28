@@ -1,9 +1,9 @@
 <template>
   <div>
     <mt-header fixed class="header" title="填写规范">
-      <router-link to="/baseInfo" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="standard-title color333">
@@ -25,7 +25,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-
+  export default {
+    methods: {
+      back() {
+        this.goback()
+      }
+    }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

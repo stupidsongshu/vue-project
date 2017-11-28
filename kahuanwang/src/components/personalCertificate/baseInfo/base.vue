@@ -1,19 +1,21 @@
 <template>
   <div>
     <mt-header fixed class="header" title="个人认证">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <pc-nav-header :curProgress="3"></pc-nav-header>
 
     <div class="residence">
-      <div class="input-item" @click="showResidence">
+      <div class="input-item" @click="showHome">
         <div class="input-item-l">
-          <span class="name">居住地</span>
+          <div class="name">
+            <span class="required">居住地</span>
+          </div>
           <!--<input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">-->
-          <span class="color999">{{residenceCity || '请选择居住地所在城市'}}</span>
+          <span class="color999">{{homeCity || '请选择居住地所在城市'}}</span>
         </div>
         <div class="input-item-r">
           <i class="fa fa-angle-right"></i>
@@ -21,15 +23,19 @@
       </div>
       <div class="input-item">
         <div class="input-item-l">
-          <span class="name">详细地址</span>
-          <input class="input" type="text" placeholder="详细居住地址（精确到门牌号）">
+          <div class="name">
+            <span class="required">详细地址</span>
+          </div>
+          <input class="input" type="text" placeholder="详细居住地址（精确到门牌号）" v-model="homeAddr4">
         </div>
       </div>
     </div>
 
     <div class="input-item" @click="showWork">
       <div class="input-item-l">
-        <span class="name">工作地址</span>
+        <div class="name">
+          <span class="required">工作地址</span>
+        </div>
         <!--<input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">-->
         <span class="color999">{{workCity || '请选择工作城市'}}</span>
       </div>
@@ -39,19 +45,47 @@
     </div>
     <div class="input-item">
       <div class="input-item-l">
-        <span class="name">单位名称</span>
-        <input class="input" type="text" placeholder="填写工作单位（公司、实体店铺等）">
+        <div class="name">
+          <span class="required">详细地址</span>
+        </div>
+        <input class="input" type="text" placeholder="详细单位地址（精确到门牌号）" v-model="unitAddr4">
       </div>
     </div>
     <div class="input-item">
       <div class="input-item-l">
-        <span class="name">单位电话</span>
-        <input class="input" type="text" placeholder="填写单位电话">
+        <div class="name">
+          <span class="required">单位名称</span>
+        </div>
+        <input class="input" type="text" placeholder="填写工作单位（公司、实体店铺等）" v-model="jobUnit">
+      </div>
+    </div>
+    <div class="input-item">
+      <div class="input-item-l">
+        <div class="name">
+          <span class="required">电话区号</span>
+        </div>
+        <input class="input" type="text" placeholder="填写单位电话区号" v-model="unitTelArea">
+      </div>
+    </div>
+    <div class="input-item">
+      <div class="input-item-l">
+        <div class="name">
+          <span class="required">座机号</span>
+        </div>
+        <input class="input" type="text" placeholder="填写单位电话座机号" v-model="unitTelNo">
+      </div>
+    </div>
+    <div class="input-item">
+      <div class="input-item-l">
+        <div class="name">
+          <span>分机号</span>
+        </div>
+        <input class="input" type="text" placeholder="填写单位电话分机号" v-model="unitTelExt">
       </div>
     </div>
 
     <div class="input-item-hint">
-      <div>
+      <div class="caution-wrapper">
         <span class="icon-caution"></span><span>详细、真实的信息可加快审核，提高额度</span>
       </div>
       <div class="arrow-wrapper">
@@ -63,7 +97,7 @@
       <mt-button class="btn" @click="submit">提交</mt-button>
     </div>
 
-    <vue-city-picker ref="pickerResidence" @select="selectResidence" :title="titleResidence" :cancel-txt="cancelTxtResidence" :confirm-txt="confirmTxtResidence"></vue-city-picker>
+    <vue-city-picker ref="pickerHome" @select="selectHome" :title="titleHome" :cancel-txt="cancelTxtHome" :confirm-txt="confirmTxtHome"></vue-city-picker>
     <vue-city-picker ref="pickerWork" @select="selectWork" :title="titleWork" :cancel-txt="cancelTxtWork" :confirm-txt="confirmTxtWork"></vue-city-picker>
   </div>
 </template>
@@ -75,14 +109,40 @@
   export default {
     data() {
       return {
-        titleResidence: '选择居住地',
-        cancelTxtResidence: '取消',
-        confirmTxtResidence: '确定',
-        residenceCity: '',
+        titleHome: '选择居住地',
+        cancelTxtHome: '取消',
+        confirmTxtHome: '确定',
+        homeCity: '',
         titleWork: '选择居住地',
         cancelTxtWork: '取消',
         confirmTxtWork: '确定',
-        workCity: ''
+        workCity: '',
+        /**
+         * homeAddr1   居住地直辖市/省
+         * homeAddr2   居住地辖区/市
+         * homeAddr3   居住地区/市、县
+         * homeAddr4   居住地详细地址
+         * jobUnit     单位名称
+         * unitAddr1   单位直辖市/省
+         * unitAddr2   单位辖区/市
+         * unitAddr3   单位区/市、县
+         * unitAddr4   单位详细地址
+         * unitTelArea 单位电话区号
+         * unitTelNo   单位座机号
+         * unitTelExt  单位分机号 可以为空
+         */
+        homeAddr1: '',
+        homeAddr2: '',
+        homeAddr3: '',
+        homeAddr4: '',
+        jobUnit: '',
+        unitAddr1: '',
+        unitAddr2: '',
+        unitAddr3: '',
+        unitAddr4: '',
+        unitTelArea: '',
+        unitTelNo: '',
+        unitTelExt: ''
       }
     },
     components: {
@@ -90,12 +150,18 @@
       vueCityPicker
     },
     methods: {
-      showResidence() {
-        this.$refs['pickerResidence'].show()
+      back() {
+        this.goback()
       },
-      selectResidence() {
+      showHome() {
+        this.$refs['pickerHome'].show()
+      },
+      selectHome() {
         console.log(arguments)
-        this.residenceCity = arguments[2][0] + ' ' + arguments[2][1] + ' ' + arguments[2][2]
+        this.homeCity = arguments[2][0] + ' ' + arguments[2][1] + ' ' + arguments[2][2]
+        this.homeAddr1 = arguments[2][0]
+        this.homeAddr2 = arguments[2][1]
+        this.homeAddr3 = arguments[2][2]
       },
       showWork() {
         this.$refs['pickerWork'].show()
@@ -103,8 +169,29 @@
       selectWork() {
         console.log(arguments)
         this.workCity = arguments[2][0] + ' ' + arguments[2][1] + ' ' + arguments[2][2]
+        this.unitAddr1 = arguments[2][0]
+        this.unitAddr2 = arguments[2][1]
+        this.unitAddr3 = arguments[2][2]
       },
-      submit() {}
+      submit() {
+        this.app.HomeJobInfo(this.homeAddr1,
+                              this.homeAddr2,
+                              this.homeAddr3,
+                              this.homeAddr4,
+                              this.jobUnit,
+                              this.unitAddr1,
+                              this.unitAddr2,
+                              this.unitAddr3,
+                              this.unitAddr4,
+                              this.unitTelArea,
+                              this.unitTelNo,
+                              this.unitTelExt
+                            )
+        this.app.HomeJobInfoCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+        }
+      }
     }
   }
 </script>

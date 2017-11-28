@@ -11,20 +11,30 @@
   .input-item-l
     display: flex
     align-items: center
+    width: calc(100% - 20px)
     height: 100%
     color: #333
     .name
       width: 84px
-      .required
+    .required
+      position: relative
+      &:after
+        display: block
+        content: '*'
         position: absolute
-        font-size: 6px
-        color: main-color
+        top: -2px
+        right: -6px
+        font-size: 12px
+        color: #f00
     .input
       display: inline-block
+      width: calc(100% - 84px) !important
       height: 100%
       outline: none
       border: none
   .input-item-r
+    width: 20px
+    text-align: right
     color: #999
     font-size: 24px
     .icon-shoot-success
@@ -42,16 +52,19 @@
   padding: 0 15px
   color: #999
   font-size: 11px
-  .icon-caution
-    display: inline-block
-    width: 12px
-    height: 12px
-    margin-right: 4px
-    background: url("../../../assets/img/icon_caution.png") no-repeat
-    background-size: 12px 12px
+  .caution-wrapper
+    display: flex
+    align-items: center
+    .icon-caution
+      display: inline-block
+      width: 12px
+      height: 12px
+      margin-right: 4px
+      background: url("../../../assets/img/icon_caution.png") no-repeat
+      background-size: 12px 12px
   .arrow-wrapper
     display: flex
     align-items: center
     .arrow-right
       margin-left: 4px
-      font-size: 20px
+      font-size: 14px

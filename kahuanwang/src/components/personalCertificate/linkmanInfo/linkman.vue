@@ -1,9 +1,9 @@
 <template>
   <div>
     <mt-header fixed class="header" title="个人认证">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <pc-nav-header :curProgress="4"></pc-nav-header>
@@ -60,7 +60,22 @@
       pcNavHeader
     },
     methods: {
-      submit() {}
+      back() {
+        this.goback()
+      },
+      submit() {
+        /**
+         * contactName 联系人姓名
+         * contactPhone 联系人电话
+         * contactRelation 关系（4家人 6朋友 7同事）
+         * app.EmContact(contactName1, contactPhone1, contactRelation1,contactName2, contactPhone2, contactRelation2,contactName3,contactPhone3,contactRelation3)
+         */
+        this.app.EmContact()
+        this.app.EmContactCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+        }
+      }
     }
   }
 </script>
