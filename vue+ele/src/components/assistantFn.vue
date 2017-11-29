@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>{{count}} {{countAlias}} {{countPlusLocalState}}</div>
+    <div>{{countProp}} {{countAlias}} {{countPlusLocalState}}</div>
     <el-button type="primary" @click="add1">add1</el-button>
     <el-button type="primary" @click="add2">add2</el-button>
 
@@ -26,15 +26,28 @@
         localCount: 1
       }
     },
-    computed: mapState({
-      count: state => state.count,
-      // 传字符串参数 'count' 等同于 `state => state.count`
-      countAlias: 'count',
-      // 为了能够使用 `this` 获取局部状态，必须使用常规函数
-      countPlusLocalState(state) {
-        return state.count + this.localCount
-      }
-    }),
+    // computed: mapState({
+    //   countProp: state => state.count,
+    //   // 传字符串参数 'count' 等同于 `state => state.count`
+    //   countAlias: 'count',
+    //   // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+    //   countPlusLocalState(state) {
+    //     return state.count + this.localCount
+    //   }
+    // }),
+    computed: {
+      localComputed() {},
+      // mapState 函数返回的是一个对象,可以使用对象展开运算符将此对象混入到外部对象中,与局部计算属性混合使用
+      ...mapState({
+        countProp: state => state.count,
+        // 传字符串参数 'count' 等同于 `state => state.count`
+        countAlias: 'count',
+        // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+        countPlusLocalState(state) {
+          return state.count + this.localCount
+        }
+      })
+    },
     methods: {
       add1() {
         this.$store.state.count++

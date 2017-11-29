@@ -55,3 +55,12 @@ new Vue({
 Vue.prototype.goback = function() {
   this.$router.go(-1)
 }
+Vue.prototype.loading = function() {
+  Indicator.open({
+    text: '加载中...',
+    spinnerType: 'fading-circle'
+  })
+}
+Vue.prototype.closeLoading = function() {
+  Indicator.close()
+}

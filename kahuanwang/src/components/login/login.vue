@@ -70,6 +70,7 @@
       getCode() {},
       loginPwd() {
         let that = this
+        that.loading()
         this.app.login(this.mobileno, this.pwd)
         this.app.loginCallBack = function(json) {
           json = JSON.parse(json)
@@ -78,6 +79,7 @@
             message: json.Msg,
             duration: 3000
           })
+          that.closeLoading()
           if (json.Result === 0) {
             that.$router.push('/identity')
           }

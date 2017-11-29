@@ -31,7 +31,12 @@ const store = new Vuex.Store({
       }
     ]
   },
+  /**
+   * Vuex 允许我们在 store 中定义“getter”（可以认为是 store 的计算属性）。
+   * 就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
+   */
   getters: {
+    // Getter 接受 state 作为其第一个参数
     doneTodos: state => {
       return state.todos.filter(todo => todo.done)
     },
@@ -40,14 +45,22 @@ const store = new Vuex.Store({
       return getters.doneTodos.length
     },
     // 通过让 getter 返回一个函数，来实现给 getter 传参。在你对 store 里的数组进行查询时非常有用。
-    getTodoById: (state) => (id) => {
-      console.log(id)
+    getTodoById: (state, getters) => (id) => {
+      console.log(typeof id, id)
       let ids = parseInt(id)
       return state.todos.find(todo => todo.id === ids)
     }
   },
   // 更改 Vuex 的 store 中的状态的唯一方法是提交 mutation，mutation 必须是同步函数
   mutations: {
+    /**
+     * 每个 mutation 都有一个字符串的 事件类型 (type) 和 一个 回调函数 (handler)。
+     * 这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数。
+     */
+    decrementTest(state) {
+      // 变更状态
+      state.count --
+    },
     incrementTest(state, payload) {
       console.log(payload)
       if (payload !== undefined && payload.step) {
@@ -55,9 +68,6 @@ const store = new Vuex.Store({
         return
       }
       state.count ++
-    },
-    decrementTest(store) {
-      store.count --
     }
   },
   // mutation 必须同步执行，Action 提交的是 mutation，Action 可以包含任意异步操作
@@ -84,6 +94,7 @@ const store = new Vuex.Store({
 new Vue({
   el: '#app',
   router,
+  // 通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到
   store,
   template: '<App/>',
   components: {App}

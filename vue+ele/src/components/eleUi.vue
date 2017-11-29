@@ -211,6 +211,7 @@
 
     <input type="text" v-model="todoId" @keyup.enter="todo = getTodoByIdTest(todoId)" placeholder="请输入查询todoId(1/2/3)">
 
+    <span>{{doneLengthAlias}}</span>
   </div>
 </template>
 
@@ -279,7 +280,6 @@
 //        })
       },
       getTodoByIdTest(id) {
-        console.log(this.$store.getters.getTodoById(id))
         return this.$store.getters.getTodoById(id)
       },
       ...mapMutations([
@@ -305,7 +305,11 @@
         'doneLength',
         'doneTodos',
         'getTodoById'
-      ])
+      ]),
+      ...mapGetters({
+        // 如果你想将一个 getter 属性另取一个名字，使用对象形式
+        doneLengthAlias: 'doneLength'
+      })
     },
     components: {
       'counterComponent': Counter

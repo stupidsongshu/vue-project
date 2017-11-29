@@ -31,20 +31,21 @@
         <span class="icon-caution"></span><span>请确保身份证和登录手机号码实名认证一致</span>
       </div>
       <div class="arrow-wrapper">
-        <router-link to="/modifyPhone" class="main-color">修改手机号</router-link> <span class="fa fa-angle-right arrow-right"></span>
+        <router-link to="/modifyPhone" class="main-color">修改手机号</router-link>
+        <span class="fa fa-angle-right arrow-right"></span>
       </div>
     </div>
 
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">姓名</span>
-        <input class="input" type="text" placeholder="输入真实姓名" readonly>
+        <input class="input" type="text" placeholder="真实姓名" readonly>
       </div>
     </div>
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">身份证号</span>
-        <input class="input" type="text" placeholder="输入身份证号码" readonly>
+        <input class="input" type="text" placeholder="身份证号码" readonly>
       </div>
     </div>
 
@@ -140,12 +141,12 @@
         this.popupVisibleR = true
       },
       idcardFront() {
+        console.log(this)
         this.app.idcardFront()
-        console.log(this.app)
-//        this.app.CheckCallBack(function(json) {
-//          json = JSON.parse(json)
-//          console.log(json)
-//        })
+        this.app.CheckCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+        }
       },
       idcardBack() {
         this.app.idcardBack()

@@ -34,6 +34,7 @@
       Vue.prototype.app = app
       Vue.prototype.retreat = app.back
       console.log(app)
+      console.log('isLogin', this.app.isLogin())
     },
     // dynamically set transition based on route change
     watch: {
@@ -46,11 +47,6 @@
         /* if (to.meta.headerTitle !== undefined) {
           this.headerTitle = to.meta.headerTitle
         } */
-      }
-    },
-    methods: {
-      isLogin() {
-        console.log(this.app.isLogin())
       }
     }
   }
