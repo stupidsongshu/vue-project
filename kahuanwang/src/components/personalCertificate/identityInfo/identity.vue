@@ -13,13 +13,15 @@
       <ul class="shot-wrapper">
         <li class="shot-item" @click="showExampleL">
           <div>
-            <img src="../../../assets/img/shot_face.png" alt="">
+            <img v-show="!idcardFrontInfo.status" src="../../../assets/img/shot_face.png" alt="">
+            <img v-show="idcardFrontInfo.status" :src="idcardFrontInfo.img" alt="">
           </div>
           <span class="explain">身份证正面</span>
         </li>
         <li class="shot-item" @click="showExampleR">
           <div>
-            <img src="../../../assets/img/shot_back.png" alt="">
+            <img v-show="!idcardBackInfo.status" src="../../../assets/img/shot_back.png" alt="">
+            <img v-show="idcardBackInfo.status" :src="idcardBackInfo.img" alt="">
           </div>
           <span class="explain">身份证反面</span>
         </li>
@@ -39,13 +41,19 @@
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">姓名</span>
-        <input class="input" type="text" placeholder="真实姓名" readonly>
+        <input class="input" type="text" placeholder="真实姓名" readonly v-model="idcardFrontInfo.name">
+      </div>
+      <div class="input-item-r" v-if="idcardFrontInfo.status">
+        <i class="icon-shoot-success"></i>
       </div>
     </div>
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">身份证号</span>
-        <input class="input" type="text" placeholder="身份证号码" readonly>
+        <input class="input" type="text" placeholder="身份证号码" readonly v-model="idcardFrontInfo.id">
+      </div>
+      <div class="input-item-r" v-if="idcardFrontInfo.status">
+        <i class="icon-shoot-success"></i>
       </div>
     </div>
 
@@ -55,8 +63,8 @@
         <input class="input" type="text" placeholder="前往拍摄" readonly>
       </div>
       <div class="input-item-r">
-        <i class="fa fa-angle-right"></i>
-        <!--<i class="icon-shoot-success"></i>-->
+        <i class="fa fa-angle-right" v-if="faceRecognitionStep !== 1"></i>
+        <i class="icon-shoot-success" v-if="faceRecognitionStep === 1"></i>
       </div>
     </router-link>
     <router-link class="input-item" to="/videoAuth">
@@ -65,8 +73,8 @@
         <input class="input" type="text" placeholder="前往认证" readonly>
       </div>
       <div class="input-item-r">
-        <i class="fa fa-angle-right"></i>
-        <!--<i class="icon-shoot-success"></i>-->
+        <i class="fa fa-angle-right" v-if="videoAuthStep === 0"></i>
+        <i class="icon-shoot-success" v-if="videoAuthStep === 1"></i>
       </div>
     </router-link>
 
@@ -118,6 +126,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { Toast } from 'mint-ui'
   import pcNavHeader from '../../common/pcNavHeader'
 
   export default {
@@ -125,6 +134,20 @@
       return {
         popupVisibleL: false,
         popupVisibleR: false
+      }
+    },
+    computed: {
+      idcardFrontInfo() {
+        return this.$store.state.identity.idcardFrontInfo
+      },
+      idcardBackInfo() {
+        return this.$store.state.identity.idcardBackInfo
+      },
+      faceRecognitionStep() {
+        return this.$store.state.identity.faceRecognitionStep
+      },
+      videoAuthStep() {
+        return this.$store.state.identity.videoAuthStep
       }
     },
     components: {
@@ -141,17 +164,81 @@
         this.popupVisibleR = true
       },
       idcardFront() {
-        console.log(this)
+        let that = this
+        this.popupVisibleL = false
         this.app.idcardFront()
         this.app.CheckCallBack = function(json) {
           json = JSON.parse(json)
           console.log(json)
+          if (json.Result === 0 && json.IdCardType === '0' && json.Step === 6) {
+            that.loading(json.Msg)
+          }
+          if (json.Result === 0 && json.IdCardType === '0' && json.Step === 7) {
+            that.closeLoading()
+            Toast({
+              message: json.Msg,
+              duration: 3000
+            })
+            that.$store.commit('idcardFrontInfoSave', {
+              status: true,
+              name: json.Name,
+              id: json.Id,
+              img: 'data:image/png;base64,' + json.Img
+            })
+          } else if (json.Result !== 0 && json.IdCardType === '0' && json.Step === 7) {
+            that.closeLoading()
+            Toast({
+              message: json.Msg,
+              duration: 3000
+            })
+          }
         }
       },
       idcardBack() {
+        let that = this
+        this.popupVisibleR = false
         this.app.idcardBack()
+        this.app.CheckCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+          if (json.Result === 0 && json.IdCardType === '1' && json.Step === 6) {
+            that.loading(json.Msg)
+          }
+          if (json.Result === 0 && json.IdCardType === '1' && json.Step === 7) {
+            that.closeLoading()
+            Toast({
+              message: json.Msg,
+              duration: 3000
+            })
+            that.$store.commit('idcardBackInfoSave', {
+              status: true,
+              img: 'data:image/png;base64,' + json.Img
+            })
+          } else if (json.Result !== 0 && json.IdCardType === '1' && json.Step === 7) {
+            that.closeLoading()
+            Toast({
+              message: json.Msg,
+              duration: 3000
+            })
+          }
+        }
       },
       submit() {
+        console.log(this.app.isLogin())
+        let that = this
+        this.loading()
+        this.app.updateIdCard()
+        this.app.UpdateIdCardCallBack = function(json) {
+          that.closeLoading()
+          json = JSON.parse(json)
+          console.log(json)
+          if (json.Result !== 0) {
+            Toast({
+              message: json.Msg,
+              duration: 3000
+            })
+          }
+        }
       }
     }
   }

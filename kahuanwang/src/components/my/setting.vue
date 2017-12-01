@@ -27,7 +27,10 @@
 <script type="text/ecmascript-6">
   export default {
     methods: {
-      loginOUt() {}
+      loginOUt() {
+        this.app.logon()
+        console.log(this.app.isLogin())
+      }
     }
   }
 </script>

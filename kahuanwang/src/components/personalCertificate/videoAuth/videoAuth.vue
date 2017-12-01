@@ -37,6 +37,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { Toast } from 'mint-ui'
   import pcNavHeader from '../../common/pcNavHeader'
 
   export default {
@@ -56,11 +57,19 @@
         this.popupVisible = true
       },
       toShoot() {
-        console.log(this.app)
+        let that = this
+        this.popupVisible = false
         this.app.vedio()
         this.app.CheckCallBack = function(json) {
           json = JSON.parse(json)
           console.log(json)
+          if (json.Step === 8) {
+            Toast({
+              message: json.Msg,
+              duration: 3000
+            })
+            that.$store.commit('videoAuthStepSave', 1)
+          }
         }
       },
       submit() {}

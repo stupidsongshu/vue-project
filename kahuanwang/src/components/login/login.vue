@@ -8,37 +8,37 @@
 
     <div class="form">
       <div class="login-type">
-        <button class="border-1px" @click="selectLoginType(1)" :class="{active: loginIndex == 1}">密码登录</button>
-        <button class="border-1px" @click="selectLoginType(2)" :class="{active: loginIndex == 2}">验证码登录</button>
+        <button class="border-1px" @click="selectLoginType(0)" :class="{active: loginIndex === 0}">密码登录</button>
+        <button class="border-1px" @click="selectLoginType(2)" :class="{active: loginIndex === 2}">验证码登录</button>
       </div>
 
-      <div v-if="loginIndex == 1">
+      <div v-if="loginIndex === 0">
         <div class="form-item">
           <label class="icon icon-phone"></label>
-          <input class="border-1px" type="number" placeholder="请输入手机号" v-model="mobileno">
+          <input class="border-1px" type="number" placeholder="请输入手机号" v-model="mobileNo1">
         </div>
         <div class="form-item">
           <label class="icon icon-password"></label>
-          <input type="password" placeholder="请输入密码" v-model="pwd">
+          <input type="password" placeholder="请输入密码" v-model="psw">
           <router-link class="form-item-right" to="/forgetPsw">忘记密码？</router-link>
         </div>
         <div class="loan-btn form-btn">
-          <mt-button class="btn" @click="loginPwd">登录</mt-button>
+          <mt-button class="btn" @click="login(mobileNo1, psw, 0)">登录</mt-button>
         </div>
       </div>
 
-      <div v-if="loginIndex == 2">
+      <div v-if="loginIndex === 2">
         <div class="form-item">
           <label class="icon icon-phone"></label>
-          <input type="number" placeholder="请输入手机号">
+          <input type="number" placeholder="请输入手机号" v-model="mobileNo2">
         </div>
         <div class="form-item">
           <label class="icon icon-msg"></label>
-          <input type="text" placeholder="请输入短信验证码">
+          <input type="text" placeholder="请输入短信验证码" v-model="code">
           <label class="form-item-right code" @click="getCode">发送验证码</label>
         </div>
         <div class="loan-btn form-btn">
-          <mt-button class="btn" @click="loginCode">登录</mt-button>
+          <mt-button class="btn" @click="login(mobileNo2, code, 2)">登录</mt-button>
         </div>
       </div>
 
@@ -55,9 +55,11 @@
   export default {
     data() {
       return {
-        loginIndex: 1,
-        mobileno: '',
-        pwd: ''
+        loginIndex: 0,
+        mobileNo1: '',
+        mobileNo2: '',
+        psw: '',
+        code: ''
       }
     },
     methods: {
@@ -67,25 +69,42 @@
       selectLoginType(index) {
         this.loginIndex = index
       },
-      getCode() {},
-      loginPwd() {
+      getCode() {
         let that = this
-        that.loading()
-        this.app.login(this.mobileno, this.pwd)
-        this.app.loginCallBack = function(json) {
+        this.loading()
+        this.app.Vcode(this.mobileNo2)
+        this.app.VcodeCallBack = function(json) {
+          that.closeLoading()
           json = JSON.parse(json)
           console.log(json)
           Toast({
             message: json.Msg,
             duration: 3000
           })
+        }
+      },
+      /**
+       * 登录
+       * @param mobileNo: 手机号
+       * @param num: 密码或验证码
+       * @param loginType: 0密码登录 2验证码登录
+       */
+      login(mobileNo, num, loginType) {
+        let that = this
+        that.loading()
+        this.app.login(mobileNo, num, loginType)
+        this.app.LoginCallBack = function(json) {
           that.closeLoading()
-          if (json.Result === 0) {
+          json = JSON.parse(json)
+          console.log(json)
+          Toast({
+            message: json.Msg,
+            duration: 3000
+          })
+          if (json.Result === 0 && json.Step === 3) {
             that.$router.push('/identity')
           }
         }
-      },
-      loginCode() {
       }
     }
   }

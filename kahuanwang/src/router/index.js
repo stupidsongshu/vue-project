@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 // 首页
 import Home from '@/components/home'
 // 登录注册
@@ -37,6 +37,7 @@ import ModifyPhone from '@/components/my/modifyPhone'
 import ModifyPhoneOld from '@/components/my/modifyPhoneOld'
 import ModifyPhoneNew from '@/components/my/modifyPhoneNew'
 // 个人认证 身份信息
+// import PersonalCertificate from '@/components/personalCertificate/personalCertificate'
 import Identity from '@/components/personalCertificate/identityInfo/identity'
 import FaceRecognition from '@/components/personalCertificate/identityInfo/faceRecognition'
 import FaceRecognitionS from '@/components/personalCertificate/identityInfo/faceRecognitionS'
@@ -53,240 +54,255 @@ import ReadAloud from '@/components/personalCertificate/videoAuth/readAloud'
 import AgreeAuth from '@/components/personalCertificate/agreeAuth/agreeAuth'
 import WaitAudit from '@/components/personalCertificate/waitAudit/waitAudit'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
-// const route = new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login,
-      meta: {
-        headerTitle: '登录11'
-      }
-    },
-    {
-      path: '/forgetPsw',
-      name: 'forgetPsw',
-      component: ForgetPsw
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: Register
-    },
-    {
-      path: '/newsCenter',
-      component: NewsCenter,
-      children: [
-        {
-          path: '',
-          name: 'activity',
-          component: NewsActivity
-        },
-        {
-          path: 'deal',
-          name: 'deal',
-          component: NewsDeal
-        },
-        {
-          path: 'notification',
-          name: 'notification',
-          component: NewsNotification
-        }
-      ]
-    },
-    {
-      path: '/loan',
-      name: 'loan',
-      component: Loan
-    },
-    {
-      path: '/loanCode',
-      name: 'loanCode',
-      component: LoanCode
-    },
-    {
-      path: '/loanDeal',
-      name: 'loanDeal',
-      component: LoanDeal
-    },
-    {
-      path: '/repay',
-      name: 'repay',
-      component: Repay
-    },
-    {
-      path: '/repay/onTimeRepay',
-      name: 'onTimeRepay',
-      component: OnTimeRepay
-    },
-    {
-      path: '/repay/overdueRepay',
-      name: 'overdueRepay',
-      component: OverdueRepay
-    },
-    {
-      path: '/repay/inAdvanceRepay',
-      name: 'inAdvanceRepay',
-      component: InAdvanceRepay
-    },
-    {
-      path: '/repay/repayCode',
-      name: 'repayCode',
-      component: RepayCode
-    },
-    {
-      path: '/repay/repayDeal',
-      name: 'repayDeal',
-      component: RepayDeal
-    },
-    {
-      path: '/my',
-      name: 'my',
-      component: My
-    },
-    {
-      path: '/loanRecord',
-      name: 'loanRecord',
-      component: LoanRecord
-    },
-    {
-      path: '/loanDesc',
-      name: 'loanDesc',
-      component: LoanDesc
-    },
-    {
-      path: '/repayRecord',
-      name: 'repayRecord',
-      component: RepayRecord
-    },
-    {
-      path: '/repayDesc',
-      name: 'repayDesc',
-      component: RepayDesc
-    },
-    {
-      path: '/bankCard',
-      name: 'bankCard',
-      component: BankCard
-    },
-    {
-      path: '/aboutUs',
-      name: 'aboutUs',
-      component: AboutUs
-    },
-    {
-      path: '/help',
-      name: 'help',
-      component: Help
-    },
-    {
-      path: '/setting',
-      name: 'setting',
-      component: Setting
-    },
-    {
-      path: '/modifyLoginPsw',
-      name: 'modifyLoginPsw',
-      component: ModifyLoginPsw
-    },
-    {
-      path: '/modifyPhone',
-      component: ModifyPhone,
-      children: [
-        {
-          path: '',
-          name: 'modifyPhoneOld',
-          component: ModifyPhoneOld
-        },
-        {
-          path: 'new',
-          name: 'modifyPhoneNew',
-          component: ModifyPhoneNew
-        }
-      ]
-    },
-    {
-      path: '/identity',
-      name: 'identity',
-      component: Identity
-    },
-    {
-      path: '/faceRecognition',
-      name: 'faceRecognition',
-      component: FaceRecognition
-    },
-    {
-      path: '/faceRecognitionS',
-      name: 'faceRecognitionS',
-      component: FaceRecognitionS
-    },
-    {
-      path: '/faceRecognitionF',
-      name: 'faceRecognitionF',
-      component: FaceRecognitionF
-    },
-    {
-      path: '/shot',
-      name: 'shot',
-      component: Shot
-    },
-    {
-      path: '/bankCardInfo',
-      name: 'bankCardInfo',
-      component: BankCardInfo
-    },
-    {
-      path: '/addDebitCard',
-      name: 'addDebitCard',
-      component: AddDebitCard
-    },
-    {
-      path: '/addCreditCard',
-      name: 'addCreditCard',
-      component: AddCreditCard
-    },
-    {
-      path: '/baseInfo',
-      name: 'baseInfo',
-      component: BaseInfo
-    },
-    {
-      path: '/writeStandard',
-      name: 'writeStandard',
-      component: WriteStandard
-    },
-    {
-      path: '/linkman',
-      name: 'linkman',
-      component: Linkman
-    },
-    {
-      path: '/videoAuth',
-      name: 'videoAuth',
-      component: VideoAuth
-    },
-    {
-      path: '/readAloud',
-      name: 'readAloud',
-      component: ReadAloud
-    },
-    {
-      path: '/agreeAuth',
-      name: 'agreeAuth',
-      component: AgreeAuth
-    },
-    {
-      path: '/waitAudit',
-      name: 'waitAudit',
-      component: WaitAudit
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta: {
+      needLogin: true,
+      showTabBar: false
     }
-  ]
+  },
+  {
+    path: '/forgetPsw',
+    name: 'forgetPsw',
+    component: ForgetPsw
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
+  },
+  {
+    path: '/newsCenter',
+    component: NewsCenter,
+    children: [
+      {
+        path: '',
+        name: 'activity',
+        component: NewsActivity
+      },
+      {
+        path: 'deal',
+        name: 'deal',
+        component: NewsDeal
+      },
+      {
+        path: 'notification',
+        name: 'notification',
+        component: NewsNotification
+      }
+    ]
+  },
+  {
+    path: '/loan',
+    name: 'loan',
+    component: Loan
+  },
+  {
+    path: '/loanCode',
+    name: 'loanCode',
+    component: LoanCode
+  },
+  {
+    path: '/loanDeal',
+    name: 'loanDeal',
+    component: LoanDeal
+  },
+  {
+    path: '/repay',
+    name: 'repay',
+    component: Repay
+  },
+  {
+    path: '/repay/onTimeRepay',
+    name: 'onTimeRepay',
+    component: OnTimeRepay
+  },
+  {
+    path: '/repay/overdueRepay',
+    name: 'overdueRepay',
+    component: OverdueRepay
+  },
+  {
+    path: '/repay/inAdvanceRepay',
+    name: 'inAdvanceRepay',
+    component: InAdvanceRepay
+  },
+  {
+    path: '/repay/repayCode',
+    name: 'repayCode',
+    component: RepayCode
+  },
+  {
+    path: '/repay/repayDeal',
+    name: 'repayDeal',
+    component: RepayDeal
+  },
+  {
+    path: '/my',
+    name: 'my',
+    component: My
+  },
+  {
+    path: '/loanRecord',
+    name: 'loanRecord',
+    component: LoanRecord
+  },
+  {
+    path: '/loanDesc',
+    name: 'loanDesc',
+    component: LoanDesc
+  },
+  {
+    path: '/repayRecord',
+    name: 'repayRecord',
+    component: RepayRecord
+  },
+  {
+    path: '/repayDesc',
+    name: 'repayDesc',
+    component: RepayDesc
+  },
+  {
+    path: '/bankCard',
+    name: 'bankCard',
+    component: BankCard
+  },
+  {
+    path: '/aboutUs',
+    name: 'aboutUs',
+    component: AboutUs
+  },
+  {
+    path: '/help',
+    name: 'help',
+    component: Help
+  },
+  {
+    path: '/setting',
+    name: 'setting',
+    component: Setting
+  },
+  {
+    path: '/modifyLoginPsw',
+    name: 'modifyLoginPsw',
+    component: ModifyLoginPsw
+  },
+  {
+    path: '/modifyPhone',
+    component: ModifyPhone,
+    children: [
+      {
+        path: '',
+        name: 'modifyPhoneOld',
+        component: ModifyPhoneOld
+      },
+      {
+        path: 'new',
+        name: 'modifyPhoneNew',
+        component: ModifyPhoneNew
+      }
+    ]
+  },
+  // {
+  //   path: '/personalCertificate',
+  //   name: 'personalCertificate',
+  //   component: PersonalCertificate,
+  //   children: [
+  //   ]
+  // },
+  {
+    path: '/identity',
+    name: 'identity',
+    component: Identity
+  },
+  {
+    path: '/faceRecognition',
+    name: 'faceRecognition',
+    component: FaceRecognition
+  },
+  {
+    path: '/faceRecognitionS',
+    name: 'faceRecognitionS',
+    component: FaceRecognitionS
+  },
+  {
+    path: '/faceRecognitionF',
+    name: 'faceRecognitionF',
+    component: FaceRecognitionF
+  },
+  {
+    path: '/shot',
+    name: 'shot',
+    component: Shot
+  },
+  {
+    path: '/bankCardInfo',
+    name: 'bankCardInfo',
+    component: BankCardInfo
+  },
+  {
+    path: '/addDebitCard',
+    name: 'addDebitCard',
+    component: AddDebitCard
+  },
+  {
+    path: '/addCreditCard',
+    name: 'addCreditCard',
+    component: AddCreditCard
+  },
+  {
+    path: '/baseInfo',
+    name: 'baseInfo',
+    component: BaseInfo
+  },
+  {
+    path: '/writeStandard',
+    name: 'writeStandard',
+    component: WriteStandard
+  },
+  {
+    path: '/linkman',
+    name: 'linkman',
+    component: Linkman
+  },
+  {
+    path: '/videoAuth',
+    name: 'videoAuth',
+    component: VideoAuth
+  },
+  {
+    path: '/readAloud',
+    name: 'readAloud',
+    component: ReadAloud
+  },
+  {
+    path: '/agreeAuth',
+    name: 'agreeAuth',
+    component: AgreeAuth
+  },
+  {
+    path: '/waitAudit',
+    name: 'waitAudit',
+    component: WaitAudit
+  }
+]
+const router = new VueRouter({
+  routes
 })
+
+router.beforeEach((to, from, next) => {
+  console.log(to)
+  console.log(from)
+  next()
+})
+export default router

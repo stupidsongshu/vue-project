@@ -89,12 +89,12 @@
         <span class="icon-caution"></span><span>详细、真实的信息可加快审核，提高额度</span>
       </div>
       <div class="arrow-wrapper">
-        <router-link to="/writeStandard" style="color: #daab5b;">填写规范</router-link> <span class="fa fa-angle-right arrow-right"></span>
+        <router-link to="/writeStandard" class="main-color">填写规范</router-link> <span class="fa fa-angle-right arrow-right"></span>
       </div>
     </div>
 
     <div class="loan-btn">
-      <mt-button class="btn" @click="submit">提交</mt-button>
+      <mt-button class="btn" @click="homeJobInfo">提交</mt-button>
     </div>
 
     <vue-city-picker ref="pickerHome" @select="selectHome" :title="titleHome" :cancel-txt="cancelTxtHome" :confirm-txt="confirmTxtHome"></vue-city-picker>
@@ -105,6 +105,7 @@
 <script type="text/ecmascript-6">
   import pcNavHeader from '../../common/pcNavHeader'
   import vueCityPicker from 'vue-city-bspicker'
+  import { Toast } from 'mint-ui'
 
   export default {
     data() {
@@ -122,6 +123,7 @@
          * homeAddr2   居住地辖区/市
          * homeAddr3   居住地区/市、县
          * homeAddr4   居住地详细地址
+         * homeTelArea 家庭电话区号 可以为空
          * jobUnit     单位名称
          * unitAddr1   单位直辖市/省
          * unitAddr2   单位辖区/市
@@ -135,6 +137,7 @@
         homeAddr2: '',
         homeAddr3: '',
         homeAddr4: '',
+        homeTelArea: '',
         jobUnit: '',
         unitAddr1: '',
         unitAddr2: '',
@@ -173,23 +176,32 @@
         this.unitAddr2 = arguments[2][1]
         this.unitAddr3 = arguments[2][2]
       },
-      submit() {
-        this.app.HomeJobInfo(this.homeAddr1,
-                              this.homeAddr2,
-                              this.homeAddr3,
-                              this.homeAddr4,
-                              this.jobUnit,
-                              this.unitAddr1,
-                              this.unitAddr2,
-                              this.unitAddr3,
-                              this.unitAddr4,
-                              this.unitTelArea,
-                              this.unitTelNo,
-                              this.unitTelExt
-                            )
+      homeJobInfo() {
+        let that = this
+        this.loading()
+        this.app.HomeJobInfo(
+          this.homeAddr1,
+          this.homeAddr2,
+          this.homeAddr3,
+          this.homeAddr4,
+          this.homeTelArea,
+          this.jobUnit,
+          this.unitAddr1,
+          this.unitAddr2,
+          this.unitAddr3,
+          this.unitAddr4,
+          this.unitTelArea,
+          this.unitTelNo,
+          this.unitTelExt
+        )
         this.app.HomeJobInfoCallBack = function(json) {
+          that.closeLoading()
           json = JSON.parse(json)
           console.log(json)
+          Toast({
+            message: json.Msg,
+            duration: 3000
+          })
         }
       }
     }

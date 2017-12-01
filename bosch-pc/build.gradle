@@ -1,0 +1,71 @@
+apply plugin: 'idea'
+apply plugin: 'maven'
+
+group 'com.bosch'
+version '1.0-SNAPSHOT'
+
+ext{
+    ts = new Date().format('yyMMddHHmmss')
+    deploySnapshotRepo = 'http://192.168.100.210:9010/nexus/repository/xms-snapshot/'
+    stgDeployUser = 'xms-deploy'
+    stgDeployPass = 'nexusDeploy@fs'
+
+    deployDemoRepo = 'http://ipn01.chinanorth.cloudapp.chinacloudapi.cn/nexus/repository/ipn-prod-repo/'
+    demoDeployUser = 'ipn-deploy'
+    demoDeployPass = 'deployUser@nexus'
+
+    deployTestRepo = 'http://extra-service.chinanorth.cloudapp.chinacloudapi.cn:9000/nexus/repository/extra-repo/'
+    testDeployUser = 'extra-deploy'
+    testDeployPass = 'eXtraDeploy@Nexus'
+
+    deployReleaseRepo = 'http://extra-service.chinanorth.cloudapp.chinacloudapi.cn:9000/nexus/repository/extra-repo/'
+    prodDeployUser = 'extra-deploy'
+    prodDeployPass = 'eXtraDeploy@Nexus'
+}
+
+task makeZip(type: Zip) {
+    from ('dist/')
+}
+
+println makeZip.archiveName
+println relativePath(makeZip.destinationDir)
+println relativePath(makeZip.archivePath)
+build.dependsOn makeZip
+
+def archiveFile = file(makeZip.archivePath)
+artifacts {
+    archives archiveFile
+}
+
+uploadArchives{
+    def env = project.hasProperty('env') ? project['env'] : 'dev'
+    def nexusUrl,deployUser,deployPass
+    if(env == 'prod') {
+        nexusUrl = "$deployReleaseRepo"
+        deployUser = "$prodDeployUser"
+        deployPass = "$prodDeployPass"
+    }else if(env == 'test') {
+       nexusUrl = "$deployTestRepo"
+       deployUser = "$testDeployUser"
+       deployPass = "$testDeployPass"
+    }else if(env == 'demo') {
+        nexusUrl = "$deployDemoRepo"
+        deployUser = "$demoDeployUser"
+        deployPass = "$demoDeployPass"
+    }else {
+        nexusUrl = "$deploySnapshotRepo"
+        deployUser = "$stgDeployUser"
+        deployPass = "$stgDeployPass"
+    }
+    repositories{
+        mavenDeployer{
+            repository(url: nexusUrl){
+                authentication(userName: deployUser, password: deployPass)
+            }
+            pom.version = "$project.version"
+            pom.artifactId = "$project.name"+"-$env"
+            pom.groupId = "$project.group"
+            pom.packaging = "war"
+        }
+    }
+}

@@ -60,26 +60,25 @@
         }
       },
       getCode() {
+        let that = this
+        this.loading()
         this.app.Vcode(this.mobileno)
         this.app.VcodeCallBack = function(json) {
+          that.closeLoading()
           json = JSON.parse(json)
           console.log(json)
-          if (json.returnCode === '000000') {
-            Toast({
-              message: '验证码获取成功',
-              duration: 3000
-            })
-          } else {
-            Toast({
-              message: json.returnMsg,
-              duration: 3000
-            })
-          }
+          Toast({
+            message: json.returnMsg,
+            duration: 3000
+          })
         }
       },
       register() {
+        let that = this
+        this.loading()
         this.app.register(this.mobileno, this.pwd, this.vcode, 'maimob')
         this.app.registerCallBack = function(json) {
+          that.closeLoading()
           json = JSON.parse(json)
           console.log(json)
           Toast({

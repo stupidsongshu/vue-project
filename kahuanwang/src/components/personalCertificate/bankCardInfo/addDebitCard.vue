@@ -25,7 +25,7 @@
         <div class="name">
           <span class="required">借记卡号</span>
         </div>
-        <input class="input" type="number" placeholder="借记卡号" v-model="debitCardno">
+        <input class="input color999" type="number" placeholder="借记卡号" v-model="debitCardno">
       </div>
       <!--<div class="input-item-r">
         <i class="fa fa-angle-right"></i>
@@ -206,37 +206,17 @@
         this.city = arguments[2][1]
       },
       addDebitCard() {
-//        alert(this.phoneNo)
-//        alert(this.debitCardno)
-//        alert(this.openBank)
-//        alert(this.openBankId)
-//        alert(this.prov)
-//        alert(this.city)
-        if (!this.debitCardno) {
-          Toast({
-            message: '借记卡号不能为空',
-            duration: 3000
-          })
-          return
-        }
-        if (!this.openBank) {
-          Toast({
-            message: '开户银行不能为空',
-            duration: 3000
-          })
-          return
-        }
-        if (!this.prov) {
-          Toast({
-            message: '开户城市不能为空',
-            duration: 3000
-          })
-          return
-        }
+        let that = this
+        this.loading()
         this.app.DebitCard(this.debitCardno, this.phoneNo, this.openBank, this.openBankId, this.prov, this.city)
-        this.DebitCardCallBack = function(json) {
+        this.app.DebitCardCallBack = function(json) {
+          that.closeLoading()
           json = JSON.parse(json)
           console.log(json)
+          Toast({
+            message: json.Msg,
+            duration: 3000
+          })
         }
       }
     },
