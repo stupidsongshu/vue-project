@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="{'has-footer': hasFooter}">
+  <div id="app" :class="{'has-footer': footer}">
     <!--<mt-header class="header" title="卡还王">
       <router-link to="/identity" slot="left">
         <mt-button icon="back"></mt-button>
@@ -10,7 +10,7 @@
     <transition :name="transitionName" mode="out-in">
       <router-view class="child-view"></router-view>
     </transition>
-    <tab-bar :hasFooter="hasFooter"></tab-bar>
+    <tab-bar :hasFooter="footer"></tab-bar>
   </div>
 </template>
 
@@ -22,7 +22,6 @@
     name: 'app',
     data() {
       return {
-        hasFooter: true,
         transitionName: 'slide-left'
       }
     },
@@ -35,6 +34,12 @@
       Vue.prototype.retreat = app.back
       console.log(app)
       console.log('isLogin', this.app.isLogin())
+      this.footer()
+    },
+    computed: {
+      footer() {
+        return this.$store.state.identity.hasFooter
+      }
     },
     // dynamically set transition based on route change
     watch: {

@@ -67,10 +67,6 @@
       swiper,
       swiperSlide
     },
-    created() {
-//      this.$store.commit('updateTitle', {title: '卡还王123456'})
-      this.$emit('updateTitle', 'hello world')
-    },
     methods: {
       loan() {
         this.$router.push('/loan')

@@ -3,6 +3,7 @@
  */
 
 const state = {
+  hasFooter: true,
   /**
    * 身份证
    * @param: status: false默认值 true识别成功
@@ -36,6 +37,9 @@ const state = {
 const getters = {}
 
 const mutations = {
+  hasFooterSave(state, payload) {
+    state.hasFooter = payload
+  },
   /**
    * 身份证
    */
