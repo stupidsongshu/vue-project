@@ -7,8 +7,8 @@
       <router-link class="icon-news" to="/newsCenter" slot="right"></router-link>
     </mt-header>-->
 
-    <transition :name="transitionName">
-      <router-view></router-view>
+    <transition :name="transitionName" mode="out-in">
+      <router-view class="child-view"></router-view>
     </transition>
     <tab-bar :hasFooter="hasFooter"></tab-bar>
   </div>
