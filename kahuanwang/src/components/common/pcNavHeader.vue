@@ -28,20 +28,20 @@
     },
     methods: {
       identity() {
-        this.$router.push('/identity')
+        this.$router.replace('/identity')
       },
       bankCard() {
-        this.$router.push('/bankCardInfo')
+        this.$router.replace('/bankCardInfo')
       },
       baseInfo() {
-        this.$router.push('/baseInfo')
+        this.$router.replace('/baseInfo')
       },
       linkman() {
-        this.$router.push('/linkman')
-      },
-      videoAuth() {
-        this.$router.push('/videoAuth')
+        this.$router.replace('/linkman')
       }
+      // videoAuth() {
+      //   this.$router.replace('/videoAuth')
+      // }
     }
   }
 </script>

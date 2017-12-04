@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './../store'
 // 首页
 import Home from '@/components/home'
 // 登录注册
@@ -301,8 +302,21 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
-  console.log(from)
+  /**
+   * 底部tabbar显示隐藏
+   */
+  let paths = ['/', '/repay', '/my']
+  let bool = paths.some((path) => {
+    return to.path === path
+  })
+  if (bool) {
+    store.commit('hasFooterSave', true)
+  } else {
+    store.commit('hasFooterSave', false)
+  }
   next()
 })
+// router.afterEach((to, from, next) => {
+//   document.title = to.name
+// })
 export default router

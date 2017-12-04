@@ -3,24 +3,27 @@
     <div class="banner">
       <mt-header class="title" title="我的"></mt-header>
 
-      <!--<div class="user">
+      <div class="user">
         <div class="user-avatar">
           <img src="./../../assets/img/head.png" alt="">
         </div>
-        <div class="user-phone">
+        <!--<div class="user-phone" v-if="loginInfo.isLogin">
           <div>您好！</div>
-          <div>182******57</div>
+          <div>{{loginInfo.mobile | filter}}</div>
         </div>
-      </div>-->
-      <router-link to="/register" class="user">
-        <div class="user-avatar">
-          <img src="./../../assets/img/head.png" alt="">
-        </div>
-        <div class="user-phone">
+        <div class="user-phone" v-else="loginInfo.isLogin">
           <div>您好！</div>
-          <div>182******57</div>
+          <div>点击登录</div>
+        </div>-->
+        <div class="user-phone" v-if="loginInfo.Step === 0 && loginInfo.Result === 0" @click="login">
+          <div>您好！</div>
+          <div>{{loginInfo.Mobile | filter}}</div>
         </div>
-      </router-link>
+        <div class="user-phone" v-if="loginInfo.Step === 0 && loginInfo.Result !== 0" @click="login">
+          <div>您好！</div>
+          <div>点击登录</div>
+        </div>
+      </div>
 
     </div>
 
@@ -64,7 +67,26 @@
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  export default {
+    computed: {
+      loginInfo() {
+        // return this.$store.state.common.loginInfo
+        return JSON.parse(this.app.isLogin())
+      }
+    },
+    filters: {
+      filter(value) {
+        return value.toString().substring(0, 3) +
+                value.toString().substring(3, 9).replace(/\S/g, '*') +
+                value.toString().substring(9)
+      }
+    },
+    methods: {
+      login() {
+        this.$router.push('/login')
+      }
+    }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

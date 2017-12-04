@@ -96,13 +96,17 @@
         this.app.LoginCallBack = function(json) {
           that.closeLoading()
           json = JSON.parse(json)
-          console.log(json)
           Toast({
             message: json.Msg,
             duration: 3000
           })
           if (json.Result === 0 && json.Step === 3) {
-            that.$router.push('/identity')
+            // let loginInfo = JSON.parse(that.app.isLogin())
+            // that.$store.commit('loginInfoSave', {
+            //   isLogin: true,
+            //   mobile: loginInfo.Mobile
+            // })
+            that.$router.push('/')
           }
         }
       }

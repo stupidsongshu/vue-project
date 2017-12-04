@@ -1,9 +1,12 @@
 <template>
   <div>
     <mt-header fixed class="header" title="个人认证">
-      <div slot="left" @click="back">
+      <!--<div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </div>
+      </div>-->
+      <router-link slot="left" to="/">
+        <mt-button icon="back"></mt-button>
+      </router-link>
     </mt-header>
 
     <pc-nav-header :curProgress="1"></pc-nav-header>

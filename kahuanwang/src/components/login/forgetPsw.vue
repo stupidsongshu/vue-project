@@ -48,6 +48,7 @@
         this.goback()
       },
       toggle() {
+        this.$refs['forgetPassword'].focus()
         this.showPassword = !this.showPassword
         if (this.showPassword) {
           this.$refs.forgetPassword.type = 'text'
@@ -56,23 +57,14 @@
         }
       },
       getCode() {
-        /* eslint-disable no-new */
-        new Promise()
         this.app.Vcode(this.mobileno)
         this.app.VcodeCallBack = function(json) {
           json = JSON.parse(json)
           console.log(json)
-          if (json.returnCode === '000000') {
-            Toast({
-              message: '验证码获取成功',
-              duration: 3000
-            })
-          } else {
-            Toast({
-              message: json.returnMsg,
-              duration: 3000
-            })
-          }
+          Toast({
+            message: json.Msg,
+            duration: 3000
+          })
         }
       },
       resetPsw() {

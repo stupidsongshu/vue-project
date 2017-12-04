@@ -67,13 +67,42 @@
       swiper,
       swiperSlide
     },
-    created() {
-//      this.$store.commit('updateTitle', {title: '卡还王123456'})
-      this.$emit('updateTitle', 'hello world')
-    },
     methods: {
       loan() {
-        this.$router.push('/loan')
+        let loginInfo = JSON.parse(this.app.isLogin())
+        // 已登录
+        if (loginInfo.Step === 0 && loginInfo.Result === 0) {
+          this.app.AppStatus()
+          this.app.AppStatusCallBack = function(json) {
+            json = JSON.parse(json)
+            console.log(json)
+            /**
+             * Result
+             * 0   缺少信息
+             *    [
+                     {822,"身份证信息"},
+                     {823,"身份证正面照片"},
+                     {824,"身份证反面照片"},
+                     {825,"活体照片"},
+                     {826,"签约视频"},
+                     {827,"信用卡"},
+                     {828,"联系人信息"},
+                     {829,"基本信息"},
+                     {830,"银行卡信息"},
+                  ]
+             * 100 申请开户
+             * 101 正在审核
+             * 102 审核通过
+             * 109 审核拒绝
+             * 121 调查问卷
+             */
+            if (json.Step === 35 && json.Result === 102) {
+              this.$router.push('/loan')
+            }
+          }
+        } else {
+          this.$router.push('/login')
+        }
       }
     }
   }

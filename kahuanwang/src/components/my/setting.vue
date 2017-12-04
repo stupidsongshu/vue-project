@@ -30,6 +30,11 @@
       loginOUt() {
         this.app.logon()
         console.log(this.app.isLogin())
+        // this.$store.commit('loginInfoSave', {
+        //   isLogin: false,
+        //   mobile: ''
+        // })
+        this.$router.push('/')
       }
     }
   }

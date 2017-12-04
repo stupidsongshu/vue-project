@@ -26,23 +26,31 @@ new Vue({
     // axios.create({
     //   baseURL: 'http://xfjr.ledaikuan.cn:9191/'
     // })
-    axios.interceptors.request.use((config) => {
-      Indicator.open({
-        text: '加载中...',
-        spinnerType: 'fading-circle'
-      })
-      return config
-    }, function(error) {
-      return Promise.reject(error)
-    })
-    axios.interceptors.response.use(function(response) {
-      Indicator.close()
-      return response
-    }, function(error) {
-      return Promise.reject(error)
-    })
+    // axios.interceptors.request.use((config) => {
+    //   Indicator.open({
+    //     text: '加载中...',
+    //     spinnerType: 'fading-circle'
+    //   })
+    //   return config
+    // }, function(error) {
+    //   return Promise.reject(error)
+    // })
+    // axios.interceptors.response.use(function(response) {
+    //   Indicator.close()
+    //   return response
+    // }, function(error) {
+    //   return Promise.reject(error)
+    // })
   }
 })
+
+/* eslint-disable no-undef */
+Vue.prototype.app = app
+// Vue.prototype.retreat = app.back
+// console.log(app)
+// console.log('isLogin', this.app.isLogin())
+
+Vue.prototype.$http = axios
 
 Vue.prototype.goback = function() {
   this.$router.go(-1)
