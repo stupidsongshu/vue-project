@@ -1,0 +1,3 @@
+javascript 图片编辑
+AlloyImage - 基于HTML5技术的专业图像处理库
+JavaScript image cropper. https://fengyuanchen.github.io/cropperjs
