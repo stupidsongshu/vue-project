@@ -51,7 +51,6 @@
 </template>
 
 <script>
-  import { Toast } from 'mint-ui'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
   export default {
@@ -70,94 +69,7 @@
     },
     methods: {
       loan() {
-        let that = this
-        let loginInfo = JSON.parse(this.app.isLogin())
-        // 已登录
-        if (loginInfo.Step === 0 && loginInfo.Result === 0) {
-          this.loading()
-          // 用户申请状态
-          this.app.AppStatus()
-          this.app.AppStatusCallBack = function(json) {
-            that.closeLoading()
-            json = JSON.parse(json)
-            console.log(json)
-            /**
-             * Result
-             * 0   缺少信息
-             *    [
-                     {822,"身份证信息"},
-                     {823,"身份证正面照片"},
-                     {824,"身份证反面照片"},
-                     {825,"活体照片"},
-                     {826,"签约视频"},
-                     {827,"信用卡"},
-                     {828,"联系人信息"},
-                     {829,"基本信息"},
-                     {830,"银行卡信息"},
-                  ]
-             * 100 申请开户
-             * 101 正在审核
-             * 102 审核通过
-             * 109 审核拒绝
-             * 121 调查问卷
-             */
-            if (json.Step === 35 && json.Result !== 102) {
-              /* eslint-disable no-unused-vars */
-              var sign, msg
-              let tmp = JSON.parse(json.Msg)
-              if (tmp.length > 0) {
-                for (let [k, v] of Object.entries(tmp[0])) {
-                  sign = k
-                  msg = v
-                }
-                console.log(sign, msg)
-                // 有未提交信息
-                if (json.Result === 0) {
-                  Toast({
-                    message: '请提交' + msg,
-                    duration: 3000
-                  })
-                  if (sign === '822') {
-                    // 身份证信息
-                    that.$router.push('/personalCertificate')
-                  } else if (sign === '823') {
-                    // 身份证正面照片
-                    that.$router.push('/personalCertificate')
-                  } else if (sign === '824') {
-                    // 身份证反面照片
-                    that.$router.push('/personalCertificate')
-                  } else if (sign === '825') {
-                    // 活体照片
-                    that.$router.push('/personalCertificate/faceRecognition')
-                  } else if (sign === '826') {
-                    // 签约视频
-                    that.$router.push('/personalCertificate/videoAuth')
-                  } else if (sign === '827') {
-                    // 信用卡
-                  } else if (sign === '828') {
-                    // 联系人信息
-                    that.$router.push('/personalCertificate/linkman')
-                  } else if (sign === '829') {
-                    // 基本信息
-                    that.$router.push('/personalCertificate/baseInfo')
-                  } else if (sign === '830') {
-                    // 银行卡信息
-                    that.$router.push('/personalCertificate/bankCardInfo')
-                  }
-                } else if (json.Result === 100) {
-                  // 申请开户
-                  that.$router.push('/personalCertificate/agreeAuth')
-                }
-              } else if (tmp.length === 0) {
-                that.$router.push('/personalCertificate/agreeAuth')
-              }
-            } else if (json.Step === 35 && json.Result === 102) {
-              that.$router.push('/personalCertificate')
-            }
-          }
-        } else {
-          this.$router.push('/login')
-        }
+        this.$emit('checkApplyStatus')
       }
     }
   }
