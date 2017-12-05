@@ -1,9 +1,9 @@
 <template>
   <div class="aboutUs">
     <mt-header fixed class="header" title="关于我们">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div>
@@ -29,10 +29,16 @@
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  export default {
+    methods: {
+      back() {
+        this.goback()
+      }
+    }
+  }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../assets/css/base.styl"
 
   .aboutUs

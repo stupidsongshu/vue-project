@@ -30,7 +30,8 @@ const state = {
    * 视频认证
    * @param: videoAuthStep: 0默认值 1已认证
    */
-  videoAuthStep: 0
+  videoAuthStep: 0,
+  videoAuthImg: ''
 }
 
 const getters = {}
@@ -61,6 +62,9 @@ const mutations = {
    */
   videoAuthStepSave(state, payload) {
     state.videoAuthStep = payload
+  },
+  videoAuthImgSave(state, payload) {
+    state.videoAuthImg = payload
   }
 }
 

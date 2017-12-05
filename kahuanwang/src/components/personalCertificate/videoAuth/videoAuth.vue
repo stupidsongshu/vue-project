@@ -6,10 +6,16 @@
       </div>
     </mt-header>
 
-    <div class="faceRecognition">
+    <div class="faceRecognition" v-if="videoAuthStep === 0">
       <h1 class="title">请按照界面提示，读一段文字，完成认证视频录制</h1>
       <div class="shot-video" @click="showPopup"></div>
       <p>点击图标进行视频认证</p>
+    </div>
+    <div class="faceRecognition" v-if="videoAuthStep === 1">
+      <h1 class="title">完成认证视频录制</h1>
+      <div class="shot-video-success">
+        <img :src="videoImg" alt="">
+      </div>
     </div>
 
     <div class="loan-btn">
@@ -30,7 +36,6 @@
         <li class="sup-item">3.视频模糊（如：环境光线暗、反光）</li>
       </ul>
 
-      <!--<router-link to="/readAloud" class="to-shoot">前往拍摄>></router-link>-->
       <div class="to-shoot" @click="toShoot">前往拍摄>></div>
     </mt-popup>
   </div>
@@ -69,10 +74,33 @@
               duration: 3000
             })
             that.$store.commit('videoAuthStepSave', 1)
+            that.$store.commit('videoAuthImgSave', 'data:image/png;base64,' + json.Img)
+            // that.videoImg = 'data:image/png;base64,' + json.Img
           }
         }
       },
-      submit() {}
+      submit() {
+        let that = this
+        this.loading()
+        this.app.updateVideo()
+        this.app.updateVideoCallBack = function(json) {
+          that.closeLoading()
+          json = JSON.parse(json)
+          console.log(json)
+          Toast({
+            message: json.Msg,
+            duration: 3000
+          })
+        }
+      }
+    },
+    computed: {
+      videoAuthStep() {
+        return this.$store.state.identity.videoAuthStep
+      },
+      videoImg() {
+        return this.$store.state.identity.videoAuthImg
+      }
     }
   }
 </script>

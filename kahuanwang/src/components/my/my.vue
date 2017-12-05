@@ -15,7 +15,7 @@
           <div>您好！</div>
           <div>点击登录</div>
         </div>-->
-        <div class="user-phone" v-if="loginInfo.Step === 0 && loginInfo.Result === 0" @click="login">
+        <div class="user-phone" v-if="loginInfo.Step === 0 && loginInfo.Result === 0">
           <div>您好！</div>
           <div>{{loginInfo.Mobile | filter}}</div>
         </div>
@@ -47,11 +47,6 @@
         <span>我的消息</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </router-link>
-      <router-link to="/aboutUs">
-        <span class="icon icon-us"></span>
-        <span>关于我们</span>
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
-      </router-link>
       <router-link to="/help">
         <span class="icon icon-help"></span>
         <span>帮助中心</span>
@@ -60,6 +55,11 @@
       <router-link to="/setting">
         <span class="icon icon-setting"></span>
         <span>安全设置</span>
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </router-link>
+      <router-link to="/aboutUs">
+        <span class="icon icon-us"></span>
+        <span>关于我们</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </router-link>
     </div>
@@ -103,6 +103,8 @@
       background-repeat: no-repeat
       background-image: url("../../assets/img/bg-header.png")
       .title
+        height: 65px
+        padding: 20px 15px 0 15px
         font-size: 18px
         background-color: transparent
       .user

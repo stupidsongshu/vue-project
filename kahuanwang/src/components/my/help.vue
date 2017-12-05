@@ -1,9 +1,9 @@
 <template>
   <div>
     <mt-header fixed class="header" title="帮助中心">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="banner-help">
@@ -13,7 +13,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-
+  export default {
+    methods: {
+      back() {
+        this.goback()
+      }
+    }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

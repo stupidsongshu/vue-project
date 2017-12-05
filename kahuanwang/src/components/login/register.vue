@@ -44,7 +44,9 @@
         showPassword: false,
         mobileno: '',
         pwd: '',
-        vcode: ''
+        vcode: '',
+        channel: 'maimob',
+        invitorMobileNo: ''
       }
     },
     methods: {
@@ -76,7 +78,7 @@
       register() {
         let that = this
         this.loading()
-        this.app.register(this.mobileno, this.pwd, this.vcode, 'maimob')
+        this.app.register(this.mobileno, this.pwd, this.vcode, this.channel, this.invitorMobileNo)
         this.app.registerCallBack = function(json) {
           that.closeLoading()
           json = JSON.parse(json)

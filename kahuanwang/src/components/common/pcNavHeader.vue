@@ -1,65 +1,91 @@
 <template>
-  <ul class="pc-nav-header">
-    <li @click="identity">
-      <span :class="{curProgress: curProgress >= 1, active: curProgress === 1}">身份信息</span>
-    </li>
-    <li @click="bankCard">
-      <span :class="{curProgress: curProgress >= 2, active: curProgress === 2}">银行卡信息</span>
-    </li>
-    <li @click="baseInfo">
-      <span :class="{curProgress: curProgress >= 3, active: curProgress === 3}">基本信息</span>
-    </li>
-    <li @click="linkman">
-      <span :class="{curProgress: curProgress >= 4, active: curProgress === 4}">联系人信息</span>
-    </li>
-    <!--<li @click="videoAuth">
-      <span :class="{curProgress: curProgress >= 5, active: curProgress === 5}">视频认证</span>
-    </li>-->
-  </ul>
+  <swiper :options="swiperOption" ref="mySwiper" class="pc-nav-header">
+    <swiper-slide>
+      <span @click="identity" :class="{curProgress: curProgress >= 1, active: curProgress === 1}">身份信息</span>
+    </swiper-slide>
+    <swiper-slide>
+      <span @click="bankCard" :class="{curProgress: curProgress >= 2, active: curProgress === 2}">银行卡信息</span>
+    </swiper-slide>
+    <swiper-slide>
+      <span @click="baseInfo" :class="{curProgress: curProgress >= 3, active: curProgress === 3}">基本信息</span>
+    </swiper-slide>
+    <swiper-slide>
+      <span @click="linkman" :class="{curProgress: curProgress >= 4, active: curProgress === 4}">联系人信息</span>
+    </swiper-slide>
+    <swiper-slide>
+      <span @click="videoAuth" :class="{curProgress: curProgress >= 5, active: curProgress === 5}">视频认证</span>
+    </swiper-slide>
+  </swiper>
 </template>
 
 <script type="text/ecmascript-6">
+  import 'swiper/dist/css/swiper.css'
+  import { swiper, swiperSlide } from 'vue-awesome-swiper'
+
   export default {
+    data() {
+      return {
+        swiperOption: {
+          slidesPerView: 3
+          // slideToClickedSlide: true,
+          // centeredSlides: true
+        }
+      }
+    },
     props: {
       // 当前进度
       curProgress: {
         type: Number
       }
     },
+    computed: {
+      swiper() {
+        return this.$refs.mySwiper.swiper
+      }
+    },
     methods: {
       identity() {
-        this.$router.replace('/identity')
+        this.$store.commit('personalCertificateProgressSave', 1)
+        this.$router.replace('/personalCertificate')
       },
       bankCard() {
-        this.$router.replace('/bankCardInfo')
+        this.swiper.slideTo(0)
+        this.$store.commit('personalCertificateProgressSave', 2)
+        this.$router.replace('/personalCertificate/bankCardInfo')
       },
       baseInfo() {
-        this.$router.replace('/baseInfo')
+        this.swiper.slideTo(1)
+        this.$store.commit('personalCertificateProgressSave', 3)
+        this.$router.replace('/personalCertificate/baseInfo')
       },
       linkman() {
-        this.$router.replace('/linkman')
+        this.swiper.slideTo(2)
+        this.$store.commit('personalCertificateProgressSave', 4)
+        this.$router.replace('/personalCertificate/linkman')
+      },
+      videoAuth() {
+        this.$store.commit('personalCertificateProgressSave', 5)
+        this.$router.replace('/personalCertificate/videoAuth')
       }
-      // videoAuth() {
-      //   this.$router.replace('/videoAuth')
-      // }
+    },
+    components: {
+      swiper,
+      swiperSlide
     }
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style scoped lang="stylus" rel="stylesheet/stylus">
   @import '../../assets/css/base.styl'
 
   .pc-nav-header
-    display: flex
     width: 100%
     height: 42px
     line-height: 42px
     color: #999
     font-size: 13px
     background-color: #fff
-    li
-      flex: 1
-      height: 100%
+    .swiper-slide
       text-align: center
       span
         display: inline-block
@@ -68,5 +94,5 @@
         &.curProgress
           color: main-color
         &.active
-          border-bottom: 1px solid main-color
+          border-bottom: 2px solid main-color
 </style>

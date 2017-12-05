@@ -6,7 +6,7 @@
       </div>
     </mt-header>
 
-    <pc-nav-header :curProgress="4"></pc-nav-header>
+    <!--<pc-nav-header :curProgress="4"></pc-nav-header>-->
 
     <div class="input-item" style="margin-top: 12px;">
       <div class="input-item-l">

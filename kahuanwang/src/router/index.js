@@ -38,7 +38,7 @@ import ModifyPhone from '@/components/my/modifyPhone'
 import ModifyPhoneOld from '@/components/my/modifyPhoneOld'
 import ModifyPhoneNew from '@/components/my/modifyPhoneNew'
 // 个人认证 身份信息
-// import PersonalCertificate from '@/components/personalCertificate/personalCertificate'
+import PersonalCertificate from '@/components/personalCertificate/personalCertificate'
 import Identity from '@/components/personalCertificate/identityInfo/identity'
 import FaceRecognition from '@/components/personalCertificate/identityInfo/faceRecognition'
 import FaceRecognitionS from '@/components/personalCertificate/identityInfo/faceRecognitionS'
@@ -214,87 +214,86 @@ const routes = [
       }
     ]
   },
-  // {
-  //   path: '/personalCertificate',
-  //   name: 'personalCertificate',
-  //   component: PersonalCertificate,
-  //   children: [
-  //   ]
-  // },
   {
-    path: '/identity',
-    name: 'identity',
-    component: Identity
-  },
-  {
-    path: '/faceRecognition',
-    name: 'faceRecognition',
-    component: FaceRecognition
-  },
-  {
-    path: '/faceRecognitionS',
-    name: 'faceRecognitionS',
-    component: FaceRecognitionS
-  },
-  {
-    path: '/faceRecognitionF',
-    name: 'faceRecognitionF',
-    component: FaceRecognitionF
-  },
-  {
-    path: '/shot',
-    name: 'shot',
-    component: Shot
-  },
-  {
-    path: '/bankCardInfo',
-    name: 'bankCardInfo',
-    component: BankCardInfo
-  },
-  {
-    path: '/addDebitCard',
-    name: 'addDebitCard',
-    component: AddDebitCard
-  },
-  {
-    path: '/addCreditCard',
-    name: 'addCreditCard',
-    component: AddCreditCard
-  },
-  {
-    path: '/baseInfo',
-    name: 'baseInfo',
-    component: BaseInfo
-  },
-  {
-    path: '/writeStandard',
-    name: 'writeStandard',
-    component: WriteStandard
-  },
-  {
-    path: '/linkman',
-    name: 'linkman',
-    component: Linkman
-  },
-  {
-    path: '/videoAuth',
-    name: 'videoAuth',
-    component: VideoAuth
-  },
-  {
-    path: '/readAloud',
-    name: 'readAloud',
-    component: ReadAloud
-  },
-  {
-    path: '/agreeAuth',
-    name: 'agreeAuth',
-    component: AgreeAuth
-  },
-  {
-    path: '/waitAudit',
-    name: 'waitAudit',
-    component: WaitAudit
+    path: '/personalCertificate',
+    component: PersonalCertificate,
+    children: [
+      {
+        path: '',
+        name: 'identity',
+        component: Identity
+      },
+      {
+        path: 'faceRecognition',
+        name: 'faceRecognition',
+        component: FaceRecognition
+      },
+      {
+        path: 'faceRecognitionS',
+        name: 'faceRecognitionS',
+        component: FaceRecognitionS
+      },
+      {
+        path: 'faceRecognitionF',
+        name: 'faceRecognitionF',
+        component: FaceRecognitionF
+      },
+      {
+        path: 'shot',
+        name: 'shot',
+        component: Shot
+      },
+      {
+        path: 'bankCardInfo',
+        name: 'bankCardInfo',
+        component: BankCardInfo
+      },
+      {
+        path: 'addDebitCard',
+        name: 'addDebitCard',
+        component: AddDebitCard
+      },
+      {
+        path: 'addCreditCard',
+        name: 'addCreditCard',
+        component: AddCreditCard
+      },
+      {
+        path: 'baseInfo',
+        name: 'baseInfo',
+        component: BaseInfo
+      },
+      {
+        path: 'writeStandard',
+        name: 'writeStandard',
+        component: WriteStandard
+      },
+      {
+        path: 'linkman',
+        name: 'linkman',
+        component: Linkman
+      },
+      {
+        path: 'videoAuth',
+        name: 'videoAuth',
+        component: VideoAuth
+      },
+      {
+        path: 'readAloud',
+        name: 'readAloud',
+        component: ReadAloud
+      },
+      {
+        path: 'agreeAuth',
+        name: 'agreeAuth',
+        component: AgreeAuth
+      },
+      {
+        path: 'waitAudit',
+        name: 'waitAudit',
+        component: WaitAudit
+      }
+    ]
   }
 ]
 const router = new VueRouter({
@@ -305,8 +304,8 @@ router.beforeEach((to, from, next) => {
   /**
    * 底部tabbar显示隐藏
    */
-  let paths = ['/', '/repay', '/my']
-  let bool = paths.some((path) => {
+  let filterPaths = ['/', '/repay', '/my']
+  let bool = filterPaths.some((path) => {
     return to.path === path
   })
   if (bool) {

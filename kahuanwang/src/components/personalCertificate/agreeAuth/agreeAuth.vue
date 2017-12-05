@@ -23,9 +23,24 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { Toast } from 'mint-ui'
+
   export default {
     methods: {
-      submit() {}
+      submit() {
+        let that = this
+        this.loading()
+        this.app.ApplyAccount('旅游')
+        this.app.ApplyAccountCallBack = function(json) {
+          that.closeLoading()
+          json = JSON.parse(json)
+          console.log(json)
+          Toast({
+            message: json.Msg,
+            duration: 3000
+          })
+        }
+      }
     }
   }
 </script>

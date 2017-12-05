@@ -1,9 +1,9 @@
 <template>
   <div>
     <mt-header fixed class="header" title="修改登录密码">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="form">
@@ -39,6 +39,9 @@
       }
     },
     methods: {
+      back() {
+        this.goback()
+      },
       toggle() {
         this.showPassword = !this.showPassword
         if (this.showPassword) {

@@ -15,7 +15,8 @@
 </template>
 
 <script>
-  // import Vue from 'vue'
+  // import { MessageBox } from 'mint-ui'
+  import { Toast } from 'mint-ui'
   import tabBar from './components/common/tabbar.vue'
 
   export default {
@@ -36,21 +37,43 @@
     // dynamically set transition based on route change
     watch: {
       '$route'(to, from) {
+        let toPath = to.path
         const toDepth = to.path.split('/').length
         const fromDepth = from.path.split('/').length
         this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
-        console.log(this.transitionName)
+        // console.log(this.transitionName)
         // 有个bug,刷新页面后watch $route不会执行
         /* if (to.meta.headerTitle !== undefined) {
           this.headerTitle = to.meta.headerTitle
         } */
         let loginInfo = JSON.parse(this.app.isLogin())
         console.log(loginInfo)
-        // if (loginInfo.Step === 0 && loginInfo.Result !== 0) {
-        //   if (to.path !== '/' || to.path !== '/register') {
-        //     this.$router.push('/login')
-        //   }
-        // }
+        /**
+         * 需登录的路由配置
+         */
+        let filterPaths = ['/', '/login', '/register', '/forgetPsw', '/my', '/aboutUs', '/help', '/setting']
+        let bool = filterPaths.some((path) => {
+          return toPath === path
+        })
+        if (loginInfo.Step === 0 && loginInfo.Result !== 0) {
+          if (!bool) {
+            // MessageBox({
+            //   title: '',
+            //   message: '点击登录',
+            //   showCancelButton: true
+            // }).then(action => {
+            //   if (action === 'confirm') {
+            //     this.$router.push('/login')
+            //   } else if (action === 'cancel') {
+            //   }
+            // })
+            Toast({
+              message: '请先登录',
+              duration: 2000
+            })
+            this.$router.push('/login')
+          }
+        }
       }
     }
   }

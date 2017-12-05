@@ -1,9 +1,9 @@
 <template>
   <div>
     <mt-header fixed class="header" title="安全设置">
-      <router-link to="/" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="form">
@@ -25,16 +25,36 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {Toast} from 'mint-ui'
+
   export default {
     methods: {
+      back() {
+        this.goback()
+      },
       loginOUt() {
+        let that = this
         this.app.logon()
-        console.log(this.app.isLogin())
-        // this.$store.commit('loginInfoSave', {
-        //   isLogin: false,
-        //   mobile: ''
-        // })
-        this.$router.push('/')
+        this.app.logonCallBack = function(json) {
+          json = JSON.parse(json)
+          if (json.Step === 31 && json.Result === 0) {
+            // this.$store.commit('loginInfoSave', {
+            //   isLogin: false,
+            //   mobile: ''
+            // })
+            Toast({
+              message: '退出登录成功',
+              duration: 2000
+            })
+            that.$router.push('/')
+            that.$store.commit('tabBarActiveIndexSave', 0)
+          } else {
+            Toast({
+              message: '退出登录失败',
+              duration: 2000
+            })
+          }
+        }
       }
     }
   }

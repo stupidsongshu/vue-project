@@ -1,22 +1,28 @@
 <template>
   <div>
     <mt-header fixed class="header" title="消息中心">
-      <router-link to="/" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="news-nav">
-      <router-link class="nav-title" to="/newsCenter">活动</router-link>
-      <router-link class="nav-title" to="/newsCenter/deal">交易</router-link>
-      <router-link class="nav-title" to="/newsCenter/notification">通知</router-link>
+      <router-link class="nav-title" replace to="/newsCenter">活动</router-link>
+      <router-link class="nav-title" replace to="/newsCenter/deal">交易</router-link>
+      <router-link class="nav-title" replace to="/newsCenter/notification">通知</router-link>
     </div>
     <router-view></router-view>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  export default {
+    methods: {
+      back() {
+        this.goback()
+      }
+    }
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">

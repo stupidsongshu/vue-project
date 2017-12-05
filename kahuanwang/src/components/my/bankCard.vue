@@ -1,9 +1,9 @@
 <template>
   <div class="bankCard">
     <mt-header fixed class="header" title="银行卡">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="bank-card-wrapper">
@@ -45,7 +45,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  export default {
+    methods: {
+      back() {
+        this.goback()
+      }
+    }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

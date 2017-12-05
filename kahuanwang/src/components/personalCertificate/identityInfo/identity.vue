@@ -1,15 +1,12 @@
 <template>
   <div>
     <mt-header fixed class="header" title="个人认证">
-      <!--<div slot="left" @click="back">
-        <mt-button icon="back"></mt-button>
-      </div>-->
       <router-link slot="left" to="/">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
 
-    <pc-nav-header :curProgress="1"></pc-nav-header>
+    <!--<pc-nav-header :curProgress="1"></pc-nav-header>-->
 
     <div class="id-card">
       <h1 class="title">拍摄身份证</h1>
@@ -60,9 +57,9 @@
       </div>
     </div>
 
-    <router-link class="input-item" to="/faceRecognition" style="margin-top: 17px;">
+    <router-link class="input-item" to="/personalCertificate/faceRecognition" style="margin-top: 17px;">
       <div class="input-item-l">
-        <span class="name">拍摄人脸</span>
+        <span class="name">活体识别</span>
         <input class="input" type="text" placeholder="前往拍摄" readonly>
       </div>
       <div class="input-item-r">
@@ -70,7 +67,7 @@
         <i class="icon-shoot-success" v-if="faceRecognitionStep === 1"></i>
       </div>
     </router-link>
-    <router-link class="input-item" to="/videoAuth">
+    <!--<router-link class="input-item" to="/videoAuth">
       <div class="input-item-l">
         <span class="name">视频认证</span>
         <input class="input" type="text" placeholder="前往认证" readonly>
@@ -79,7 +76,7 @@
         <i class="fa fa-angle-right" v-if="videoAuthStep === 0"></i>
         <i class="icon-shoot-success" v-if="videoAuthStep === 1"></i>
       </div>
-    </router-link>
+    </router-link>-->
 
     <div class="loan-btn" style="margin-top: 42px;">
       <mt-button class="btn" @click="submit">提交</mt-button>
@@ -148,18 +145,15 @@
       },
       faceRecognitionStep() {
         return this.$store.state.identity.faceRecognitionStep
-      },
-      videoAuthStep() {
-        return this.$store.state.identity.videoAuthStep
       }
+      // videoAuthStep() {
+      //   return this.$store.state.identity.videoAuthStep
+      // }
     },
     components: {
       pcNavHeader
     },
     methods: {
-      back() {
-        this.goback()
-      },
       showExampleL() {
         this.popupVisibleL = true
       },

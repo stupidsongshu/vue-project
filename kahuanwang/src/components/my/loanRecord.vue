@@ -1,9 +1,9 @@
 <template>
   <div class="loanRepayRecord">
     <mt-header fixed class="header" title="借款记录">
-      <router-link to="/" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="record-list" v-if="true">
@@ -31,7 +31,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  export default {
+    methods: {
+      back() {
+        this.goback()
+      }
+    }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

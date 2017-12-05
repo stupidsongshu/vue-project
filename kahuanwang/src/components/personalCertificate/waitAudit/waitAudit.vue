@@ -40,9 +40,9 @@
 
 <script type="text/ecmascript-6">
   export default {
-    data() {
-      return {
-        status: 0
+    computed: {
+      status() {
+        return 0
       }
     }
   }

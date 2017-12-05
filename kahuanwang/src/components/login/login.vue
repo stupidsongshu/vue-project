@@ -1,9 +1,9 @@
 <template>
   <div class="login">
     <mt-header fixed class="header" title="登录">
-      <div slot="left" @click="back">
+      <router-link to="/my" slot="left">
         <mt-button icon="back"></mt-button>
-      </div>
+      </router-link>
     </mt-header>
 
     <div class="form">
@@ -63,9 +63,6 @@
       }
     },
     methods: {
-      back() {
-        this.goback()
-      },
       selectLoginType(index) {
         this.loginIndex = index
       },
@@ -95,7 +92,9 @@
         this.app.login(mobileNo, num, loginType)
         this.app.LoginCallBack = function(json) {
           that.closeLoading()
+          console.log(json)
           json = JSON.parse(json)
+          console.log(json)
           Toast({
             message: json.Msg,
             duration: 3000
@@ -106,6 +105,7 @@
             //   isLogin: true,
             //   mobile: loginInfo.Mobile
             // })
+            that.$store.commit('tabBarActiveIndexSave', 0)
             that.$router.push('/')
           }
         }

@@ -1,19 +1,25 @@
 <template>
-  <mt-tabbar fixed v-model="selected" v-if="hasFooter">
+  <mt-tabbar fixed v-if="hasFooter">
     <mt-tab-item id="loan">
-      <img slot="icon" src="../../assets/img/bottom_icon_01_click.png" v-show="selected === 'loan'">
-      <img slot="icon" src="../../assets/img/bottom_icon_01_nor.png" v-show="selected !== 'loan'">
-      借款
+      <div class="self-tab-item" @click="selectTab(0)">
+        <img slot="icon" src="../../assets/img/bottom_icon_01_click.png" v-show="activeTabIndex === 0">
+        <img slot="icon" src="../../assets/img/bottom_icon_01_nor.png" v-show="activeTabIndex !== 0">
+        <span :class="{'isSelected': activeTabIndex === 0}">借款</span>
+      </div>
     </mt-tab-item>
     <mt-tab-item id="repay">
-      <img slot="icon" src="../../assets/img/bottom_icon_02_click.png" v-show="selected === 'repay'">
-      <img slot="icon" src="../../assets/img/bottom_icon_02_nor.png" v-show="selected !== 'repay'">
-      还款
+      <div class="self-tab-item" @click="selectTab(1)" :class="{'isSelected': activeTabIndex === 1}">
+        <img slot="icon" src="../../assets/img/bottom_icon_02_click.png" v-show="activeTabIndex === 1">
+        <img slot="icon" src="../../assets/img/bottom_icon_02_nor.png" v-show="activeTabIndex !== 1">
+        <span :class="{'isSelected': activeTabIndex === 1}">还款</span>
+      </div>
     </mt-tab-item>
     <mt-tab-item id="my">
-      <img slot="icon" src="../../assets/img/bottom_icon_03_click.png" v-show="selected === 'my'">
-      <img slot="icon" src="../../assets/img/bottom_icon_03_nor.png" v-show="selected !== 'my'">
-      我的
+      <div class="self-tab-item" @click="selectTab(2)" :class="{'isSelected': activeTabIndex === 2}">
+        <img slot="icon" src="../../assets/img/bottom_icon_03_click.png" v-show="activeTabIndex === 2">
+        <img slot="icon" src="../../assets/img/bottom_icon_03_nor.png" v-show="activeTabIndex !== 2">
+        <span :class="{'isSelected': activeTabIndex === 2}">我的</span>
+      </div>
     </mt-tab-item>
   </mt-tabbar>
 </template>
@@ -25,21 +31,21 @@
         type: Boolean
       }
     },
-    data() {
-      return {
-        selected: 'loan'
-      }
-    },
-    watch: {
-      selected: function(newValue, oldValue) {
-        console.log(newValue)
-        if (newValue === 'loan') {
+    methods: {
+      selectTab(index) {
+        this.$store.commit('tabBarActiveIndexSave', index)
+        if (index === 0) {
           this.$router.push('/')
-        } else if (newValue === 'repay') {
+        } else if (index === 1) {
           this.$router.push('/repay')
-        } else if (newValue === 'my') {
+        } else if (index === 2) {
           this.$router.push('/my')
         }
+      }
+    },
+    computed: {
+      activeTabIndex() {
+        return this.$store.state.common.activeTabIndex
       }
     }
   }
@@ -54,6 +60,15 @@
     border-top: 1px solid #d9d9d9
     .mint-tab-item
       &.is-selected
-        color: #daab5b !important
+        color: #d2d1d1
         background-color: #fff !important
+    .self-tab-item
+      display: flex
+      flex-direction: column
+      .isSelected
+        color: #daab5b !important
+      img
+        width: 24px
+        height: 24px
+        margin: 0 auto 5px auto
 </style>

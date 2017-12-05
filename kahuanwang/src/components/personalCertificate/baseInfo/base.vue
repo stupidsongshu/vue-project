@@ -6,7 +6,7 @@
       </div>
     </mt-header>
 
-    <pc-nav-header :curProgress="3"></pc-nav-header>
+    <!--<pc-nav-header :curProgress="3"></pc-nav-header>-->
 
     <div class="residence">
       <div class="input-item" @click="showHome">
@@ -89,7 +89,7 @@
         <span class="icon-caution"></span><span>详细、真实的信息可加快审核，提高额度</span>
       </div>
       <div class="arrow-wrapper">
-        <router-link to="/writeStandard" class="main-color">填写规范</router-link> <span class="fa fa-angle-right arrow-right"></span>
+        <router-link to="/personalCertificate/writeStandard" class="main-color">填写规范</router-link> <span class="fa fa-angle-right arrow-right"></span>
       </div>
     </div>
 

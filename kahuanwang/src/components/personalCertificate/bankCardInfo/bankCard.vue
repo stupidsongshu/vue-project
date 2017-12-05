@@ -6,7 +6,7 @@
       </div>
     </mt-header>
 
-    <pc-nav-header :curProgress="2"></pc-nav-header>
+    <!--<pc-nav-header :curProgress="2"></pc-nav-header>-->
 
     <div class="bank-card-wrapper">
       <div class="title">还款借记卡</div>
@@ -23,7 +23,7 @@
         <div class="card-edit"></div>
         <div class="card-num">**** **** **** 5391</div>
       </div>
-      <router-link to="/addDebitCard" class="add-credit-card" v-if="!hasDebitCard">
+      <router-link to="/personalCertificate/addDebitCard" class="add-credit-card" v-if="!hasDebitCard">
         <img src="../../../assets/img/icon_card_add.png" width="40" height="30" alt=""><span>添加借记卡</span>
       </router-link>
 
