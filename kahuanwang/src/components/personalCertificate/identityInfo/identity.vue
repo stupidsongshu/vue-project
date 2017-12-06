@@ -1,10 +1,10 @@
 <template>
   <div>
-    <mt-header fixed class="header" title="个人认证">
+    <!--<mt-header fixed class="header" title="个人认证">
       <router-link slot="left" to="/">
         <mt-button icon="back"></mt-button>
       </router-link>
-    </mt-header>
+    </mt-header>-->
 
     <!--<pc-nav-header :curProgress="1"></pc-nav-header>-->
 
@@ -32,10 +32,10 @@
       <div class="caution-wrapper">
         <span class="icon-caution"></span><span>请确保身份证和登录手机号码实名认证一致</span>
       </div>
-      <div class="arrow-wrapper">
+      <!--<div class="arrow-wrapper">
         <router-link to="/modifyPhone" class="main-color">修改手机号</router-link>
         <span class="fa fa-angle-right arrow-right"></span>
-      </div>
+      </div>-->
     </div>
 
     <div class="input-item">
@@ -67,16 +67,6 @@
         <i class="icon-shoot-success" v-if="faceRecognitionStep === 1"></i>
       </div>
     </router-link>
-    <!--<router-link class="input-item" to="/videoAuth">
-      <div class="input-item-l">
-        <span class="name">视频认证</span>
-        <input class="input" type="text" placeholder="前往认证" readonly>
-      </div>
-      <div class="input-item-r">
-        <i class="fa fa-angle-right" v-if="videoAuthStep === 0"></i>
-        <i class="icon-shoot-success" v-if="videoAuthStep === 1"></i>
-      </div>
-    </router-link>-->
 
     <div class="loan-btn" style="margin-top: 42px;">
       <mt-button class="btn" @click="submit">提交</mt-button>
@@ -146,9 +136,6 @@
       faceRecognitionStep() {
         return this.$store.state.identity.faceRecognitionStep
       }
-      // videoAuthStep() {
-      //   return this.$store.state.identity.videoAuthStep
-      // }
     },
     components: {
       pcNavHeader

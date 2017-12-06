@@ -20,7 +20,8 @@
       <div class="form-item">
         <label class="icon icon-msg"></label>
         <input type="text" placeholder="请输入短信验证码" v-model="vcode">
-        <label class="form-item-right code" @click="getCode">发送验证码</label>
+        <label class="form-item-right code" @click="getCode" v-if="!hasGetCode">发送验证码</label>
+        <label class="form-item-right code" v-if="hasGetCode">{{time}}s后重新获取</label>
       </div>
 
       <div class="loan-btn form-btn">
@@ -46,7 +47,9 @@
         pwd: '',
         vcode: '',
         channel: 'maimob',
-        invitorMobileNo: ''
+        invitorMobileNo: '',
+        hasGetCode: false,
+        time: 60
       }
     },
     methods: {
@@ -62,7 +65,7 @@
         }
       },
       getCode() {
-        let that = this
+        var that = this
         this.loading()
         this.app.Vcode(this.mobileno)
         this.app.VcodeCallBack = function(json) {
@@ -70,16 +73,27 @@
           json = JSON.parse(json)
           console.log(json)
           Toast({
-            message: json.returnMsg,
+            message: json.Msg,
             duration: 3000
           })
+          if (json.Step === 1 && json.Result === 0) {
+            that.hasGetCode = true
+            var timer = setInterval(() => {
+              that.time --
+              if (that.time === 0) {
+                that.hasGetCode = false
+                that.time = 60
+                clearInterval(timer)
+              }
+            }, 1000)
+          }
         }
       },
       register() {
         let that = this
         this.loading()
         this.app.register(this.mobileno, this.pwd, this.vcode, this.channel, this.invitorMobileNo)
-        this.app.registerCallBack = function(json) {
+        this.app.RegisterCallBack = function(json) {
           that.closeLoading()
           json = JSON.parse(json)
           console.log(json)
@@ -88,16 +102,17 @@
             duration: 3000
           })
         }
-//        axios.post('http://xfjr.ledaikuan.cn:9191/khw/c/a', {
-//          mobileNo: this.mobileno,
-//          password: this.pwd,
-//          yzm: this.vcode,
-//          channel: 'maimob'
-//        }).then(function(response) {
-//          console.log(response)
-//        }).catch(function(error) {
-//          console.log(error)
-//        })
+
+       // axios.post('http://xfjr.ledaikuan.cn:9191/khw/c/a', {
+       //   mobileNo: this.mobileno,
+       //   password: this.pwd,
+       //   yzm: this.vcode,
+       //   channel: 'maimob'
+       // }).then(function(response) {
+       //   console.log(response)
+       // }).catch(function(error) {
+       //   console.log(error)
+       // })
       }
     }
   }

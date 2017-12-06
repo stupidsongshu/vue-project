@@ -5,7 +5,8 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import store from './store/index'
-import MintUI, {Indicator} from 'mint-ui'
+// import MintUI, {Indicator} from 'mint-ui'
+import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'normalize.css'
 import './assets/css/common.css'
@@ -56,11 +57,11 @@ Vue.prototype.goback = function() {
   this.$router.go(-1)
 }
 Vue.prototype.loading = function(txt) {
-  Indicator.open({
-    text: txt,
-    spinnerType: 'fading-circle'
-  })
+  // Indicator.open({
+  //   text: txt,
+  //   spinnerType: 'fading-circle'
+  // })
 }
 Vue.prototype.closeLoading = function() {
-  Indicator.close()
+  // Indicator.close()
 }

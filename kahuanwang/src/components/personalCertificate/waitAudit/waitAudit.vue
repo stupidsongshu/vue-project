@@ -2,20 +2,21 @@
   <div class="waitAudit no-header">
     <div class="banner">
       <mt-header class="title" title="卡还王">
-        <router-link to="" slot="left">
+        <div slot="left" @click="back">
           <mt-button icon="back"></mt-button>
-        </router-link>
+        </div>
       </mt-header>
 
       <div>
         <div :class="{'icon-audit-pending': status === 0}"></div>
-        <div :class="{'icon-audit-fail': status === 1 || status === 2}"></div>
-        <div :class="{'icon-audit-success': status === 3}"></div>
+        <div :class="{'icon-audit-fail': status === 1}"></div>
+        <div :class="{'icon-audit-success': status === 2}"></div>
       </div>
       <div class="audit-hint">
         <span v-if="status === 0">资料已提交，请等待审核</span>
-        <span v-if="status === 1 || status === 2">很遗憾，您的资料没有通过审核</span>
-        <span v-if="status === 3">恭喜您！获得 20000 元额度</span>
+        <span v-if="status === 1">很遗憾，您的资料没有通过审核</span>
+        <!--<span v-if="status === 2">恭喜您！获得 20000 元额度</span>-->
+        <span v-if="status === 2">恭喜您！已通过审核</span>
       </div>
     </div>
 
@@ -25,30 +26,34 @@
         <p class="color999">
           一经审核通过，我们将会立即通知您，<br>
           敬请留意手机短信通知，<br>
-          或者登陆卡还王APP查看审核结果
+          或者登录卡还王APP查看审核结果
         </p>
       </div>
-      <div v-if="status === 1" class="audit-fail">再次申请>></div>
-      <div v-if="status === 2" class="audit-fail">请一个月后再来尝试~</div>
+      <!--<div v-if="status === 1" class="audit-fail">再次申请>></div>-->
     </div>
 
-    <div class="loan-btn" style="margin-top: 146px;">
-      <mt-button class="btn">返回首页</mt-button>
+    <div class="loan-btn" style="margin-top: 110px;">
+      <router-link to="/" class="btn">返回首页</router-link>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
+    methods: {
+      back() {
+        this.goback()
+      }
+    },
     computed: {
       status() {
-        return 0
+        return this.$store.state.identity.waitAuditStatus
       }
     }
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style scoped lang="stylus" rel="stylesheet/stylus">
   .waitAudit
     .banner
       width: 100%
@@ -57,9 +62,6 @@
       background-image: url("../../../assets/img/bg-header.png")
       background-repeat: no-repeat
       background-size: 100% 238px
-      .title
-        font-size: 18px
-        background-color: transparent
       .icon-audit-pending
         height: 61px
         margin: 48px 0 23px 0
@@ -86,11 +88,12 @@
         font-size: 15px
         text-align: center
     .audit-content
-      margin-top: 73px
+      margin-top: 72px
       text-align: center
       .audit-pending
         line-height: 20px
         font-size: 13px
         .title
           margin-bottom: 34px
+          font-size: 13px
 </style>

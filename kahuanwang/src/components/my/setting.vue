@@ -12,11 +12,11 @@
         <input type="text" placeholder="修改登录密码" readonly>
         <i class="fa fa-angle-right arrow"></i>
       </router-link>
-      <router-link class="form-item" to="/modifyPhone">
+      <!--<router-link class="form-item" to="/modifyPhone">
         <label class="icon icon-phone"></label>
         <input type="text" placeholder="修改手机号" readonly>
         <i class="fa fa-angle-right arrow"></i>
-      </router-link>
+      </router-link>-->
       <div class="loan-btn form-btn">
         <mt-button class="btn" @click="loginOUt">退出登录</mt-button>
       </div>

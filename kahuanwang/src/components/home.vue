@@ -8,16 +8,13 @@
       </div>-->
 
       <mt-header class="title" title="卡还王">
-        <!--<router-link to="/identity" slot="left">
-          <mt-button icon="back"></mt-button>
-        </router-link>-->
-        <router-link class="icon-news" to="/newsCenter" slot="right"></router-link>
+        <!--<router-link class="icon-news" to="/newsCenter" slot="right"></router-link>-->
       </mt-header>
 
       <div class="card-wrapper">
         <div class="card">
           <div class="loan-amount">
-            <div class="loan-amount-num"><span class="icon-money"></span><span>{{loanNum}}</span></div>
+            <div class="loan-amount-num"><span class="icon-money"></span><span>{{loanLimit}}</span></div>
             <div class="loan-amount-title">申请金额</div>
           </div>
         </div>
@@ -30,15 +27,15 @@
     </div>
 
     <div class="range">
-      <mt-range v-model="loanNum" :min="loanNumMin" :max="loanNumMax" :step="100" :bar-height="3"></mt-range>
+      <mt-range v-model="loanLimit" :min="loanLimitMin" :max="loanLimitMax" :step="100" :bar-height="3"></mt-range>
       <div class="clearfix range-num">
-        <span class="pull-left">{{loanNumMin}}</span>
-        <span class="pull-right">{{loanNumMax}}</span>
+        <span class="pull-left">{{loanLimitMin}}</span>
+        <span class="pull-right">{{loanLimitMax}}</span>
       </div>
       <div class="select-month">
-        <mt-button :class="{active: selectMonthBtn === 1}" @click="selectMonthBtn = 1">3个月</mt-button>
-        <mt-button :class="{active: selectMonthBtn === 2}" @click="selectMonthBtn = 2">6个月</mt-button>
-        <mt-button :class="{active: selectMonthBtn === 3}" @click="selectMonthBtn = 3">12个月</mt-button>
+        <mt-button :class="{active: loanDuration === 3}" @click="selectLoanDuration(3)">3个月</mt-button>
+        <mt-button :class="{active: loanDuration === 6}" @click="selectLoanDuration(6)">6个月</mt-button>
+        <mt-button :class="{active: loanDuration === 12}" @click="selectLoanDuration(12)">12个月</mt-button>
       </div>
     </div>
 
@@ -46,7 +43,6 @@
       <mt-button class="btn" @click="loan">立即借款</mt-button>
     </div>
     <div class="footer-txt">"卡还王"由麦广互娱与中银消费金融联合打造</div>
-
   </div>
 </template>
 
@@ -57,10 +53,8 @@
     name: 'home',
     data() {
       return {
-        loanNum: 10000,
-        loanNumMin: 500,
-        loanNumMax: 20000,
-        selectMonthBtn: 0
+        loanLimitMin: 500,
+        loanLimitMax: 20000
       }
     },
     components: {
@@ -68,8 +62,26 @@
       swiperSlide
     },
     methods: {
+      selectLoanDuration(time) {
+        this.$store.commit('loan_duration_save', time)
+      },
       loan() {
         this.$emit('checkApplyStatus')
+      }
+    },
+    computed: {
+      loanLimit: {
+        // getter
+        get: function() {
+          return this.$store.state.loan.loan_limit
+        },
+        // setter
+        set: function(newValue) {
+          this.$store.commit('loan_limit_save', newValue)
+        }
+      },
+      loanDuration() {
+        return this.$store.state.loan.loan_duration
       }
     }
   }
@@ -93,31 +105,20 @@
 <style scoped lang="stylus">
   .bg-header
     position: relative
-    /*top: -45px*/
     width: 100%
     height: 238px
     font-size: 20px
     background-image: url("../assets/img/bg-header.png")
     background-repeat: no-repeat
     background-size: 100% 238px
-    .title
-      display: flex
-      justify-content: space-between
-      /*height: 45px
-      padding: 0 15px*/
-      height: 65px
-      padding: 20px 15px 0 15px
-      color: #fff
-      font-size: 18px
-      background-color: transparent
-      .icon-news
-        display: inline-block
-        width: 22px
-        height: 45px
-        background-image: url("../assets/img/icon_news.png")
-        background-repeat: no-repeat
-        background-position: center
-        background-size: 22px 23px
+    .icon-news
+      display: inline-block
+      width: 22px
+      height: 45px
+      background-image: url("../assets/img/icon_news.png")
+      background-repeat: no-repeat
+      background-position: center
+      background-size: 22px 23px
     .card-wrapper
       position: absolute
       top: 80px

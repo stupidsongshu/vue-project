@@ -1,10 +1,10 @@
 <template>
   <div class="bankCard">
-    <mt-header fixed class="header" title="个人认证">
+    <!--<mt-header fixed class="header" title="个人认证">
       <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
       </div>
-    </mt-header>
+    </mt-header>-->
 
     <!--<pc-nav-header :curProgress="2"></pc-nav-header>-->
 
@@ -24,7 +24,7 @@
         <div class="card-num">**** **** **** 5391</div>
       </div>
       <router-link to="/personalCertificate/addDebitCard" class="add-credit-card" v-if="!hasDebitCard">
-        <img src="../../../assets/img/icon_card_add.png" width="40" height="30" alt=""><span>添加借记卡</span>
+        <img src="../../../assets/img/icon_card_add.png" style="display: block;" width="40" height="30" alt=""><span>添加借记卡</span>
       </router-link>
 
       <!--<div class="title">代还信用卡</div>

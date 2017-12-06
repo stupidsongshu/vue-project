@@ -53,7 +53,6 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   .mint-tabbar
-    /*bottom: 20px !important*/
     color: #d2d1d1
     background-color: #fff !important
     background-image: none

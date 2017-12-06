@@ -15,10 +15,6 @@
         <p>点击图标进行人脸识别</p>
         <p>请正面对准手机，确保光线充足！</p>
       </div>
-
-      <!--<div class="loan-btn">
-        <mt-button class="btn" @click="nextStep">下一步</mt-button>
-      </div>-->
     </div>
 
     <!-- 人脸识别成功 -->
@@ -27,7 +23,6 @@
         <h1 class="title">恭喜您，您的人脸识别已通过！</h1>
         <div class="shot-frame">
           <div class="shot-success">
-            <!--<img src="../../../assets/img/shot_success.png" alt="">-->
             <img :src="faceRecognitionImg" alt="">
           </div>
         </div>
@@ -67,12 +62,6 @@
   import { Toast } from 'mint-ui'
 
   export default {
-    data() {
-      return {
-        // faceRecognitionStep: 0,
-        // faceRecognitionImg: ''
-      }
-    },
     computed: {
       faceRecognitionStep() {
         return this.$store.state.identity.faceRecognitionStep
@@ -86,11 +75,10 @@
         this.goback()
       },
       nextStep() {
-        this.$router.push('/identity')
+        this.$router.push('/personalCertificate')
       },
       shot() {
         let that = this
-//        this.$router.push('/shot')
         this.app.livingCheck()
         this.app.CheckCallBack = function(json) {
           json = JSON.parse(json)

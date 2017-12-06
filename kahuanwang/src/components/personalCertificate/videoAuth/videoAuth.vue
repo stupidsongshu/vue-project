@@ -1,10 +1,10 @@
 <template>
   <div>
-    <mt-header fixed class="header" title="视频认证">
+    <!--<mt-header fixed class="header" title="视频认证">
       <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
       </div>
-    </mt-header>
+    </mt-header>-->
 
     <div class="faceRecognition" v-if="videoAuthStep === 0">
       <h1 class="title">请按照界面提示，读一段文字，完成认证视频录制</h1>

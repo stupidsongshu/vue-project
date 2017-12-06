@@ -1,12 +1,6 @@
 <template>
-  <div id="app" :class="{'has-footer': footer}">
-    <!--<mt-header class="header" title="卡还王">
-      <router-link to="/identity" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-      <router-link class="icon-news" to="/newsCenter" slot="right"></router-link>
-    </mt-header>-->
-
+  <!--<div id="app" :class="{'has-footer': footer}">-->
+  <div id="app">
     <transition :name="transitionName" mode="out-in">
       <router-view class="child-view" v-on:checkApplyStatus="applyStatus"></router-view>
     </transition>
@@ -46,17 +40,18 @@
         /* if (to.meta.headerTitle !== undefined) {
           this.headerTitle = to.meta.headerTitle
         } */
-        let loginInfo = JSON.parse(this.app.isLogin())
-        console.log(loginInfo)
+
         /**
          * 需登录的路由配置
          */
-        let filterPaths = ['/', '/login', '/register', '/forgetPsw', '/my', '/aboutUs', '/help', '/setting']
-        let bool = filterPaths.some((path) => {
+        let loginInfo = JSON.parse(this.app.isLogin())
+        console.log(loginInfo)
+        let filterPathsLogin = ['/', '/login', '/register', '/forgetPsw', '/my', '/aboutUs', '/help', '/setting']
+        let boolLogin = filterPathsLogin.some((path) => {
           return toPath === path
         })
         if (loginInfo.Step === 0 && loginInfo.Result !== 0) {
-          if (!bool) {
+          if (!boolLogin) {
             // MessageBox({
             //   title: '',
             //   message: '点击登录',
@@ -77,6 +72,7 @@
       }
     },
     methods: {
+      // 用户申请状态
       applyStatus() {
         let that = this
         let loginInfo = JSON.parse(this.app.isLogin())
@@ -85,15 +81,12 @@
         } else if (loginInfo.Step === 0 && loginInfo.Result === 0) { // 已登录
           this.loading()
 
-          // 用户申请状态
+          // 查询用户申请状态
           this.app.AppStatus()
           this.app.AppStatusCallBack = function(json) {
             that.closeLoading()
             json = JSON.parse(json)
             console.log(json)
-            /* eslint-disable no-unused-vars */
-            var sign, msg
-            let requires = JSON.parse(json.Msg)
             /**
              * Result
              * 0  缺少信息
@@ -115,6 +108,10 @@
              * 121  调查问卷
              */
             if (json.Step === 35 && json.Result === 0) {
+              /* eslint-disable no-unused-vars */
+              var sign, msg
+              let requires = JSON.parse(json.Msg)
+
               if (requires.length === 0) {
                 that.$router.push('/personalCertificate/agreeAuth')
               } else if (requires.length > 0) {
@@ -130,18 +127,22 @@
                 switch (sign) {
                   case '822':
                     // 身份证信息
+                    that.$store.commit('personalCertificateSwiperProgressSave', 1)
                     that.$router.push('/personalCertificate')
                     break
                   case '823':
                     // 身份证正面照片
+                    that.$store.commit('personalCertificateSwiperProgressSave', 1)
                     that.$router.push('/personalCertificate')
                     break
                   case '824':
                     // 身份证反面照片
+                    that.$store.commit('personalCertificateSwiperProgressSave', 1)
                     that.$router.push('/personalCertificate')
                     break
                   case '825':
                     // 活体照片
+                    that.$store.commit('personalCertificateSwiperProgressSave', 1)
                     that.$router.push('/personalCertificate/faceRecognition')
                     break
                   case '826':
@@ -167,14 +168,24 @@
               }
             } else if (json.Step === 35 && json.Result === 100) {
               // 申请开户
+              that.$store.commit('waitAuditStatusSave', 0)
+              that.$router.push('/personalCertificate/waitAudit')
             } else if (json.Step === 35 && json.Result === 101) {
               // 正在审核
+              that.$store.commit('waitAuditStatusSave', 0)
+              that.$router.push('/personalCertificate/waitAudit')
             } else if (json.Step === 35 && json.Result === 102) {
               // 审核通过
+              that.$store.commit('waitAuditStatusSave', 2)
+              that.$router.push('/personalCertificate/waitAudit')
             } else if (json.Step === 35 && json.Result === 109) {
               // 审核拒绝
+              that.$store.commit('waitAuditStatusSave', 1)
+              that.$router.push('/personalCertificate/waitAudit')
             } else if (json.Step === 35 && json.Result === 121) {
               // 调查问卷
+              that.$store.commit('waitAuditStatusSave', 3)
+              // that.$router.push('/personalCertificate/waitAudit')
             }
           }
         }
@@ -189,7 +200,8 @@
     /*max-width: 600px*/
     min-height: 100%
     margin: 0 auto
-    padding-top: 45px
+    /*padding-top: 45px*/
+    padding-top: 65px
   .has-footer
     padding-bottom: 56px
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div class="repay-deal">
     <mt-header fixed class="header" title="还款">
-      <router-link to="/" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="repay-deal-progress">
@@ -62,19 +62,9 @@
   import step from './../common/step'
 
   export default {
-    data() {
-      return {
-        /* componentInfo: {
-          route: 'repayDeal',
-          defaultColor: '#999',
-          activeColor: '#daab5b',
-          defaultBgStep1: 'icon_repay_submit_nor.png',
-          defaultBgStep2: 'icon_repay_handle_nor.png',
-          defaultBgStep3: 'icon_repay_success_nor.png',
-          activeBgStep1: 'icon_repay_submit_show.png',
-          activeBgStep2: 'icon_repay_handle_show.png',
-          activeBgStep3: 'icon_repay_success_show.png'
-        } */
+    methods: {
+      back() {
+        this.goback()
       }
     },
     components: {

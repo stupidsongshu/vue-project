@@ -1,10 +1,10 @@
 <template>
   <div>
-    <mt-header fixed class="header" title="个人认证">
+    <!--<mt-header fixed class="header" title="个人认证">
       <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
       </div>
-    </mt-header>
+    </mt-header>-->
 
     <!--<pc-nav-header :curProgress="4"></pc-nav-header>-->
 
@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="loan-btn">
+    <div class="loan-btn" style="margin-top: 42px;">
       <mt-button class="btn" @click="submit">提交</mt-button>
     </div>
 

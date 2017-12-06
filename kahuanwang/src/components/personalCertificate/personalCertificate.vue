@@ -24,29 +24,41 @@
     },
     computed: {
       progress() {
-        return this.$store.state.common.personalCertificateProgress
+        return this.$store.state.identity.personalCertificateSwiperProgress
       },
       progressShow() {
-        return this.$store.state.common.personalCertificateShow
+        return this.$store.state.identity.personalCertificateSwiperShow
       }
     },
-    watch: {
-      '$route'(to, from) {
-        let filterPath = [
+    methods: {
+      progressStatus(curPath) {
+        let filterPathPersonalCertificate = [
           '/personalCertificate',
           '/personalCertificate/bankCardInfo',
           '/personalCertificate/baseInfo',
           '/personalCertificate/linkman',
           '/personalCertificate/videoAuth'
         ]
-        let bool = filterPath.some((path) => {
-          return to.path === path
+        let boolCertificate = filterPathPersonalCertificate.some((path) => {
+          return curPath === path
         })
-        if (bool) {
-          this.$store.commit('personalCertificateShowSave', true)
+        if (boolCertificate) {
+          this.$store.commit('personalCertificateSwiperShowSave', true)
         } else {
-          this.$store.commit('personalCertificateShowSave', false)
+          this.$store.commit('personalCertificateSwiperShowSave', false)
         }
+      }
+    },
+    created() {
+      // 修复从personalCertificate组件以外的页面直接进入personalCertificate组件及其子组件后,个人认证资料swiper会显示的问题
+      this.progressStatus(this.$route.path)
+    },
+    watch: {
+      /**
+       * 个人认证资料swiper是否显示
+       */
+      '$route'(to, from) {
+        this.progressStatus(to.path)
       }
     }
   }

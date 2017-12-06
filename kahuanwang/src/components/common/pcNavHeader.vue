@@ -44,27 +44,32 @@
       }
     },
     methods: {
+      // 身份信息
       identity() {
-        this.$store.commit('personalCertificateProgressSave', 1)
+        this.$store.commit('personalCertificateSwiperProgressSave', 1)
         this.$router.replace('/personalCertificate')
       },
+      // 银行卡信息
       bankCard() {
         this.swiper.slideTo(0)
-        this.$store.commit('personalCertificateProgressSave', 2)
+        this.$store.commit('personalCertificateSwiperProgressSave', 2)
         this.$router.replace('/personalCertificate/bankCardInfo')
       },
+      // 基本信息
       baseInfo() {
         this.swiper.slideTo(1)
-        this.$store.commit('personalCertificateProgressSave', 3)
+        this.$store.commit('personalCertificateSwiperProgressSave', 3)
         this.$router.replace('/personalCertificate/baseInfo')
       },
+      // 联系人信息
       linkman() {
         this.swiper.slideTo(2)
-        this.$store.commit('personalCertificateProgressSave', 4)
+        this.$store.commit('personalCertificateSwiperProgressSave', 4)
         this.$router.replace('/personalCertificate/linkman')
       },
+      // 视频认证
       videoAuth() {
-        this.$store.commit('personalCertificateProgressSave', 5)
+        this.$store.commit('personalCertificateSwiperProgressSave', 5)
         this.$router.replace('/personalCertificate/videoAuth')
       }
     },

@@ -1,9 +1,9 @@
 <template>
   <div class="loanRepayDesc">
     <mt-header fixed class="header" title="提前还款">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <div class="banner">
@@ -47,6 +47,9 @@
 <script type="text/ecmascript-6">
   export default {
     methods: {
+      back() {
+        this.goback()
+      },
       inAdvanceRepayBtn() {
         this.$router.push('/repay/repayCode')
       }

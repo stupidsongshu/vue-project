@@ -4,6 +4,13 @@
 
 const state = {
   /**
+   * 个人认证swiper
+   * personalCertificateProgress: 认证进度
+   * personalCertificateShow: 是否显示
+   */
+  personalCertificateSwiperProgress: 1,
+  personalCertificateSwiperShow: true,
+  /**
    * 身份证
    * @param: status: false默认值 true识别成功
    * @param: name: 身份证姓名
@@ -31,12 +38,29 @@ const state = {
    * @param: videoAuthStep: 0默认值 1已认证
    */
   videoAuthStep: 0,
-  videoAuthImg: ''
+  videoAuthImg: '',
+  /**
+   * 资料审核状态 waitAuditStatus
+   * 0 等待审核
+   * 1 审核拒绝
+   * 2 审核通过
+   * 3 调查问卷
+   */
+  waitAuditStatus: 0
 }
 
 const getters = {}
 
 const mutations = {
+  /**
+   * 个人认证swiper
+   */
+  personalCertificateSwiperProgressSave(state, payload) {
+    state.personalCertificateSwiperProgress = payload
+  },
+  personalCertificateSwiperShowSave(state, payload) {
+    state.personalCertificateSwiperShow = payload
+  },
   /**
    * 身份证
    */
@@ -65,6 +89,12 @@ const mutations = {
   },
   videoAuthImgSave(state, payload) {
     state.videoAuthImg = payload
+  },
+  /**
+   * 资料审核状态
+   */
+  waitAuditStatusSave(state, payload) {
+    state.waitAuditStatus = payload
   }
 }
 

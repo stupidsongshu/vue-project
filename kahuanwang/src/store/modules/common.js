@@ -12,14 +12,7 @@ const state = {
   loginInfo: {
     isLogin: false,
     mobile: ''
-  },
-  /**
-   * 个人认证
-   * personalCertificateProgress: 认证进度
-   * personalCertificateShow: 是否显示
-   */
-  personalCertificateProgress: 1,
-  personalCertificateShow: true
+  }
 }
 
 const getters = {}
@@ -33,12 +26,6 @@ const mutations = {
   },
   loginInfoSave(state, payload) {
     state.loginInfo = payload
-  },
-  personalCertificateProgressSave(state, payload) {
-    state.personalCertificateProgress = payload
-  },
-  personalCertificateShowSave(state, payload) {
-    state.personalCertificateShow = payload
   }
 }
 

@@ -7,14 +7,6 @@
         <div class="user-avatar">
           <img src="./../../assets/img/head.png" alt="">
         </div>
-        <!--<div class="user-phone" v-if="loginInfo.isLogin">
-          <div>您好！</div>
-          <div>{{loginInfo.mobile | filter}}</div>
-        </div>
-        <div class="user-phone" v-else="loginInfo.isLogin">
-          <div>您好！</div>
-          <div>点击登录</div>
-        </div>-->
         <div class="user-phone" v-if="loginInfo.Step === 0 && loginInfo.Result === 0">
           <div>您好！</div>
           <div>{{loginInfo.Mobile | filter}}</div>
@@ -24,7 +16,6 @@
           <div>点击登录</div>
         </div>
       </div>
-
     </div>
 
     <div class="nav">
@@ -42,11 +33,11 @@
       </router-link>
     </div>
     <div class="menu">
-      <router-link to="/newsCenter">
+      <!--<router-link to="/newsCenter">
         <span class="icon icon-msg"></span>
         <span>我的消息</span>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
-      </router-link>
+      </router-link>-->
       <router-link to="/help">
         <span class="icon icon-help"></span>
         <span>帮助中心</span>
@@ -94,7 +85,6 @@
 
   .my
     position: relative
-    /*margin-top: -45px*/
     .banner
       position: relative
       width: 100%
@@ -102,11 +92,6 @@
       background-size: 100%
       background-repeat: no-repeat
       background-image: url("../../assets/img/bg-header.png")
-      .title
-        height: 65px
-        padding: 20px 15px 0 15px
-        font-size: 18px
-        background-color: transparent
       .user
         position: absolute
         left: 20px

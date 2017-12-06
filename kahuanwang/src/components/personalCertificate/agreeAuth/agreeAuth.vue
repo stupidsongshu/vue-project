@@ -1,9 +1,9 @@
 <template>
   <div class="agreeAuth">
     <mt-header fixed class="header" title="卡还王">
-      <router-link to="" slot="left">
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
     <img class="icon-card" src="../../../assets/img/icon_card.png" alt="">
@@ -27,10 +27,13 @@
 
   export default {
     methods: {
+      back() {
+        this.goback()
+      },
       submit() {
         let that = this
         this.loading()
-        this.app.ApplyAccount('旅游')
+        this.app.ApplyAccount(1)
         this.app.ApplyAccountCallBack = function(json) {
           that.closeLoading()
           json = JSON.parse(json)
@@ -39,6 +42,10 @@
             message: json.Msg,
             duration: 3000
           })
+          if (json.Step === 14 && json.Result === 0) {
+            that.$store.commit('waitAuditStatusSave', 0)
+            that.$router.push('/personalCertificate/waitAudit')
+          }
         }
       }
     }
