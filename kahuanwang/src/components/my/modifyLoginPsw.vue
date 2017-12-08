@@ -9,12 +9,13 @@
     <div class="form">
       <div class="form-item">
         <label class="icon icon-phone"></label>
-        <input type="number" placeholder="请输入手机号">
+        <input type="number" placeholder="请输入手机号" readonly v-model="mobile">
       </div>
       <div class="form-item">
         <label class="icon icon-msg"></label>
-        <input type="text" placeholder="请输入短信验证码">
-        <label class="form-item-right code" @click="getCode">发送验证码</label>
+        <input type="text" placeholder="请输入短信验证码" v-model="code">
+        <label class="form-item-right code" @click="getCode(mobile)" v-if="!hasGetCode">发送验证码</label>
+        <label class="form-item-right code" v-if="hasGetCode">{{time}}s后重新获取</label>
       </div>
       <div class="reset-psw-title">请重新设置密码</div>
       <div class="form-item">
@@ -32,10 +33,16 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { Toast } from 'mint-ui'
+
   export default {
     data() {
       return {
-        showPassword: false
+        showPassword: false,
+        mobile: '',
+        code: '',
+        hasGetCode: false,
+        time: 60
       }
     },
     methods: {
@@ -50,8 +57,39 @@
           this.$refs.psw.type = 'password'
         }
       },
-      getCode() {},
+      getCode(mobile) {
+        var that = this
+        this.loading()
+        this.app.Vcode(mobile)
+        this.app.VcodeCallBack = function(json) {
+          that.closeLoading()
+          json = JSON.parse(json)
+          console.log(json)
+          Toast({
+            message: json.Msg,
+            duration: 3000
+          })
+          if (json.Step === 3 && json.Result === 0) {
+            that.hasGetCode = true
+            var timer = setInterval(() => {
+              that.time --
+              if (that.time === 0) {
+                that.hasGetCode = false
+                that.time = 60
+                clearInterval(timer)
+              }
+            }, 1000)
+          }
+        }
+      },
       resetPsw() {}
+    },
+    created() {
+      let loginInfo = JSON.parse(this.app.isLogin())
+      if (loginInfo.Step === 0 && loginInfo.Result === 0) { // 已登录
+        this.mobile = loginInfo.Mobile
+      } else if (loginInfo.Step === 0 && loginInfo.Result !== 0) { // 未登录
+      }
     }
   }
 </script>

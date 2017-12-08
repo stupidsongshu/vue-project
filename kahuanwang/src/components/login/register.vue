@@ -101,6 +101,9 @@
             message: json.Msg,
             duration: 3000
           })
+          if (json.Step === 2 && json.Result === 0) {
+            that.$router.push('/login')
+          }
         }
 
        // axios.post('http://xfjr.ledaikuan.cn:9191/khw/c/a', {

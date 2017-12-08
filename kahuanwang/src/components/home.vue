@@ -22,6 +22,13 @@
       <div class="notice-wrapper">
         <div class="notice">
           <div class="icon"></div>
+          <keep-alive>
+            <swiper :options="swiperOption" v-if="phoneArr">
+              <swiper-slide class="phone-item" v-for="phone in phoneArr">
+                {{phone.number}}成功借款{{phone.amount}}元
+              </swiper-slide>
+            </swiper>
+          </keep-alive>
         </div>
       </div>
     </div>
@@ -43,18 +50,28 @@
       <mt-button class="btn" @click="loan">立即借款</mt-button>
     </div>
     <div class="footer-txt">"卡还王"由麦广互娱与中银消费金融联合打造</div>
+    <!--<router-link to="/survey" class="footer-txt" style="display: block;margin: 0 auto;">"卡还王"由麦广互娱与中银消费金融联合打造</router-link>-->
   </div>
 </template>
 
 <script>
-  import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  import {swiper, swiperSlide} from 'vue-awesome-swiper'
 
   export default {
     name: 'home',
     data() {
       return {
         loanLimitMin: 500,
-        loanLimitMax: 20000
+        loanLimitMax: 20000,
+        swiperOption: {
+          direction: 'vertical',
+          autoplay: 3000,
+          speed: 800,
+          loop: true,
+          // 值为true时，slide无法拖动
+          onlyExternal: true
+        },
+        phoneArr: []
       }
     },
     components: {
@@ -84,6 +101,53 @@
         return this.$store.state.loan.loan_duration
       }
     }
+    // mounted() {
+    //   var a = new Date()
+    //   /*
+    //     三大运营商最新号段 合作版
+    //     移动号段:
+    //       134 135 136 137 138 139 147 148 150 151 152 157 158 159 172 178 182 183 184 187 188 198
+    //     联通号段:
+    //       130 131 132 145 146 155 156 166 171 175 176 185 186
+    //     电信号段:
+    //       133 149 153 173 174 177 180 181 189 199
+    //     虚拟运营商:
+    //       170
+    //   */
+    //   const LOAN_LIMIT_MIN = 500
+    //   const LOAN_LIMIT_MAX = 20000
+    //   let prefixArr = [134, 135, 136, 137, 138, 139, 147, 148, 150, 151, 152, 157, 158, 159, 172, 178, 182, 183, 184, 187, 188, 198, 130, 131, 132, 145, 146, 155, 156, 166, 171, 175, 176, 185, 186, 133, 149, 153, 173, 174, 177, 180, 181, 189, 199, 170]
+    //   // 生成手机号
+    //   let generateNumber = function() {
+    //     // 前3位
+    //     let prefix = prefixArr[parseInt(Math.random() * prefixArr.length)]
+    //     // 后4位
+    //     let postfix = (() => {
+    //       let tmp = (parseInt(Math.random() * 10000)).toString()
+    //       while (tmp.length < 4) {
+    //         tmp = '0' + tmp
+    //       }
+    //       return tmp
+    //     })()
+    //     return prefix + '****' + postfix
+    //   }
+    //   // 贷款额度
+    //   let generateAmount = () => {
+    //     // var a = parseInt(Math.random() * ((20000 - 500) / 100 + 1))
+    //     // return a * 100 + 500
+    //     var tmp = parseInt(Math.random() * ((LOAN_LIMIT_MAX - LOAN_LIMIT_MIN) / 100 + 1))
+    //     return tmp * 100 + LOAN_LIMIT_MIN
+    //   }
+    //   for (var i = 0; i < 5; i++) {
+    //     this.phoneArr.push({
+    //       number: generateNumber(),
+    //       amount: generateAmount()
+    //     })
+    //   }
+    //   console.log(this.phoneArr)
+    //   var b = new Date()
+    //   console.log(b - a)
+    // }
   }
 </script>
 
@@ -91,10 +155,12 @@
   .mt-range-runway
     border: 3px solid #d9d9d9 !important
     border-radius: 3px
+
   .mt-range-progress
     border: 3px solid #4e433d
     border-top-left-radius: 3px
     border-bottom-left-radius: 3px
+
   .mt-range-thumb
     width: 33px !important
     height: 33px !important
@@ -163,12 +229,22 @@
         width: 100%
         height: 100%
         padding-left: 10px
-        background-color: rgba(255,255,255,.4)
+        background-color: rgba(255, 255, 255, .4)
         .icon
           width: 14px
           height: 100%
           background: url('../assets/img/icon_horn.png') no-repeat center;
           background-size: 14px 14px
+        .swiper-container
+          margin-left: 4px
+          .phone-item
+            /*width: 100%
+            height: 24px
+            line-height: 24px*/
+            display: flex
+            align-items: center
+            color: #fff
+            font-size: 12px
 
   .range
     width: 100%

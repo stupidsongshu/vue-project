@@ -4,6 +4,11 @@
 
 const state = {
   /**
+   * 申请资格认证状态
+   * applyQualificationAuthStatus: false未通过(默认) true已通过
+   */
+  applyQualificationAuthStatus: false,
+  /**
    * 个人认证swiper
    * personalCertificateProgress: 认证进度
    * personalCertificateShow: 是否显示
@@ -17,16 +22,24 @@ const state = {
    * @param: id: 身份证号码
    * @param: img: 身份证识别成功图片
    */
-  idcardFrontInfo: {
-    status: false,
-    name: '',
-    id: '',
-    img: ''
-  },
-  idcardBackInfo: {
-    status: false,
-    img: ''
-  },
+  // idcardFrontInfo: {
+  //   status: false,
+  //   name: '',
+  //   id: '',
+  //   img: ''
+  // },
+  idcardFront_shotStatus: false, // 正面拍摄完成返回本地图片状态
+  idcardFront_identifyStatus: false, // 服务器识别状态
+  idcardFront_name: '',
+  idcardFront_id: '',
+  idcardFront_img: '',
+  // idcardBackInfo: {
+  //   status: false,
+  //   img: ''
+  // },
+  idcardBack_shotStatus: false, // 反面拍摄完成返回本地图片状态
+  idcardBack_identifyStatus: false, // 服务器识别状态
+  idcardBack_img: '',
   /**
    * 人脸识别
    * @param: faceRecognitionStep: 0默认值 1识别成功 2识别失败
@@ -64,13 +77,35 @@ const mutations = {
   /**
    * 身份证
    */
-  idcardFrontInfoSave(state, payload) {
-    console.log(payload)
-    state.idcardFrontInfo = payload
+  // idcardFrontInfoSave(state, payload) {
+  //   state.idcardFrontInfo = payload
+  // },
+  // idcardBackInfoSave(state, payload) {
+  //   state.idcardBackInfo = payload
+  // },
+  idcardFrontShotStatusSave(state, payload) {
+    state.idcardFront_shotStatus = payload
   },
-  idcardBackInfoSave(state, payload) {
-    console.log(payload)
-    state.idcardBackInfo = payload
+  idcardFrontIdentifyStatusSave(state, payload) {
+    state.idcardFront_identifyStatus = payload
+  },
+  idcardFrontNameSave(state, payload) {
+    state.idcardFront_name = payload
+  },
+  idcardFrontIdSave(state, payload) {
+    state.idcardFront_id = payload
+  },
+  idcardFrontImgSave(state, payload) {
+    state.idcardFront_img = payload
+  },
+  idcardBackShotStatusSave(state, payload) {
+    state.idcardBack_shotStatus = payload
+  },
+  idcardBackIdentifyStatusSave(state, payload) {
+    state.idcardBack_identifyStatus = payload
+  },
+  idcardBackImgSave(state, payload) {
+    state.idcardBack_img = payload
   },
   /**
    * 人脸识别

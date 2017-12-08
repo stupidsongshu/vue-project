@@ -17,7 +17,7 @@
         <input type="text" placeholder="修改手机号" readonly>
         <i class="fa fa-angle-right arrow"></i>
       </router-link>-->
-      <div class="loan-btn form-btn">
+      <div class="loan-btn form-btn" v-if="isLogin">
         <mt-button class="btn" @click="loginOUt">退出登录</mt-button>
       </div>
     </div>
@@ -46,6 +46,9 @@
               message: '退出登录成功',
               duration: 2000
             })
+            console.log(window.sessionStorage)
+            window.sessionStorage.clear()
+            console.log(window.sessionStorage)
             that.$router.push('/')
             that.$store.commit('tabBarActiveIndexSave', 0)
           } else {
@@ -54,6 +57,16 @@
               duration: 2000
             })
           }
+        }
+      }
+    },
+    computed: {
+      isLogin() {
+        let loginInfo = JSON.parse(this.app.isLogin())
+        if (loginInfo.Step === 0 && loginInfo.Result === 0) { // 已登录
+          return true
+        } else if (loginInfo.Step === 0 && loginInfo.Result !== 0) { // 未登录
+          return false
         }
       }
     }

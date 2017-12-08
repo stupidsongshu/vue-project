@@ -41,6 +41,10 @@
     computed: {
       swiper() {
         return this.$refs.mySwiper.swiper
+      },
+      // 申请资格认证状态
+      applyQualificationAuthStatus() {
+        return this.$store.state.identity.applyQualificationAuthStatus
       }
     },
     methods: {

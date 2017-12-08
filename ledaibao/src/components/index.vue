@@ -147,9 +147,9 @@
       let prefixArr = [134, 135, 136, 137, 138, 139, 147, 148, 150, 151, 152, 157, 158, 159, 172, 178, 182, 183, 184, 187, 188, 198, 130, 131, 132, 145, 146, 155, 156, 166, 171, 175, 176, 185, 186, 133, 149, 153, 173, 174, 177, 180, 181, 189, 199, 170]
       let a = () => {
         let createPhone = () => {
-        // 前缀
+          // 前缀
           let prefix = prefixArr[parseInt(Math.random() * prefixArr.length)]
-        // 后缀
+          // 后缀
           let postfix = (() => {
             let tmp = (parseInt(Math.random() * 10000)).toString()
             while (tmp.length < 4) {

@@ -5,8 +5,8 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import store from './store/index'
-// import MintUI, {Indicator} from 'mint-ui'
-import MintUI from 'mint-ui'
+import MintUI, {Indicator} from 'mint-ui'
+// import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'normalize.css'
 import './assets/css/common.css'
@@ -44,24 +44,47 @@ new Vue({
     // })
   }
 })
+Vue.prototype.goHome = function() {
+  this.$router.push('/')
+}
+Vue.prototype.$http = axios
 
 /* eslint-disable no-undef */
 Vue.prototype.app = app
-// Vue.prototype.retreat = app.back
-// console.log(app)
-// console.log('isLogin', this.app.isLogin())
 
-Vue.prototype.$http = axios
-
+app.back = function() {
+  window.history.go(-1)
+  let loginInfo = JSON.parse(this.isLogin())
+  if (loginInfo.Step === 0 && loginInfo.Result === 0) { // 已登录
+    // alert('已登录')
+  } else if (loginInfo.Step === 0 && loginInfo.Result !== 0) { // 未登录
+    // alert('未登录')
+    // Vue.prototype.goHome = function() {
+    //   console.log(this)
+    // }
+  }
+}
 Vue.prototype.goback = function() {
   this.$router.go(-1)
 }
+
 Vue.prototype.loading = function(txt) {
-  // Indicator.open({
-  //   text: txt,
-  //   spinnerType: 'fading-circle'
-  // })
+  Indicator.open({
+    text: txt,
+    spinnerType: 'fading-circle'
+  })
 }
 Vue.prototype.closeLoading = function() {
-  // Indicator.close()
+  Indicator.close()
 }
+
+window.addEventListener('resize', function() {
+  // alert(1)
+  if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+    // alert(2)
+    window.setTimeout(function() {
+      // alert(3)
+      document.activeElement.scrollIntoViewIfNeeded()
+    }, 0)
+  }
+})

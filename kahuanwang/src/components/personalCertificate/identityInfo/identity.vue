@@ -13,15 +13,15 @@
       <ul class="shot-wrapper">
         <li class="shot-item" @click="showExampleL">
           <div>
-            <img v-show="!idcardFrontInfo.status" src="../../../assets/img/shot_face.png" alt="">
-            <img v-show="idcardFrontInfo.status" :src="idcardFrontInfo.img" alt="">
+            <img v-show="!idcardFrontShotStatus" src="../../../assets/img/shot_face.png" alt="">
+            <img v-show="idcardFrontShotStatus" :src="idcardFrontImg" alt="">
           </div>
           <span class="explain">身份证正面</span>
         </li>
         <li class="shot-item" @click="showExampleR">
           <div>
-            <img v-show="!idcardBackInfo.status" src="../../../assets/img/shot_back.png" alt="">
-            <img v-show="idcardBackInfo.status" :src="idcardBackInfo.img" alt="">
+            <img v-show="!idcardBackShotStatus" src="../../../assets/img/shot_back.png" alt="">
+            <img v-show="idcardBackShotStatus" :src="idcardBackImg" alt="">
           </div>
           <span class="explain">身份证反面</span>
         </li>
@@ -41,18 +41,18 @@
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">姓名</span>
-        <input class="input" type="text" placeholder="真实姓名" readonly v-model="idcardFrontInfo.name">
+        <input class="input" type="text" placeholder="真实姓名" v-model="idcardFrontName" v-on:focus="focus($event)" v-on:blur="blur">
       </div>
-      <div class="input-item-r" v-if="idcardFrontInfo.status">
+      <div class="input-item-r" v-if="idcardFrontIdentifyStatus">
         <i class="icon-shoot-success"></i>
       </div>
     </div>
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">身份证号</span>
-        <input class="input" type="text" placeholder="身份证号码" readonly v-model="idcardFrontInfo.id">
+        <input class="input" type="text" placeholder="身份证号码" v-model="idcardFrontId">
       </div>
-      <div class="input-item-r" v-if="idcardFrontInfo.status">
+      <div class="input-item-r" v-if="idcardFrontIdentifyStatus">
         <i class="icon-shoot-success"></i>
       </div>
     </div>
@@ -127,11 +127,41 @@
       }
     },
     computed: {
-      idcardFrontInfo() {
-        return this.$store.state.identity.idcardFrontInfo
+      // idcardFrontInfo() {
+      //   return this.$store.state.identity.idcardFrontInfo
+      // },
+      // idcardBackInfo() {
+      //   return this.$store.state.identity.idcardBackInfo
+      // },
+
+      // 正面拍摄完成返回本地图片状态
+      idcardFrontShotStatus() {
+        return this.$store.state.identity.idcardFront_shotStatus
       },
-      idcardBackInfo() {
-        return this.$store.state.identity.idcardBackInfo
+      // 服务器识别状态
+      idcardFrontIdentifyStatus() {
+        return this.$store.state.identity.idcardFront_identifyStatus
+      },
+      idcardFrontName() {
+        return this.$store.state.identity.idcardFront_name
+      },
+      idcardFrontId() {
+        return this.$store.state.identity.idcardFront_id
+      },
+      idcardFrontImg() {
+        return this.$store.state.identity.idcardFront_img
+      },
+
+      // 反面拍摄完成返回本地图片状态
+      idcardBackShotStatus() {
+        return this.$store.state.identity.idcardBack_shotStatus
+      },
+      // 服务器识别状态
+      idcardBackIdentifyStatus() {
+        return this.$store.state.identity.idcardBack_identifyStatus
+      },
+      idcardBackImg() {
+        return this.$store.state.identity.idcardBack_img
       },
       faceRecognitionStep() {
         return this.$store.state.identity.faceRecognitionStep
@@ -141,6 +171,16 @@
       pcNavHeader
     },
     methods: {
+      focus(e) {
+        // let that = this
+        // setTimeout(function() {
+        //   let pannel = that.$refs.idcardFrontInfoName
+        //   pannel.scrollIntoView(true)
+        //   pannel.scrollIntoViewIfNeeded()
+        // }, 200)
+      },
+      blur() {
+      },
       showExampleL() {
         this.popupVisibleL = true
       },
@@ -151,25 +191,26 @@
         let that = this
         this.popupVisibleL = false
         this.app.idcardFront()
-        this.app.CheckCallBack = function(json) {
+        this.app.IdcardFrontCallBack = function(json) {
           json = JSON.parse(json)
           console.log(json)
-          if (json.Result === 0 && json.IdCardType === '0' && json.Step === 6) {
-            that.loading(json.Msg)
+          if (json.Step === 6 && json.Result === 0 && json.IdCardType === 0) {
+            // that.loading(json.Msg)
+            // 正面拍摄完成返回本地图片状态
+            that.$store.commit('idcardFrontShotStatusSave', true)
+            that.$store.commit('idcardFrontImgSave', 'data:image/png;base64,' + json.Img)
           }
-          if (json.Result === 0 && json.IdCardType === '0' && json.Step === 7) {
-            that.closeLoading()
-            Toast({
-              message: json.Msg,
-              duration: 3000
-            })
-            that.$store.commit('idcardFrontInfoSave', {
-              status: true,
-              name: json.Name,
-              id: json.Id,
-              img: 'data:image/png;base64,' + json.Img
-            })
-          } else if (json.Result !== 0 && json.IdCardType === '0' && json.Step === 7) {
+          if (json.Step === 7 && json.Result === 0 && json.IdCardType === 0) {
+            // that.closeLoading()
+            // Toast({
+            //   message: json.Msg,
+            //   duration: 3000
+            // })
+            // 服务器识别状态
+            that.$store.commit('idcardFrontIdentifyStatusSave', true)
+            that.$store.commit('idcardFrontNameSave', json.Name)
+            that.$store.commit('idcardFrontIdSave', json.Id)
+          } else if (json.Step === 7 && json.Result !== 0 && json.IdCardType === 0) {
             that.closeLoading()
             Toast({
               message: json.Msg,
@@ -182,23 +223,24 @@
         let that = this
         this.popupVisibleR = false
         this.app.idcardBack()
-        this.app.CheckCallBack = function(json) {
+        this.app.IdcardBackCallBack = function(json) {
           json = JSON.parse(json)
           console.log(json)
-          if (json.Result === 0 && json.IdCardType === '1' && json.Step === 6) {
-            that.loading(json.Msg)
+          if (json.Step === 6 && json.Result === 0 && json.IdCardType === 1) {
+            // that.loading(json.Msg)
+            // 反面拍摄完成返回本地图片状态
+            that.$store.commit('idcardBackShotStatusSave', true)
+            that.$store.commit('idcardBackImgSave', 'data:image/png;base64,' + json.Img)
           }
-          if (json.Result === 0 && json.IdCardType === '1' && json.Step === 7) {
-            that.closeLoading()
-            Toast({
-              message: json.Msg,
-              duration: 3000
-            })
-            that.$store.commit('idcardBackInfoSave', {
-              status: true,
-              img: 'data:image/png;base64,' + json.Img
-            })
-          } else if (json.Result !== 0 && json.IdCardType === '1' && json.Step === 7) {
+          if (json.Step === 7 && json.Result === 0 && json.IdCardType === 1) {
+            // that.closeLoading()
+            // Toast({
+            //   message: json.Msg,
+            //   duration: 3000
+            // })
+            // 服务器识别状态
+            that.$store.commit('idcardBackIdentifyStatusSave', true)
+          } else if (json.Step === 7 && json.Result !== 0 && json.IdCardType === 1) {
             that.closeLoading()
             Toast({
               message: json.Msg,
@@ -208,10 +250,10 @@
         }
       },
       submit() {
-        console.log(this.app.isLogin())
         let that = this
         this.loading()
-        this.app.updateIdCard()
+        // this.app.updateIdCard()
+        this.app.updateIdCard(this.idcardFrontInfo.name, this.idcardFrontInfo.id)
         this.app.UpdateIdCardCallBack = function(json) {
           that.closeLoading()
           json = JSON.parse(json)

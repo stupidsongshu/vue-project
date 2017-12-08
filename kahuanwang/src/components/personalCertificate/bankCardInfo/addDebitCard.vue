@@ -17,7 +17,7 @@
         <div class="name">
           <span>手机号码</span>
         </div>
-        <input class="input" type="number" placeholder="请输入借记卡绑定手机号" v-model="phoneNo">
+        <input class="input" type="number" placeholder="请输入借记卡绑定手机号(选填)" v-model="phoneNo">
       </div>
     </div>
     <div class="input-item">

@@ -16,9 +16,6 @@
   import pcNavHeader from '../common/pcNavHeader'
 
   export default {
-    data() {
-      return {}
-    },
     components: {
       pcNavHeader
     },

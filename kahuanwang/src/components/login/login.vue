@@ -35,7 +35,7 @@
         <div class="form-item">
           <label class="icon icon-msg"></label>
           <input type="text" placeholder="请输入短信验证码" v-model="code">
-          <label class="form-item-right code" @click="getCode" v-if="!hasGetCode">发送验证码</label>
+          <label class="form-item-right code" @click="getCode(mobileNo2)" v-if="!hasGetCode">发送验证码</label>
           <label class="form-item-right code" v-if="hasGetCode">{{time}}s后重新获取</label>
         </div>
         <div class="loan-btn form-btn">
@@ -69,10 +69,10 @@
       selectLoginType(index) {
         this.loginIndex = index
       },
-      getCode() {
+      getCode(mobileNo2) {
         var that = this
         this.loading()
-        this.app.Vcode(this.mobileNo2)
+        this.app.Vcode(mobileNo2)
         this.app.VcodeCallBack = function(json) {
           that.closeLoading()
           json = JSON.parse(json)

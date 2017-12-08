@@ -12,25 +12,10 @@
 
 <script type="text/ecmascript-6">
   export default {
-    data() {
-      return {
-        showPassword: false
-      }
-    },
     methods: {
       back() {
         this.goback()
-      },
-      toggle() {
-        this.showPassword = !this.showPassword
-        if (this.showPassword) {
-          this.$refs.psw.type = 'text'
-        } else {
-          this.$refs.psw.type = 'password'
-        }
-      },
-      getCode() {},
-      resetPsw() {}
+      }
     }
   }
 </script>

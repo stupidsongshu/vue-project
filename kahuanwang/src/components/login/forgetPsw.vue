@@ -9,12 +9,12 @@
     <div class="form">
       <div class="form-item">
         <label class="icon icon-phone"></label>
-        <input type="number" placeholder="请输入手机号" v-model="mobileno">
+        <input type="number" placeholder="请输入手机号" v-model="mobileNo">
       </div>
       <div class="form-item">
         <label class="icon icon-msg"></label>
         <input type="text" placeholder="请输入短信验证码" v-model="vcode">
-        <label class="form-item-right code" @click="getCode">发送验证码</label>
+        <label class="form-item-right code" @click="getCode(mobileNo)">发送验证码</label>
       </div>
       <div class="reset-psw-title">请重新设置密码</div>
       <div class="form-item">
@@ -38,7 +38,7 @@
     data() {
       return {
         showPassword: false,
-        mobileno: '',
+        mobileNo: '',
         vcode: '',
         pwd: ''
       }
@@ -56,8 +56,8 @@
           this.$refs.forgetPassword.type = 'password'
         }
       },
-      getCode() {
-        this.app.Vcode(this.mobileno)
+      getCode(mobileNo) {
+        this.app.Vcode(mobileNo)
         this.app.VcodeCallBack = function(json) {
           json = JSON.parse(json)
           console.log(json)

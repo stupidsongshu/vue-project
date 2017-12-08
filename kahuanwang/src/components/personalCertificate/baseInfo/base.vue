@@ -15,7 +15,7 @@
             <span class="required">居住地</span>
           </div>
           <!--<input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">-->
-          <span class="color999">{{homeCity || '请选择居住地所在城市'}}</span>
+          <span class="color999">{{homeCity || '请选择居住地所在城市家家爱睡觉睡觉'}}</span>
         </div>
         <div class="input-item-r">
           <i class="fa fa-angle-right"></i>
@@ -80,7 +80,7 @@
         <div class="name">
           <span>分机号</span>
         </div>
-        <input class="input" type="text" placeholder="填写单位电话分机号" v-model="unitTelExt">
+        <input class="input" type="text" placeholder="填写单位电话分机号(选填)" v-model="unitTelExt">
       </div>
     </div>
 

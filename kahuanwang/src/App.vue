@@ -1,6 +1,6 @@
 <template>
-  <!--<div id="app" :class="{'has-footer': footer}">-->
-  <div id="app">
+  <div id="app" :class="{'has-footer': footer}">
+  <!--<div id="app">-->
     <transition :name="transitionName" mode="out-in">
       <router-view class="child-view" v-on:checkApplyStatus="applyStatus"></router-view>
     </transition>
@@ -42,6 +42,17 @@
         } */
 
         /**
+         * fix 点击设备物理返回键 tabBar 显示
+         */
+        if (toPath === '/') {
+          this.$store.commit('tabBarActiveIndexSave', 0)
+        } else if (toPath === '/repay') {
+          this.$store.commit('tabBarActiveIndexSave', 1)
+        } else if (toPath === '/my') {
+          this.$store.commit('tabBarActiveIndexSave', 2)
+        }
+
+        /**
          * 需登录的路由配置
          */
         let loginInfo = JSON.parse(this.app.isLogin())
@@ -76,6 +87,7 @@
       applyStatus() {
         let that = this
         let loginInfo = JSON.parse(this.app.isLogin())
+        console.log(loginInfo)
         if (loginInfo.Step === 0 && loginInfo.Result !== 0) { // 未登录
           this.$router.push('/login')
         } else if (loginInfo.Step === 0 && loginInfo.Result === 0) { // 已登录
@@ -170,6 +182,7 @@
               // 申请开户
               that.$store.commit('waitAuditStatusSave', 0)
               that.$router.push('/personalCertificate/waitAudit')
+              // that.$router.push('/personalCertificate')
             } else if (json.Step === 35 && json.Result === 101) {
               // 正在审核
               that.$store.commit('waitAuditStatusSave', 0)
@@ -200,8 +213,5 @@
     /*max-width: 600px*/
     min-height: 100%
     margin: 0 auto
-    /*padding-top: 45px*/
     padding-top: 65px
-  .has-footer
-    padding-bottom: 56px
 </style>

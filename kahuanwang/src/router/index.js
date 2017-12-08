@@ -54,6 +54,8 @@ import VideoAuth from '@/components/personalCertificate/videoAuth/videoAuth'
 import ReadAloud from '@/components/personalCertificate/videoAuth/readAloud'
 import AgreeAuth from '@/components/personalCertificate/agreeAuth/agreeAuth'
 import WaitAudit from '@/components/personalCertificate/waitAudit/waitAudit'
+// 问卷调查
+import Survey from '@/components/survey/survey'
 
 Vue.use(VueRouter)
 
@@ -294,6 +296,11 @@ const routes = [
         component: WaitAudit
       }
     ]
+  },
+  {
+    path: '/survey',
+    name: 'survey',
+    component: Survey
   }
 ]
 const router = new VueRouter({

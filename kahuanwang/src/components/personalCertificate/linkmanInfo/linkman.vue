@@ -86,9 +86,15 @@
         this.goback()
       },
       getContacts(contactRelation) {
+        let that = this
         this.popupVisible = true
         this.contactRelation = contactRelation
-        this.linkmanInfo = JSON.parse(this.app.getContacts())
+        this.app.getContacts()
+        this.app.GetContactsCallBack = function(json) {
+          json = JSON.parse(json)
+          console.log(json)
+          that.linkmanInfo = json
+        }
       },
       getUser(user) {
         this.popupVisible = false

@@ -47,10 +47,6 @@
         <img src="../../../assets/img/icon_card_add.png" width="40" height="30" alt=""><span>添加信用卡</span>
       </router-link>-->
     </div>
-
-    <div class="loan-btn" style="margin-top: 106px;">
-      <mt-button class="btn" @click="submit">提交</mt-button>
-    </div>
   </div>
 </template>
 
