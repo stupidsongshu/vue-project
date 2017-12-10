@@ -1,14 +1,17 @@
 <template>
   <div>
     <mt-header fixed class="header" title="个人认证">
-      <router-link to="/" slot="left">
+      <!--<router-link to="/" slot="left">-->
+        <!--<mt-button icon="back"></mt-button>-->
+      <!--</router-link>-->
+      <div slot="left" @click="back">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </div>
     </mt-header>
 
-    <pc-nav-header :curProgress="progress" v-if="progressShow"></pc-nav-header>
+    <pc-nav-header v-if="progressShow" :curProgress="curProgress"></pc-nav-header>
 
-    <router-view></router-view>
+    <router-view :storageTextData="storageTextData"></router-view>
   </div>
 </template>
 
@@ -20,14 +23,27 @@
       pcNavHeader
     },
     computed: {
-      progress() {
-        return this.$store.state.identity.personalCertificateSwiperProgress
-      },
       progressShow() {
         return this.$store.state.identity.personalCertificateSwiperShow
+      },
+      curProgress() {
+        return this.$store.state.identity.personalCertificateSwiperProgress
+      },
+      storageTextData() {
+        let data = this.app.getData()
+        if (data !== '') {
+          data = JSON.parse(data)
+          return data
+        } else {
+          console.log('没有缓存')
+          return {}
+        }
       }
     },
     methods: {
+      back() {
+        this.goback()
+      },
       progressStatus(curPath) {
         let filterPathPersonalCertificate = [
           '/personalCertificate',
@@ -40,13 +56,16 @@
           return curPath === path
         })
         if (boolCertificate) {
+          /**
+           * 个人认证 swiper 是否显示
+           */
           this.$store.commit('personalCertificateSwiperShowSave', true)
         } else {
           this.$store.commit('personalCertificateSwiperShowSave', false)
         }
       }
     },
-    created() {
+    mounted() {
       // 修复从personalCertificate组件以外的页面直接进入personalCertificate组件及其子组件后,个人认证资料swiper会显示的问题
       this.progressStatus(this.$route.path)
     },
@@ -60,7 +79,3 @@
     }
   }
 </script>
-
-<style lang="stylus" rel="stylesheet/stylus">
-
-</style>

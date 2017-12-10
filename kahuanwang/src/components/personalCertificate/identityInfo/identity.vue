@@ -8,25 +8,39 @@
 
     <!--<pc-nav-header :curProgress="1"></pc-nav-header>-->
 
-    <div class="id-card">
-      <h1 class="title">拍摄身份证</h1>
-      <ul class="shot-wrapper">
-        <li class="shot-item" @click="showExampleL">
-          <div>
-            <img v-show="!idcardFrontShotStatus" src="../../../assets/img/shot_face.png" alt="">
-            <img v-show="idcardFrontShotStatus" :src="idcardFrontImg" alt="">
-          </div>
-          <span class="explain">身份证正面</span>
-        </li>
-        <li class="shot-item" @click="showExampleR">
-          <div>
-            <img v-show="!idcardBackShotStatus" src="../../../assets/img/shot_back.png" alt="">
-            <img v-show="idcardBackShotStatus" :src="idcardBackImg" alt="">
-          </div>
-          <span class="explain">身份证反面</span>
-        </li>
-      </ul>
-    </div>
+    <!--<div class="identity-nav">
+      <div class="identity-slide">
+        <span class="active">身份信息</span>
+      </div>
+      <div class="identity-slide">
+        <span>银行卡信息</span>
+      </div>
+      <div class="identity-slide">
+        <span>基本信息</span>
+      </div>
+    </div>-->
+
+    <transition name="slide">
+      <div class="id-card" ref="idCard">
+        <h1 class="title">拍摄身份证</h1>
+        <ul class="shot-wrapper">
+          <li class="shot-item" @click="showExampleL">
+            <div>
+              <img v-show="!idcardFrontShotStatus" src="../../../assets/img/shot_face.png" alt="">
+              <img v-show="idcardFrontShotStatus" :src="idcardFrontImg" alt="">
+            </div>
+            <span class="explain">身份证正面</span>
+          </li>
+          <li class="shot-item" @click="showExampleR">
+            <div>
+              <img v-show="!idcardBackShotStatus" src="../../../assets/img/shot_back.png" alt="">
+              <img v-show="idcardBackShotStatus" :src="idcardBackImg" alt="">
+            </div>
+            <span class="explain">身份证反面</span>
+          </li>
+        </ul>
+      </div>
+    </transition>
 
     <div class="input-item-hint">
       <div class="caution-wrapper">
@@ -50,14 +64,14 @@
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">身份证号</span>
-        <input class="input" type="text" placeholder="身份证号码" v-model="idcardFrontId">
+        <input class="input" type="text" placeholder="身份证号码" v-model="idcardFrontId" v-on:focus="focus($event)" v-on:blur="blur">
       </div>
       <div class="input-item-r" v-if="idcardFrontIdentifyStatus">
         <i class="icon-shoot-success"></i>
       </div>
     </div>
 
-    <router-link class="input-item" to="/personalCertificate/faceRecognition" style="margin-top: 17px;">
+    <router-link class="input-item" to="/personalCertificate/faceRecognition" replace style="margin-top: 17px;">
       <div class="input-item-l">
         <span class="name">活体识别</span>
         <input class="input" type="text" placeholder="前往拍摄" readonly>
@@ -69,6 +83,7 @@
     </router-link>
 
     <div class="loan-btn" style="margin-top: 42px;">
+      <!--<mt-button class="btn" @click="submit" :disabled="!applyQualificationAuthStatus">提交</mt-button>-->
       <mt-button class="btn" @click="submit">提交</mt-button>
     </div>
 
@@ -120,18 +135,31 @@
   import pcNavHeader from '../../common/pcNavHeader'
 
   export default {
+    components: {
+      pcNavHeader
+    },
     data() {
       return {
         popupVisibleL: false,
-        popupVisibleR: false
+        popupVisibleR: false,
+        idcardFrontName: this.storageTextData.idCard.customerName,
+        idcardFrontId: this.storageTextData.idCard.idNo
+      }
+    },
+    props: {
+      storageTextData: {
+        type: Object
       }
     },
     computed: {
-      // idcardFrontInfo() {
-      //   return this.$store.state.identity.idcardFrontInfo
-      // },
-      // idcardBackInfo() {
-      //   return this.$store.state.identity.idcardBackInfo
+      applyQualificationAuthStatus() {
+        return this.$store.state.identity.applyQualificationAuthStatus
+      },
+      // idCardTxt() {
+      //   let idCard = this.storageTextData.idCard
+      //   if (idCard !== undefined) {
+      //     return idCard
+      //   }
       // },
 
       // 正面拍摄完成返回本地图片状态
@@ -142,14 +170,32 @@
       idcardFrontIdentifyStatus() {
         return this.$store.state.identity.idcardFront_identifyStatus
       },
-      idcardFrontName() {
-        return this.$store.state.identity.idcardFront_name
-      },
-      idcardFrontId() {
-        return this.$store.state.identity.idcardFront_id
-      },
+      // idcardFrontName() {
+      //   // return this.$store.state.identity.idcardFront_name
+      //
+      //   return this.idCardTxt.customerName
+      // },
+      // idcardFrontName: {
+      //   get: function() {
+      //     return this.idCardTxt.customerName
+      //   },
+      //   set: function(newValue) {
+      //     console.log(newValue)
+      //   }
+      // },
+      // idcardFrontId() {
+      //   // return this.$store.state.identity.idcardFront_id
+      //
+      //   return this.idCardTxt.idNo
+      // },
       idcardFrontImg() {
-        return this.$store.state.identity.idcardFront_img
+        // return this.$store.state.identity.idcardFront_img
+
+        let idCard = this.app.getIdFile()
+        if (idCard !== '') {
+          this.$store.commit('idcardFrontShotStatusSave', true)
+          return 'data:image/png;base64,' + idCard
+        }
       },
 
       // 反面拍摄完成返回本地图片状态
@@ -161,25 +207,64 @@
         return this.$store.state.identity.idcardBack_identifyStatus
       },
       idcardBackImg() {
-        return this.$store.state.identity.idcardBack_img
+        // return this.$store.state.identity.idcardBack_img
+
+        let idCard = this.app.getIdBackFile()
+        if (idCard !== '') {
+          this.$store.commit('idcardBackShotStatusSave', true)
+          return 'data:image/png;base64,' + idCard
+        }
       },
       faceRecognitionStep() {
         return this.$store.state.identity.faceRecognitionStep
       }
     },
-    components: {
-      pcNavHeader
-    },
     methods: {
-      focus(e) {
+      /**
+       * 检查申请资格认证状态并存储
+       * @return false未通过
+       * @return true 已通过
+       */
+      checkApplyQualificationAuthStatus() {
+        let that = this
+        let loginInfo = JSON.parse(this.app.isLogin())
+        if (loginInfo.Step === 0 && loginInfo.Result !== 0) { // 未登录
+          this.$router.push('/login')
+        } else if (loginInfo.Step === 0 && loginInfo.Result === 0) {
+          // 查询用户申请状态
+          this.app.AppStatus()
+          this.app.AppStatusCallBack = function(json) {
+            json = JSON.parse(json)
+            // console.log(json)
+            if (json.Step === 35 && json.Result === 0) {
+              let requires = JSON.parse(json.Msg)
+              if (requires.length > 0) {
+                // console.log(requires)
+                let keys = Object.keys(requires[0])
+                if (keys[0] === '822') {
+                  that.$store.commit('applyQualificationAuthStatusSave', false)
+                } else {
+                  that.$store.commit('applyQualificationAuthStatusSave', true)
+                }
+              }
+            }
+          }
+        }
+      },
+      focus() {
         // let that = this
         // setTimeout(function() {
         //   let pannel = that.$refs.idcardFrontInfoName
         //   pannel.scrollIntoView(true)
         //   pannel.scrollIntoViewIfNeeded()
         // }, 200)
+        this.$refs.idCard.style.display = 'none'
       },
       blur() {
+        let that = this
+        this.app.ShowView(function() {
+          that.$refs.idCard.style.display = 'block'
+        })
       },
       showExampleL() {
         this.popupVisibleL = true
@@ -208,8 +293,12 @@
             // })
             // 服务器识别状态
             that.$store.commit('idcardFrontIdentifyStatusSave', true)
-            that.$store.commit('idcardFrontNameSave', json.Name)
-            that.$store.commit('idcardFrontIdSave', json.Id)
+            /**
+             * 检查申请资格认证状态
+             */
+            that.checkApplyQualificationAuthStatus()
+            // that.$store.commit('idcardFrontNameSave', json.Name)
+            // that.$store.commit('idcardFrontIdSave', json.Id)
           } else if (json.Step === 7 && json.Result !== 0 && json.IdCardType === 0) {
             that.closeLoading()
             Toast({
@@ -240,6 +329,10 @@
             // })
             // 服务器识别状态
             that.$store.commit('idcardBackIdentifyStatusSave', true)
+            /**
+             * 检查申请资格认证状态
+             */
+            that.checkApplyQualificationAuthStatus()
           } else if (json.Step === 7 && json.Result !== 0 && json.IdCardType === 1) {
             that.closeLoading()
             Toast({
@@ -252,13 +345,17 @@
       submit() {
         let that = this
         this.loading()
-        // this.app.updateIdCard()
-        this.app.updateIdCard(this.idcardFrontInfo.name, this.idcardFrontInfo.id)
+        this.app.updateIdCard(this.idcardFrontName, this.idcardFrontId)
         this.app.UpdateIdCardCallBack = function(json) {
           that.closeLoading()
           json = JSON.parse(json)
           console.log(json)
-          if (json.Result !== 0) {
+          if (json.Step === 811 && json.Result === 0) {
+            Toast({
+              message: '请继续进行下一步',
+              duration: 3000
+            })
+          } else if (json.Step === 811 && json.Result === 0) {
             Toast({
               message: json.Msg,
               duration: 3000
@@ -273,6 +370,27 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import '../../../assets/css/base.styl'
   @import '../../../assets/css/identity/personalCertificate.styl'
+
+  .identity-nav
+    display: flex
+    align-items: center
+    width: 100%
+    height: 42px
+    color: #999
+    font-size: 13px
+    background-color: #fff
+    .identity-slide
+      flex: 1
+      height: 100%
+      text-align: center
+      span
+        display: inline-block
+        height: 100%
+        line-height: 42px
+        padding: 0 2px
+        &.active
+          color: main-color
+          border-bottom: 1px solid main-color
 
   .id-card
     margin-top: 13px

@@ -21,7 +21,7 @@
     <div v-if="faceRecognitionStep === 1">
       <div class="faceRecognition">
         <h1 class="title">恭喜您，您的人脸识别已通过！</h1>
-        <div class="shot-frame">
+        <div class="shot-frame" @click="shot">
           <div class="shot-success">
             <img :src="faceRecognitionImg" alt="">
           </div>
@@ -67,7 +67,15 @@
         return this.$store.state.identity.faceRecognitionStep
       },
       faceRecognitionImg() {
-        return this.$store.state.identity.faceRecognitionImg
+        // return this.$store.state.identity.faceRecognitionImg
+
+        return 'data:image/png;base64,' + this.app.getLive()
+      }
+    },
+    created() {
+      // console.log(!!this.app.getLive() === true)
+      if (!!this.app.getLive() === true) {
+        this.$store.commit('faceRecognitionStepSave', 1)
       }
     },
     methods: {
@@ -97,19 +105,15 @@
               message: json.Msg,
               duration: 3000
             })
-            // that.faceRecognitionStep = 1
-            // that.faceRecognitionImg = 'data:image/png;base64,' + json.Img
-
-            that.$store.commit('faceRecognitionStepSave', 1)
-            that.$store.commit('faceRecognitionImgSave', 'data:image/png;base64,' + json.Img)
+            // that.$store.commit('faceRecognitionStepSave', 1)
+            // that.$store.commit('faceRecognitionImgSave', 'data:image/png;base64,' + json.Img)
           } else if (json.Step === 5 && json.Result !== 0) {
             that.closeLoading()
             Toast({
               message: json.Msg,
               duration: 3000
             })
-            // that.faceRecognitionStep = 2
-            that.$store.commit('faceRecognitionStepSave', 2)
+            // that.$store.commit('faceRecognitionStepSave', 2)
           }
         }
       }

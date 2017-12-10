@@ -17,7 +17,8 @@
         <div class="name">
           <span>手机号码</span>
         </div>
-        <input class="input" type="number" placeholder="请输入借记卡绑定手机号(选填)" v-model="phoneNo">
+        <input class="input color999" type="number" placeholder="请输入借记卡绑定手机号(选填)" v-model="phoneNo" v-on:focus="focus" v-on:blur="blur" oninput=" if(value.length>11)
+        {value = value.slice(0,11)}">
       </div>
     </div>
     <div class="input-item">
@@ -25,7 +26,7 @@
         <div class="name">
           <span class="required">借记卡号</span>
         </div>
-        <input class="input color999" type="number" placeholder="借记卡号" v-model="debitCardno">
+        <input class="input color999" type="number" placeholder="借记卡号" v-model="debitCardno" v-on:focus="focus" v-on:blur="blur">
       </div>
       <!--<div class="input-item-r">
         <i class="fa fa-angle-right"></i>
@@ -87,14 +88,13 @@
       popup-transition="popup-fade"
       position="bottom"
       modal="false"
-      closeOnClickModal="false">
+      closeOnClickModal=false>
       <div class="picker-nav">
-        <div class="cancel-btn" @click="ensure">取消</div>
+        <div class="cancel-btn" @click="cancel">取消</div>
         <div>选择开户银行</div>
         <div class="ensure-btn" @click="ensure">确定</div>
-        <!--<mt-button @click="ensure">确定</mt-button>-->
       </div>
-      <mt-picker :slots="bankListSlot" @change="onChange" :visible-item-count="3" value-key="bankName"></mt-picker>
+      <mt-picker :slots="bankListSlot" @change="onChange" :visible-item-count="5" value-key="bankName"></mt-picker>
     </mt-popup>
 
     <vue-city-picker ref="picker" @select="select" :title="title" :cancel-txt="cancelTxt" :confirm-txt="confirmTxt"></vue-city-picker>
@@ -106,6 +106,9 @@
   import vueCityPicker from 'vue-city-bspicker'
 
   export default {
+    components: {
+      vueCityPicker
+    },
     data() {
       return {
         // 借记卡号
@@ -123,12 +126,12 @@
         popupVisible: false,
         bankListSlot: [{
           flex: 1,
-          // values: ['', '中国银行', '农业银行', '工商银行', '建设银行', '中信银行', '光大银行', '兴业银行', '平安银行', '招商银行'],
+          // values: ['中国银行', '农业银行', '工商银行', '建设银行', '中信银行', '光大银行', '兴业银行', '平安银行', '招商银行'],
           values: [
-            {
-              bankId: '0000',
-              bankName: ' '
-            },
+            // {
+            //   bankId: '0000',
+            //   bankName: ' '
+            // },
             {
               bankId: '0102',
               bankName: '工商银行'
@@ -174,6 +177,25 @@
         selectedCity: ''
       }
     },
+    props: {
+      storageTextData: {
+        type: Object
+      }
+    },
+    mounted() {
+      let debitCardList = this.storageTextData.debitCardList
+      if (debitCardList !== undefined) {
+        let debitCard = debitCardList[0]
+        Toast({
+          message: this.storageTextData.debitCardList,
+          duration: 3000
+        })
+        this.debitCardno = debitCard.debitcardNo
+        this.phoneNo = debitCard.debitcardPhoneNo
+        this.openBank = debitCard.openBank
+        this.selectedCity = debitCard.prov + ' ' + debitCard.city
+      }
+    },
     methods: {
       back() {
         this.goback()
@@ -193,8 +215,12 @@
           }
         }
       },
+      cancel() {
+        this.popupVisible = false
+      },
       ensure() {
         this.popupVisible = false
+        this.saveDebitCard()
       },
       show() {
         this.$refs['picker'].show()
@@ -204,6 +230,7 @@
         this.selectedCity = arguments[2][0] + ' ' + arguments[2][1] + ' ' + arguments[2][2]
         this.prov = arguments[2][0]
         this.city = arguments[2][1]
+        this.saveDebitCard()
       },
       addDebitCard() {
         let that = this
@@ -218,11 +245,28 @@
             duration: 3000
           })
         }
+      },
+      // 缓存
+      saveDebitCard() {
+        let arr = [0, this.debitCardno, this.phoneNo, this.openBank, this.openBankId, this.prov, this.city]
+        Toast({
+          message: arr,
+          duration: 3000
+        })
+        this.app.SaveDebitCard(0, this.debitCardno, this.phoneNo, this.openBank, this.openBankId, this.prov, this.city)
+      },
+      focus() {
+      },
+      blur() {
+        this.saveDebitCard()
       }
-    },
-    components: {
-      vueCityPicker
     }
+    // beforeDestroy() {
+    //   alert(this.phoneNo)
+    //   alert(this.debitCardno)
+    //   alert(this.openBank)
+    //   this.saveDebitCard()
+    // }
   }
 </script>
 
@@ -319,5 +363,7 @@
       h4
         font-size: 15px !important
     .picker--content
-      font-size: 15px !important
+      .wheel--wrapper
+        .wheel
+          font-size: 12px !important
 </style>

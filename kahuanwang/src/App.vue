@@ -4,6 +4,14 @@
     <transition :name="transitionName" mode="out-in">
       <router-view class="child-view" v-on:checkApplyStatus="applyStatus"></router-view>
     </transition>
+
+    <!--<transition-gruop :name="transitionName" mode="out-in">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive" v-on:checkApplyStatus="applyStatus"></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive" v-on:checkApplyStatus="applyStatus"></router-view>
+    </transition-gruop>-->
+
     <tab-bar :hasFooter="footer"></tab-bar>
   </div>
 </template>
@@ -56,7 +64,7 @@
          * 需登录的路由配置
          */
         let loginInfo = JSON.parse(this.app.isLogin())
-        console.log(loginInfo)
+        // console.log(loginInfo)
         let filterPathsLogin = ['/', '/login', '/register', '/forgetPsw', '/my', '/aboutUs', '/help', '/setting']
         let boolLogin = filterPathsLogin.some((path) => {
           return toPath === path
@@ -87,7 +95,7 @@
       applyStatus() {
         let that = this
         let loginInfo = JSON.parse(this.app.isLogin())
-        console.log(loginInfo)
+        // console.log(loginInfo)
         if (loginInfo.Step === 0 && loginInfo.Result !== 0) { // 未登录
           this.$router.push('/login')
         } else if (loginInfo.Step === 0 && loginInfo.Result === 0) { // 已登录
@@ -131,11 +139,11 @@
                   sign = k
                   msg = v
                 }
-                console.log(sign, msg)
-                Toast({
-                  message: '请提交' + msg,
-                  duration: 3000
-                })
+                // console.log(sign, msg)
+                // Toast({
+                //   message: '请提交' + msg,
+                //   duration: 3000
+                // })
                 switch (sign) {
                   case '822':
                     // 身份证信息

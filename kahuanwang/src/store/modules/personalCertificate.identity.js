@@ -66,6 +66,12 @@ const getters = {}
 
 const mutations = {
   /**
+   * 申请资格认证状态
+   */
+  applyQualificationAuthStatusSave(state, payload) {
+    state.applyQualificationAuthStatus = payload
+  },
+  /**
    * 个人认证swiper
    */
   personalCertificateSwiperProgressSave(state, payload) {

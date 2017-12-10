@@ -1,34 +1,41 @@
 <template>
   <swiper :options="swiperOption" ref="mySwiper" class="pc-nav-header">
     <swiper-slide>
-      <span @click="identity" :class="{curProgress: curProgress >= 1, active: curProgress === 1}">身份信息</span>
+      <!--<span @click="identity" :class="{curProgress: curProgress >= 1, active: curProgress === 1}">身份信息</span>-->
+      <span @click="identity" :class="{active: curProgress === 1}">身份信息</span>
     </swiper-slide>
     <swiper-slide>
-      <span @click="bankCard" :class="{curProgress: curProgress >= 2, active: curProgress === 2}">银行卡信息</span>
+      <!--<span @click="bankCard" :class="{curProgress: curProgress >= 2, active: curProgress === 2}">银行卡信息</span>-->
+      <span @click="bankCard" :class="{active: curProgress === 2}">银行卡信息</span>
     </swiper-slide>
     <swiper-slide>
-      <span @click="baseInfo" :class="{curProgress: curProgress >= 3, active: curProgress === 3}">基本信息</span>
+      <!--<span @click="baseInfo" :class="{curProgress: curProgress >= 3, active: curProgress === 3}">基本信息</span>-->
+      <span @click="baseInfo" :class="{active: curProgress === 3}">基本信息</span>
     </swiper-slide>
     <swiper-slide>
-      <span @click="linkman" :class="{curProgress: curProgress >= 4, active: curProgress === 4}">联系人信息</span>
+      <!--<span @click="linkman" :class="{curProgress: curProgress >= 4, active: curProgress === 4}">联系人信息</span>-->
+      <span @click="linkman" :class="{active: curProgress === 4}">联系人信息</span>
     </swiper-slide>
     <swiper-slide>
-      <span @click="videoAuth" :class="{curProgress: curProgress >= 5, active: curProgress === 5}">视频认证</span>
+      <!--<span @click="videoAuth" :class="{curProgress: curProgress >= 5, active: curProgress === 5}">视频认证</span>-->
+      <span @click="videoAuth" :class="{active: curProgress === 5}">视频认证</span>
     </swiper-slide>
   </swiper>
 </template>
 
 <script type="text/ecmascript-6">
-  import 'swiper/dist/css/swiper.css'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
   export default {
+    components: {
+      swiper,
+      swiperSlide
+    },
     data() {
       return {
         swiperOption: {
           slidesPerView: 3
-          // slideToClickedSlide: true,
-          // centeredSlides: true
+          // onlyExternal: true
         }
       }
     },
@@ -37,16 +44,37 @@
       curProgress: {
         type: Number
       }
+      // 申请资格认证状态
+      // applyQualificationAuthStatus: {
+      //   type: Boolean
+      // }
     },
     computed: {
       swiper() {
         return this.$refs.mySwiper.swiper
-      },
-      // 申请资格认证状态
-      applyQualificationAuthStatus() {
-        return this.$store.state.identity.applyQualificationAuthStatus
       }
+      // a() {
+      //   if (!this.applyQualificationAuthStatus) {
+      //     // 移除所有slide监听事件
+      //     this.swiper.detachEvents()
+      //   } else {
+      //     // 重新绑定所有监听事件
+      //     this.swiper.attachEvents()
+      //   }
+      // }
     },
+    // watch: {
+    //   applyQualificationAuthStatus(newValue) {
+    //     console.log(newValue)
+    //     if (!newValue) {
+    //       // 移除所有slide监听事件
+    //       this.swiper.detachEvents()
+    //     } else {
+    //       // 重新绑定所有监听事件
+    //       this.swiper.attachEvents()
+    //     }
+    //   }
+    // },
     methods: {
       // 身份信息
       identity() {
@@ -76,10 +104,6 @@
         this.$store.commit('personalCertificateSwiperProgressSave', 5)
         this.$router.replace('/personalCertificate/videoAuth')
       }
-    },
-    components: {
-      swiper,
-      swiperSlide
     }
   }
 </script>
@@ -103,5 +127,6 @@
         &.curProgress
           color: main-color
         &.active
+          color: main-color
           border-bottom: 2px solid main-color
 </style>
