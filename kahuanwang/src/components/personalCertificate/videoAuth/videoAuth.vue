@@ -13,7 +13,7 @@
     </div>
     <div class="faceRecognition" v-if="videoAuthStep === 1">
       <h1 class="title">完成认证视频录制</h1>
-      <div class="shot-video-success">
+      <div class="shot-video-success" @click="showPopup">
         <img :src="videoImg" alt="">
       </div>
     </div>

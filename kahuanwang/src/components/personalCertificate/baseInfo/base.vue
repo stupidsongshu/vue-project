@@ -1,21 +1,13 @@
 <template>
   <div>
-    <!--<mt-header fixed class="header" title="个人认证">
-      <div slot="left" @click="back">
-        <mt-button icon="back"></mt-button>
-      </div>
-    </mt-header>-->
-
-    <!--<pc-nav-header :curProgress="3"></pc-nav-header>-->
-
     <div class="residence" ref="residence">
       <div class="input-item" @click="showHome">
         <div class="input-item-l">
           <div class="name">
             <span class="required">居住地</span>
           </div>
-          <!--<input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">-->
-          <span class="color999">{{homeCity || '请选择居住地所在城市'}}</span>
+          <input class="input" type="text" placeholder="请选择居住地所在城市" readonly v-model="homeCity">
+          <!--<span class="color999">{{homeCity || '请选择居住地所在城市'}}</span>-->
         </div>
         <div class="input-item-r">
           <i class="fa fa-angle-right"></i>
@@ -38,8 +30,8 @@
           <div class="name">
             <span class="required">工作地址</span>
           </div>
-          <!--<input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">-->
-          <span class="color999">{{workCity || '请选择工作城市'}}</span>
+          <input class="input" type="text" placeholder="请选择工作城市" readonly v-model="workCity">
+          <!--<span class="color999">{{workCity || '请选择工作城市'}}</span>-->
         </div>
         <div class="input-item-r">
           <i class="fa fa-angle-right"></i>
@@ -125,11 +117,13 @@
         titleHome: '选择居住地',
         cancelTxtHome: '取消',
         confirmTxtHome: '确定',
-        homeCity: this.storageTextData.homeInfo ? (this.storageTextData.homeInfo.homeAddr1 ? (this.storageTextData.homeInfo.homeAddr1 + ' ' + this.storageTextData.homeInfo.homeAddr2 + ' ' + this.storageTextData.homeInfo.homeAddr3) : '') : '',
+        // homeCity: this.storageTextData.homeInfo ? (this.storageTextData.homeInfo.homeAddr1 ? (this.storageTextData.homeInfo.homeAddr1 + ' ' + this.storageTextData.homeInfo.homeAddr2 + ' ' + this.storageTextData.homeInfo.homeAddr3) : '') : '',
+        homeCity: '',
         titleWork: '选择居住地',
         cancelTxtWork: '取消',
         confirmTxtWork: '确定',
-        workCity: this.storageTextData.jobInfo ? (this.storageTextData.jobInfo.unitAddr1 ? (this.storageTextData.jobInfo.unitAddr1 + ' ' + this.storageTextData.jobInfo.unitAddr2 + ' ' + this.storageTextData.jobInfo.unitAddr3) : '') : '',
+        // workCity: this.storageTextData.jobInfo ? (this.storageTextData.jobInfo.unitAddr1 ? (this.storageTextData.jobInfo.unitAddr1 + ' ' + this.storageTextData.jobInfo.unitAddr2 + ' ' + this.storageTextData.jobInfo.unitAddr3) : '') : '',
+        workCity: '',
         /**
          * homeAddr1   居住地直辖市/省
          * homeAddr2   居住地辖区/市
@@ -170,12 +164,36 @@
         unitAddr4: '',
         unitTelArea: '',
         unitTelNo: '',
-        unitTelExt: '',
-        storageTextData: null
+        unitTelExt: ''
       }
     },
     created() {
       this.storageTextData = this.$emit('storageTextData')
+      console.log(this.storageTextData)
+
+      if (this.storageTextData.homeInfo) {
+        this.homeAddr1 = this.storageTextData.homeInfo.homeAddr1
+        this.homeAddr2 = this.storageTextData.homeInfo.homeAddr2
+        this.homeAddr3 = this.storageTextData.homeInfo.homeAddr3
+        this.homeAddr4 = this.storageTextData.homeInfo.homeAddr4
+        if (this.storageTextData.homeInfo.homeAddr1) {
+          this.homeCity = this.storageTextData.homeInfo.homeAddr1 + ' ' + this.storageTextData.homeInfo.homeAddr2 + ' ' + this.storageTextData.homeInfo.homeAddr3
+        }
+      }
+
+      if (this.storageTextData.jobInfo) {
+        this.jobUnit = this.storageTextData.jobInfo.jobUnit
+        this.unitAddr1 = this.storageTextData.jobInfo.unitAddr1
+        this.unitAddr2 = this.storageTextData.jobInfo.unitAddr2
+        this.unitAddr3 = this.storageTextData.jobInfo.unitAddr3
+        this.unitAddr4 = this.storageTextData.jobInfo.unitAddr4
+        this.unitTelArea = this.storageTextData.jobInfo.unitTelArea
+        this.unitTelNo = this.storageTextData.jobInfo.unitTelNo
+        this.unitTelExt = this.storageTextData.jobInfo.unitTelExt
+        if (this.storageTextData.jobInfo.unitAddr1) {
+          this.workCity = this.storageTextData.jobInfo.unitAddr1 + ' ' + this.storageTextData.jobInfo.unitAddr2 + ' ' + this.storageTextData.jobInfo.unitAddr3
+        }
+      }
     },
     methods: {
       hideResidence() {

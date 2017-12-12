@@ -1,17 +1,10 @@
 <template>
   <div>
-    <!--<mt-header fixed class="header" title="个人认证">
-      <div slot="left" @click="back">
-        <mt-button icon="back"></mt-button>
-      </div>
-    </mt-header>-->
-
-    <!--<pc-nav-header :curProgress="4"></pc-nav-header>-->
-
     <div class="input-item" style="margin-top: 12px;">
       <div class="input-item-l">
         <span class="name">家人</span>
-        <span class="color999">{{contactName1 || '请选择联系人'}}</span>
+        <!--<span class="color999">{{contactName1 || '请选择联系人'}}</span>-->
+        <span class="color999">{{contactName1 ? (contactName1 + ' ' + contactPhone1) : '请选择联系人'}}</span>
       </div>
       <div class="input-item-r" @click="getContacts(4)">
         <i class="icon-linkman"></i>
@@ -20,7 +13,7 @@
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">朋友</span>
-        <span class="color999">{{contactName2 || '请选择联系人'}}</span>
+        <span class="color999">{{contactName2 ? (contactName2 + ' ' + contactPhone2) : '请选择联系人'}}</span>
       </div>
       <div class="input-item-r" @click="getContacts(6)">
         <i class="icon-linkman"></i>
@@ -29,7 +22,7 @@
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">同事</span>
-        <span class="color999">{{contactName3 || '请选择联系人'}}</span>
+        <span class="color999">{{contactName3 ? (contactName3 + ' ' + contactPhone3) : '请选择联系人'}}</span>
       </div>
       <div class="input-item-r" @click="getContacts(7)">
         <i class="icon-linkman"></i>
@@ -39,7 +32,6 @@
     <div class="loan-btn" style="margin-top: 42px;">
       <mt-button class="btn" @click="submit">提交</mt-button>
     </div>
-    {{emContactList}}
   </div>
 </template>
 
@@ -69,14 +61,10 @@
         contactRelation3: 7
       }
     },
-    props: {
-      storageTextData: {
-        type: Object
-      }
-    },
     created() {
-      // console.log(this.storageTextData)
-      console.log(JSON.parse(this.app.getData()))
+      this.storageTextData = this.$emit('storageTextData')
+      console.log(this.storageTextData)
+
       let linkInfo = this.storageTextData.emContactList
       if (linkInfo && linkInfo.length > 0) {
         this.contactName1 = this.emContactList[0].contactName
@@ -89,21 +77,6 @@
         this.contactPhone3 = this.emContactList[2].contactPhone
       }
     },
-    // computed: {
-    //   emContactList: {
-    //     get() {
-    //       console.log(1)
-    //       console.log(this.storageTextData)
-    //       console.log(2)
-    //       let linkInfo = this.storageTextData.emContactList
-    //       if (linkInfo && linkInfo.length > 0) {
-    //         console.log(this.emContactList[0].contactName)
-    //         return linkInfo
-    //       }
-    //     },
-    //     set() {}
-    //   }
-    // },
     methods: {
       back() {
         this.goback()
@@ -148,24 +121,19 @@
             message: json.Msg,
             duration: 3000
           })
+          // 缓存
+          that.app.SaveEmContact(
+            that.contactName1,
+            that.contactPhone1,
+            that.contactRelation1,
+            that.contactName2,
+            that.contactPhone2,
+            that.contactRelation2,
+            that.contactName3,
+            that.contactPhone3,
+            that.contactRelation3
+          )
           if (json.Step === 13 && json.Result === 0) {
-            // 缓存
-            that.app.SaveEmContact(
-              that.contactName1,
-              that.contactPhone1,
-              that.contactRelation1,
-              that.contactName2,
-              that.contactPhone2,
-              that.contactRelation2,
-              that.contactName3,
-              that.contactPhone3,
-              that.contactRelation3
-            )
-
-            // that.$router.push('/personalCertificate/videoAuth')
-            // that.$store.commit('personalCertificateSwiperProgressSave', 5)
-
-            // that.$emit('checkApplyStatus')
             that.applystatus()
           }
         }

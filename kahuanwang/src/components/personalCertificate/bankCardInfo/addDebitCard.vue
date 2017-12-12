@@ -177,11 +177,10 @@
         selectedCity: ''
       }
     },
-    created() {
+    mounted() {
       this.storageTextData = this.$emit('storageTextData')
       console.log(this.storageTextData)
-    },
-    mounted() {
+
       let debitCardList = this.storageTextData.debitCardList
       if (debitCardList) {
         let debitCard = debitCardList[0]
@@ -247,10 +246,6 @@
             duration: 3000
           })
           if (json.Step === 9 && json.Result === 0) {
-            // that.$router.push('/personalCertificate/baseInfo')
-            // that.$store.commit('personalCertificateSwiperProgressSave', 3)
-
-            // that.$emit('checkApplyStatus')
             that.applystatus()
           }
         }
@@ -265,12 +260,6 @@
         this.app.SaveDebitCard(0, this.debitCardno, this.phoneNo, this.openBank, this.openBankId, this.prov, this.city)
       }
     }
-    // beforeDestroy() {
-    //   alert(this.phoneNo)
-    //   alert(this.debitCardno)
-    //   alert(this.openBank)
-    //   this.saveDebitCard()
-    // }
   }
 </script>
 

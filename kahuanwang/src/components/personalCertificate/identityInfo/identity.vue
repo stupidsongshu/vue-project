@@ -164,20 +164,27 @@
         popupVisibleR: false,
         idcardFrontImg: '',
         idcardBackImg: '',
-        idcardFrontName: this.storageTextData.idCard ? this.storageTextData.idCard.customerName : '',
-        idcardFrontId: this.storageTextData.idCard ? this.storageTextData.idCard.idNo : '',
+        // idcardFrontName: this.storageTextData.idCard ? this.storageTextData.idCard.customerName : '',
+        // idcardFrontId: this.storageTextData.idCard ? this.storageTextData.idCard.idNo : '',
+        idcardFrontName: '',
+        idcardFrontId: '',
         idcardFrontIdTest: ''
       }
     },
-    props: {
-      storageTextData: {
-        type: Object
-      }
-    },
+    // props: {
+    //   storageTextData: {
+    //     type: Object
+    //   }
+    // },
     mounted() {
+      this.storageTextData = this.$emit('storageTextData')
       console.log(this.storageTextData)
-      let that = this
+      if (this.storageTextData.idCard) {
+        this.idcardFrontName = this.storageTextData.idCard.customerName
+        this.idcardFrontId = this.storageTextData.idCard.idNo
+      }
 
+      let that = this
       this.app.InitCallBack = function() {
         let isshow = true
         if (that.storageTextData.errorid && that.storageTextData.idCard && that.storageTextData.idCard.idNo) {
@@ -187,7 +194,7 @@
             isshow = false
           }
         }
-        alert(1)
+
         let idFile = that.app.getIdFile()
         let idBackFile = that.app.getIdBackFile()
         alert(idFile.length + '     ' + idBackFile.length)

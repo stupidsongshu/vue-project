@@ -1,23 +1,18 @@
 <template>
   <swiper :options="swiperOption" ref="mySwiper" class="pc-nav-header">
     <swiper-slide>
-      <!--<span @click="identity" :class="{curProgress: curProgress >= 1, active: curProgress === 1}">身份信息</span>-->
       <span @click="identity" :class="{active: curProgress === 1}">身份信息</span>
     </swiper-slide>
     <swiper-slide>
-      <!--<span @click="bankCard" :class="{curProgress: curProgress >= 2, active: curProgress === 2}">银行卡信息</span>-->
       <span @click="bankCard" :class="{active: curProgress === 2}">银行卡信息</span>
     </swiper-slide>
     <swiper-slide>
-      <!--<span @click="baseInfo" :class="{curProgress: curProgress >= 3, active: curProgress === 3}">基本信息</span>-->
       <span @click="baseInfo" :class="{active: curProgress === 3}">基本信息</span>
     </swiper-slide>
     <swiper-slide>
-      <!--<span @click="linkman" :class="{curProgress: curProgress >= 4, active: curProgress === 4}">联系人信息</span>-->
       <span @click="linkman" :class="{active: curProgress === 4}">联系人信息</span>
     </swiper-slide>
     <swiper-slide>
-      <!--<span @click="videoAuth" :class="{curProgress: curProgress >= 5, active: curProgress === 5}">视频认证</span>-->
       <span @click="videoAuth" :class="{active: curProgress === 5}">视频认证</span>
     </swiper-slide>
   </swiper>
