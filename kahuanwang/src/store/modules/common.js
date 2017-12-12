@@ -12,6 +12,15 @@ const state = {
   loginInfo: {
     isLogin: false,
     mobile: ''
+  },
+  /**
+   * fix 输入框被输入法遮住
+   * status 输入法是否弹起
+   * target 输入法弹起后需隐藏的dom结点数组
+   */
+  toggleView: {
+    status: false,
+    target: []
   }
 }
 
@@ -26,6 +35,9 @@ const mutations = {
   },
   loginInfoSave(state, payload) {
     state.loginInfo = payload
+  },
+  toggleViewSave(state, payload) {
+    state.toggleView = payload
   }
 }
 

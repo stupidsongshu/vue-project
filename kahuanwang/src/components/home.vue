@@ -66,7 +66,8 @@
         this.$store.commit('loan_duration_save', time)
       },
       loan() {
-        this.$emit('checkApplyStatus')
+        // this.$emit('checkapplystatus', 'home')
+        this.applystatus()
       }
     },
     computed: {

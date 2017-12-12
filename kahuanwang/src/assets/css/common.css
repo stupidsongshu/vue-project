@@ -57,6 +57,11 @@ ul, ol, li {
   list-style: none;
 }
 
+img {
+  border: none;
+  outline: none;
+}
+
 input::-webkit-input-placeholder { /* WebKit */
   color: #999;
 }

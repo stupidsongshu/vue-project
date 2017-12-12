@@ -2,7 +2,9 @@
   <div id="app" :class="{'has-footer': footer}">
   <!--<div id="app">-->
     <transition :name="transitionName" mode="out-in">
-      <router-view class="child-view" v-on:checkApplyStatus="applyStatus"></router-view>
+      <!--<router-view class="child-view" v-on:checkApplyStatus="applyStatus"></router-view>-->
+      <!--<router-view class="child-view" @checkapplystatus="applystatus"></router-view>-->
+      <router-view class="child-view"></router-view>
     </transition>
 
     <!--<transition-gruop :name="transitionName" mode="out-in">
@@ -92,125 +94,143 @@
     },
     methods: {
       // 用户申请状态
-      applyStatus() {
-        let that = this
-        let loginInfo = JSON.parse(this.app.isLogin())
-        // console.log(loginInfo)
-        if (loginInfo.Step === 0 && loginInfo.Result !== 0) { // 未登录
-          this.$router.push('/login')
-        } else if (loginInfo.Step === 0 && loginInfo.Result === 0) { // 已登录
-          this.loading()
-
-          // 查询用户申请状态
-          this.app.AppStatus()
-          this.app.AppStatusCallBack = function(json) {
-            that.closeLoading()
-            json = JSON.parse(json)
-            console.log(json)
-            /**
-             * Result
-             * 0  缺少信息
-             [
-             {822,"身份证信息"},
-             {823,"身份证正面照片"},
-             {824,"身份证反面照片"},
-             {825,"活体照片"},
-             {826,"签约视频"},
-             {827,"信用卡"},
-             {828,"联系人信息"},
-             {829,"基本信息"},
-             {830,"银行卡信息"},
-             ]
-             * 100  申请开户
-             * 101  正在审核
-             * 102  审核通过
-             * 109  审核拒绝
-             * 121  调查问卷
-             */
-            if (json.Step === 35 && json.Result === 0) {
-              /* eslint-disable no-unused-vars */
-              var sign, msg
-              let requires = JSON.parse(json.Msg)
-
-              if (requires.length === 0) {
-                that.$router.push('/personalCertificate/agreeAuth')
-              } else if (requires.length > 0) {
-                for (let [k, v] of Object.entries(requires[0])) {
-                  sign = k
-                  msg = v
-                }
-                // console.log(sign, msg)
-                // Toast({
-                //   message: '请提交' + msg,
-                //   duration: 3000
-                // })
-                switch (sign) {
-                  case '822':
-                    // 身份证信息
-                    that.$store.commit('personalCertificateSwiperProgressSave', 1)
-                    that.$router.push('/personalCertificate')
-                    break
-                  case '823':
-                    // 身份证正面照片
-                    that.$store.commit('personalCertificateSwiperProgressSave', 1)
-                    that.$router.push('/personalCertificate')
-                    break
-                  case '824':
-                    // 身份证反面照片
-                    that.$store.commit('personalCertificateSwiperProgressSave', 1)
-                    that.$router.push('/personalCertificate')
-                    break
-                  case '825':
-                    // 活体照片
-                    that.$store.commit('personalCertificateSwiperProgressSave', 1)
-                    that.$router.push('/personalCertificate/faceRecognition')
-                    break
-                  case '826':
-                    // 签约视频
-                    that.$router.push('/personalCertificate/videoAuth')
-                    break
-                  case '827':
-                    // 信用卡
-                    break
-                  case '828':
-                    // 联系人信息
-                    that.$router.push('/personalCertificate/linkman')
-                    break
-                  case '829':
-                    // 基本信息
-                    that.$router.push('/personalCertificate/baseInfo')
-                    break
-                  case '830':
-                    // 银行卡信息
-                    that.$router.push('/personalCertificate/bankCardInfo')
-                    break
-                }
-              }
-            } else if (json.Step === 35 && json.Result === 100) {
-              // 申请开户
-              that.$store.commit('waitAuditStatusSave', 0)
-              that.$router.push('/personalCertificate/waitAudit')
-              // that.$router.push('/personalCertificate')
-            } else if (json.Step === 35 && json.Result === 101) {
-              // 正在审核
-              that.$store.commit('waitAuditStatusSave', 0)
-              that.$router.push('/personalCertificate/waitAudit')
-            } else if (json.Step === 35 && json.Result === 102) {
-              // 审核通过
-              that.$store.commit('waitAuditStatusSave', 2)
-              that.$router.push('/personalCertificate/waitAudit')
-            } else if (json.Step === 35 && json.Result === 109) {
-              // 审核拒绝
-              that.$store.commit('waitAuditStatusSave', 1)
-              that.$router.push('/personalCertificate/waitAudit')
-            } else if (json.Step === 35 && json.Result === 121) {
-              // 调查问卷
-              that.$store.commit('waitAuditStatusSave', 3)
-              // that.$router.push('/personalCertificate/waitAudit')
-            }
-          }
-        }
-      }
+      // applystatus(param) {
+      //   alert('检查状态')
+      //   alert(param)
+      //   let that = this
+      //   let loginInfo = JSON.parse(this.app.isLogin())
+      //   // console.log(loginInfo)
+      //   if (loginInfo.Step === 0 && loginInfo.Result !== 0) { // 未登录
+      //     this.$router.push('/login')
+      //   } else if (loginInfo.Step === 0 && loginInfo.Result === 0) { // 已登录
+      //     this.loading()
+      //
+      //     // 查询用户申请状态
+      //     this.app.AppStatus()
+      //     this.app.AppStatusCallBack = function(json) {
+      //       that.closeLoading()
+      //       json = JSON.parse(json)
+      //       console.log(json)
+      //       /**
+      //        * Result
+      //        * 0  缺少信息
+      //        [
+      //        {822,"身份证信息"},
+      //        {823,"身份证正面照片"},
+      //        {824,"身份证反面照片"},
+      //        {825,"活体照片"},
+      //        {826,"签约视频"},
+      //        {827,"信用卡"},
+      //        {828,"联系人信息"},
+      //        {829,"基本信息"},
+      //        {830,"银行卡信息"},
+      //        ]
+      //        * 100  申请开户
+      //        * 101  正在审核
+      //        * 102  审核通过
+      //        * 109  审核拒绝
+      //        * 121  调查问卷
+      //        */
+      //       if (json.Step === 35 && json.Result === 0) {
+      //         /* eslint-disable no-unused-vars */
+      //         var sign, msg
+      //         let requires = JSON.parse(json.Msg)
+      //
+      //         if (requires.length === 0) {
+      //           that.$router.push('/personalCertificate/agreeAuth')
+      //         } else if (requires.length > 0) {
+      //           for (let [k, v] of Object.entries(requires[0])) {
+      //             sign = k
+      //             msg = v
+      //           }
+      //           // console.log(sign, msg)
+      //           // Toast({
+      //           //   message: '请提交' + msg,
+      //           //   duration: 3000
+      //           // })
+      //           if (parseInt(sign) === 822) {
+      //             // 申请资格认证未通过
+      //             that.$store.commit('applyQualificationAuthStatusSave', false)
+      //             that.$store.commit('applyQualificationAuthStatusSave', false)
+      //             that.$store.commit('idFrontApplyQualificationAuthStepSave', 8111)
+      //             that.$store.commit('idBackApplyQualificationAuthStepSave', 8111)
+      //           } else if (parseInt(sign) >= 825) {
+      //             // 申请资格认证已通过
+      //             that.$store.commit('applyQualificationAuthStatusSave', true)
+      //             that.$store.commit('idFrontApplyQualificationAuthStepSave', 8110)
+      //             that.$store.commit('idBackApplyQualificationAuthStepSave', 8110)
+      //           }
+      //           switch (sign) {
+      //             case '822':
+      //               // 身份证信息
+      //               that.$store.commit('personalCertificateSwiperProgressSave', 1)
+      //               that.$router.push('/personalCertificate')
+      //               break
+      //             case '823':
+      //               // 身份证正面照片
+      //               that.$store.commit('personalCertificateSwiperProgressSave', 1)
+      //               that.$router.push('/personalCertificate')
+      //               break
+      //             case '824':
+      //               // 身份证反面照片
+      //               that.$store.commit('personalCertificateSwiperProgressSave', 1)
+      //               that.$router.push('/personalCertificate')
+      //               break
+      //             case '825':
+      //               // 活体照片
+      //               that.$store.commit('personalCertificateSwiperProgressSave', 1)
+      //               that.$router.push('/personalCertificate/faceRecognition')
+      //               break
+      //             case '826':
+      //               // 签约视频
+      //               that.$router.push('/personalCertificate/videoAuth')
+      //               that.$store.commit('personalCertificateSwiperProgressSave', 5)
+      //               break
+      //             case '827':
+      //               // 信用卡
+      //               break
+      //             case '828':
+      //               // 联系人信息
+      //               that.$router.push('/personalCertificate/linkman')
+      //               that.$store.commit('personalCertificateSwiperProgressSave', 4)
+      //               break
+      //             case '829':
+      //               // 基本信息
+      //               that.$router.push('/personalCertificate/baseInfo')
+      //               that.$store.commit('personalCertificateSwiperProgressSave', 3)
+      //               break
+      //             case '830':
+      //               // 银行卡信息-借记卡
+      //               that.$router.push('/personalCertificate/bankCardInfo')
+      //               that.$store.commit('personalCertificateSwiperProgressSave', 2)
+      //               break
+      //           }
+      //         }
+      //       } else if (json.Step === 35 && json.Result === 100) {
+      //         // 申请开户
+      //         that.$store.commit('waitAuditStatusSave', 0)
+      //         that.$router.push('/personalCertificate/waitAudit')
+      //         // that.$router.push('/personalCertificate')
+      //       } else if (json.Step === 35 && json.Result === 101) {
+      //         // 正在审核
+      //         that.$store.commit('waitAuditStatusSave', 0)
+      //         that.$router.push('/personalCertificate/waitAudit')
+      //       } else if (json.Step === 35 && json.Result === 102) {
+      //         // 审核通过
+      //         that.$store.commit('waitAuditStatusSave', 2)
+      //         that.$router.push('/personalCertificate/waitAudit')
+      //       } else if (json.Step === 35 && json.Result === 109) {
+      //         // 审核拒绝
+      //         that.$store.commit('waitAuditStatusSave', 1)
+      //         that.$router.push('/personalCertificate/waitAudit')
+      //       } else if (json.Step === 35 && json.Result === 121) {
+      //         // 调查问卷
+      //         that.$store.commit('waitAuditStatusSave', 3)
+      //         // that.$router.push('/personalCertificate/waitAudit')
+      //       }
+      //     }
+      //   }
+      // }
     }
   }
 </script>

@@ -11,7 +11,8 @@
 
     <pc-nav-header v-if="progressShow" :curProgress="curProgress"></pc-nav-header>
 
-    <router-view :storageTextData="storageTextData"></router-view>
+    <!--<router-view :storageTextData="storageTextData"></router-view>-->
+    <router-view @storageTextData="storageTextData"></router-view>
   </div>
 </template>
 
@@ -24,10 +25,26 @@
     },
     computed: {
       progressShow() {
-        return this.$store.state.identity.personalCertificateSwiperShow
+        // 个人认证 swiper 显示 且 申请资格认证资格通过
+        return this.$store.state.identity.personalCertificateSwiperShow && this.$store.state.identity.applyQualificationAuthStatus
       },
       curProgress() {
         return this.$store.state.identity.personalCertificateSwiperProgress
+      }
+      // storageTextData() {
+      //   let data = this.app.getData()
+      //   if (data !== '') {
+      //     data = JSON.parse(data)
+      //     return data
+      //   } else {
+      //     console.log('没有缓存')
+      //     return {}
+      //   }
+      // }
+    },
+    methods: {
+      back() {
+        this.goback()
       },
       storageTextData() {
         let data = this.app.getData()
@@ -35,14 +52,9 @@
           data = JSON.parse(data)
           return data
         } else {
-          console.log('没有缓存')
+          // console.log('没有缓存')
           return {}
         }
-      }
-    },
-    methods: {
-      back() {
-        this.goback()
       },
       progressStatus(curPath) {
         let filterPathPersonalCertificate = [

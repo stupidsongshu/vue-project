@@ -9,7 +9,8 @@
     <div class="form">
       <div class="form-item">
         <label class="icon icon-phone"></label>
-        <input type="number" placeholder="请输入手机号" v-model="mobileno">
+        <input type="number" placeholder="请输入手机号" v-model="mobileno" oninput=" if(value.length>11)
+        {value = value.slice(0,11)}">
       </div>
       <div class="form-item">
         <label class="icon icon-password"></label>
@@ -19,7 +20,8 @@
       </div>
       <div class="form-item">
         <label class="icon icon-msg"></label>
-        <input type="text" placeholder="请输入短信验证码" v-model="vcode">
+        <input type="text" placeholder="请输入短信验证码" v-model="vcode" oninput=" if(value.length>4)
+        {value = value.slice(0,4)}">
         <label class="form-item-right code" @click="getCode" v-if="!hasGetCode">发送验证码</label>
         <label class="form-item-right code" v-if="hasGetCode">{{time}}s后重新获取</label>
       </div>
@@ -51,6 +53,9 @@
         hasGetCode: false,
         time: 60
       }
+    },
+    created() {
+      console.log(sessionStorage)
     },
     methods: {
       back() {

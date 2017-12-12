@@ -29,7 +29,6 @@
       swiperSlide
     },
     created() {
-      var a = new Date()
       /*
         三大运营商最新号段 合作版
         移动号段:
@@ -61,8 +60,6 @@
       }
       // 贷款额度
       let generateAmount = () => {
-        // var a = parseInt(Math.random() * ((20000 - 500) / 100 + 1))
-        // return a * 100 + 500
         // var tmp = parseInt(Math.random() * ((LOAN_LIMIT_MAX - LOAN_LIMIT_MIN) / 100 + 1))
 
         // var tmp = parseInt(Math.random() * (LOAN_LIMIT_MAX / LOAN_LIMIT_MIN) + 1)
@@ -77,10 +74,6 @@
           amount: generateAmount()
         })
       }
-      console.log(this.phoneArr)
-      var b = new Date()
-      // alert(b - a)
-      console.log(b - a)
     }
   }
 </script>
@@ -106,9 +99,6 @@
       .swiper-container
         margin-left: 4px
         .phone-item
-          /*width: 100%
-          height: 24px
-          line-height: 24px*/
           display: flex
           align-items: center
           color: #fff

@@ -39,16 +39,7 @@
     <div class="loan-btn" style="margin-top: 42px;">
       <mt-button class="btn" @click="submit">提交</mt-button>
     </div>
-
-    <mt-popup v-model="popupVisible" popup-transition="popup-fade" closeOnClickModal="true">
-      <ul>
-        <li class="linkman-item" v-for="user in linkmanInfo" @click="getUser(user)">
-          <span>{{user.name}}</span>
-          <span>{{user.number}}</span>
-          <span>{{user.city}}</span>
-        </li>
-      </ul>
-    </mt-popup>
+    {{emContactList}}
   </div>
 </template>
 
@@ -57,67 +48,88 @@
   import {Toast} from 'mint-ui'
 
   export default {
+    components: {
+      pcNavHeader
+    },
     data() {
       return {
-        popupVisible: false,
-        linkmanInfo: [],
         /**
          * contactName 联系人姓名
          * contactPhone 联系人电话
          * contactRelation 关系:4家人 6朋友 7同事
          */
-        contactRelation: 0,
         contactName1: '',
         contactPhone1: '',
-        contactRelation1: '',
+        contactRelation1: 4,
         contactName2: '',
         contactPhone2: '',
-        contactRelation2: '',
+        contactRelation2: 6,
         contactName3: '',
         contactPhone3: '',
-        contactRelation3: ''
+        contactRelation3: 7
       }
     },
-    components: {
-      pcNavHeader
+    props: {
+      storageTextData: {
+        type: Object
+      }
     },
+    created() {
+      // console.log(this.storageTextData)
+      console.log(JSON.parse(this.app.getData()))
+      let linkInfo = this.storageTextData.emContactList
+      if (linkInfo && linkInfo.length > 0) {
+        this.contactName1 = this.emContactList[0].contactName
+        this.contactPhone1 = this.emContactList[0].contactPhone
+
+        this.contactName2 = this.emContactList[1].contactName
+        this.contactPhone2 = this.emContactList[1].contactPhone
+
+        this.contactName3 = this.emContactList[2].contactName
+        this.contactPhone3 = this.emContactList[2].contactPhone
+      }
+    },
+    // computed: {
+    //   emContactList: {
+    //     get() {
+    //       console.log(1)
+    //       console.log(this.storageTextData)
+    //       console.log(2)
+    //       let linkInfo = this.storageTextData.emContactList
+    //       if (linkInfo && linkInfo.length > 0) {
+    //         console.log(this.emContactList[0].contactName)
+    //         return linkInfo
+    //       }
+    //     },
+    //     set() {}
+    //   }
+    // },
     methods: {
       back() {
         this.goback()
       },
       getContacts(contactRelation) {
         let that = this
-        this.popupVisible = true
-        this.contactRelation = contactRelation
         this.app.getContacts()
         this.app.GetContactsCallBack = function(json) {
-          json = JSON.parse(json)
-          console.log(json)
-          that.linkmanInfo = json
-        }
-      },
-      getUser(user) {
-        this.popupVisible = false
-        if (this.contactRelation === 4) {
-          this.contactName1 = user.name
-          this.contactPhone1 = user.number
-          this.contactRelation1 = this.contactRelation
-        }
-        if (this.contactRelation === 6) {
-          this.contactName2 = user.name
-          this.contactPhone2 = user.number
-          this.contactRelation2 = this.contactRelation
-        }
-        if (this.contactRelation === 7) {
-          this.contactName3 = user.name
-          this.contactPhone3 = user.number
-          this.contactRelation3 = this.contactRelation
+          let name = json.split(',')[0]
+          let number = json.split(',')[1]
+          if (contactRelation === 4) {
+            that.contactName1 = name
+            that.contactPhone1 = number
+          }
+          if (contactRelation === 6) {
+            that.contactName2 = name
+            that.contactPhone2 = number
+          }
+          if (contactRelation === 7) {
+            that.contactName3 = name
+            that.contactPhone3 = number
+          }
         }
       },
       submit() {
-        /**
-         * app.EmContact(contactName1, contactPhone1, contactRelation1,contactName2, contactPhone2, contactRelation2,contactName3,contactPhone3,contactRelation3)
-         */
+        let that = this
         this.app.EmContact(
           this.contactName1,
           this.contactPhone1,
@@ -136,6 +148,26 @@
             message: json.Msg,
             duration: 3000
           })
+          if (json.Step === 13 && json.Result === 0) {
+            // 缓存
+            that.app.SaveEmContact(
+              that.contactName1,
+              that.contactPhone1,
+              that.contactRelation1,
+              that.contactName2,
+              that.contactPhone2,
+              that.contactRelation2,
+              that.contactName3,
+              that.contactPhone3,
+              that.contactRelation3
+            )
+
+            // that.$router.push('/personalCertificate/videoAuth')
+            // that.$store.commit('personalCertificateSwiperProgressSave', 5)
+
+            // that.$emit('checkApplyStatus')
+            that.applystatus()
+          }
         }
       }
     }

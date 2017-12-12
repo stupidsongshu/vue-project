@@ -17,8 +17,7 @@
         <div class="name">
           <span>手机号码</span>
         </div>
-        <input class="input color999" type="number" placeholder="请输入借记卡绑定手机号(选填)" v-model="phoneNo" v-on:focus="focus" v-on:blur="blur" oninput=" if(value.length>11)
-        {value = value.slice(0,11)}">
+        <input class="input" type="number" placeholder="请输入借记卡绑定手机号(选填)" v-model="phoneNo" v-on:blur="saveDebitCard" oninput=" if(value.length>11){value = value.slice(0,11)}">
       </div>
     </div>
     <div class="input-item">
@@ -26,7 +25,7 @@
         <div class="name">
           <span class="required">借记卡号</span>
         </div>
-        <input class="input color999" type="number" placeholder="借记卡号" v-model="debitCardno" v-on:focus="focus" v-on:blur="blur">
+        <input class="input" type="number" placeholder="借记卡号" v-model="debitCardno" v-on:blur="saveDebitCard" oninput=" if(value.length>19){value = value.slice(0,19)}">
       </div>
       <!--<div class="input-item-r">
         <i class="fa fa-angle-right"></i>
@@ -37,8 +36,7 @@
         <div class="name">
           <span class="required">开户银行</span>
         </div>
-        <!--<input class="input" type="text" placeholder="请选择" readonly v-model="purpose">-->
-        <span class="color999">{{openBank || '请选择'}}</span>
+        <input class="input" type="text" placeholder="请选择" readonly v-model="openBank">
       </div>
       <div class="input-item-r">
         <i class="fa fa-angle-right"></i>
@@ -49,8 +47,8 @@
         <div class="name">
           <span class="required">开户城市</span>
         </div>
-        <!--<input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">-->
-        <span class="color999">{{selectedCity || '请选择'}}</span>
+        <input class="input" type="text" placeholder="请选择" readonly v-model="selectedCity">
+        <!--<span class="color999">{{selectedCity || '请选择'}}</span>-->
       </div>
       <div class="input-item-r">
         <i class="fa fa-angle-right"></i>
@@ -66,6 +64,8 @@
     <div class="loan-btn">
       <mt-button class="btn" @click="addDebitCard">添加借记卡</mt-button>
     </div>
+    <!--{{storageTextData.debitCardList[0]}}-->
+    <!--{{typeof storageTextData.debitCardList[0]}}-->
 
     <div class="warm-prompt">
       <span class="title">温馨提示：<span style="color: #f00;">当前仅支持以下银行</span>，请勿绑定其他银行</span>
@@ -177,14 +177,13 @@
         selectedCity: ''
       }
     },
-    props: {
-      storageTextData: {
-        type: Object
-      }
+    created() {
+      this.storageTextData = this.$emit('storageTextData')
+      console.log(this.storageTextData)
     },
     mounted() {
       let debitCardList = this.storageTextData.debitCardList
-      if (debitCardList !== undefined) {
+      if (debitCardList) {
         let debitCard = debitCardList[0]
         Toast({
           message: this.storageTextData.debitCardList,
@@ -193,7 +192,10 @@
         this.debitCardno = debitCard.debitcardNo
         this.phoneNo = debitCard.debitcardPhoneNo
         this.openBank = debitCard.openBank
-        this.selectedCity = debitCard.prov + ' ' + debitCard.city
+        this.openBankId = debitCard.openBankId
+        this.prov = debitCard.prov
+        this.city = debitCard.city
+        this.selectedCity = debitCard.prov ? (debitCard.prov + ' ' + debitCard.city) : ''
       }
     },
     methods: {
@@ -244,21 +246,23 @@
             message: json.Msg,
             duration: 3000
           })
+          if (json.Step === 9 && json.Result === 0) {
+            // that.$router.push('/personalCertificate/baseInfo')
+            // that.$store.commit('personalCertificateSwiperProgressSave', 3)
+
+            // that.$emit('checkApplyStatus')
+            that.applystatus()
+          }
         }
       },
       // 缓存
       saveDebitCard() {
-        let arr = [0, this.debitCardno, this.phoneNo, this.openBank, this.openBankId, this.prov, this.city]
-        Toast({
-          message: arr,
-          duration: 3000
-        })
+        // let arr = [0, this.debitCardno, this.phoneNo, this.openBank, this.openBankId, this.prov, this.city]
+        // Toast({
+        //   message: arr,
+        //   duration: 3000
+        // })
         this.app.SaveDebitCard(0, this.debitCardno, this.phoneNo, this.openBank, this.openBankId, this.prov, this.city)
-      },
-      focus() {
-      },
-      blur() {
-        this.saveDebitCard()
       }
     }
     // beforeDestroy() {

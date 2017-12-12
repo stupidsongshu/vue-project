@@ -8,7 +8,7 @@
 
     <!--<pc-nav-header :curProgress="1"></pc-nav-header>-->
 
-    <!--<div class="identity-nav">
+    <div class="identity-nav" v-if="!applyQualificationAuthStatus">
       <div class="identity-slide">
         <span class="active">身份信息</span>
       </div>
@@ -18,25 +18,39 @@
       <div class="identity-slide">
         <span>基本信息</span>
       </div>
-    </div>-->
+    </div>
 
     <transition name="slide">
       <div class="id-card" ref="idCard">
         <h1 class="title">拍摄身份证</h1>
         <ul class="shot-wrapper">
           <li class="shot-item" @click="showExampleL">
-            <div>
-              <img v-show="!idcardFrontShotStatus" src="../../../assets/img/shot_face.png" alt="">
-              <img v-show="idcardFrontShotStatus" :src="idcardFrontImg" alt="">
+            <div class="idCard-outer">
+              <!--<img v-show="idFrontApplyQualificationAuthStep === 0 " src="../../../assets/img/shot_face.png" alt="">
+              <img v-show="idFrontApplyQualificationAuthStep === 60 || idFrontApplyQualificationAuthStep === 70 || idFrontApplyQualificationAuthStep === 8110 || idFrontApplyQualificationAuthStep === 8111" :src="idcardFrontImg" alt="">-->
+              <img ref="idcardFront_img" src="../../../assets/img/shot_face.png" alt="">
+              <div class="idCard-inner">
+                <img v-show="idFrontShow === 1" src="../../../assets/img/icon_idCard_return.png" alt="">
+                <img v-show="idFrontShow === 2" src="../../../assets/img/icon_idCard_change.png" alt="">
+                <img v-show="idFrontShow === 3" src="../../../assets/img/icon_idCard_pass.png" alt="">
+              </div>
             </div>
-            <span class="explain">身份证正面</span>
+
+            <span class="explain">身份证正面{{idFrontShow}}</span>
           </li>
           <li class="shot-item" @click="showExampleR">
-            <div>
-              <img v-show="!idcardBackShotStatus" src="../../../assets/img/shot_back.png" alt="">
-              <img v-show="idcardBackShotStatus" :src="idcardBackImg" alt="">
+            <div class="idCard-outer">
+              <!--<img v-show="idBackApplyQualificationAuthStep === 0" src="../../../assets/img/shot_back.png" alt="">
+              <img v-show="idBackApplyQualificationAuthStep === 60 || idBackApplyQualificationAuthStep === 70 || idBackApplyQualificationAuthStep === 8110 || idBackApplyQualificationAuthStep === 8111" :src="idcardBackImg" alt="">
+              -->
+              <img ref="idcardBack_img" src="../../../assets/img/shot_back.png" alt="">
+              <div class="idCard-inner">
+                <img v-show="idBackShow === 1" src="../../../assets/img/icon_idCard_return.png" alt="">
+                <img v-show="idBackShow === 2" src="../../../assets/img/icon_idCard_change.png" alt="">
+                <img v-show="idBackShow === 3" src="../../../assets/img/icon_idCard_pass.png" alt="">
+              </div>
             </div>
-            <span class="explain">身份证反面</span>
+            <span class="explain">身份证反面{{idBackShow}}</span>
           </li>
         </ul>
       </div>
@@ -55,7 +69,7 @@
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">姓名</span>
-        <input class="input" type="text" placeholder="真实姓名" v-model="idcardFrontName" v-on:focus="focus($event)" v-on:blur="blur">
+        <input class="input" type="text" placeholder="真实姓名" v-model="idcardFrontName" readonly>
       </div>
       <div class="input-item-r" v-if="idcardFrontIdentifyStatus">
         <i class="icon-shoot-success"></i>
@@ -64,14 +78,20 @@
     <div class="input-item">
       <div class="input-item-l">
         <span class="name">身份证号</span>
-        <input class="input" type="text" placeholder="身份证号码" v-model="idcardFrontId" v-on:focus="focus($event)" v-on:blur="blur">
+        <input class="input" type="text" placeholder="身份证号码" v-model="idcardFrontId" readonly>
       </div>
       <div class="input-item-r" v-if="idcardFrontIdentifyStatus">
         <i class="icon-shoot-success"></i>
       </div>
     </div>
+    <div class="input-item">
+      <div class="input-item-l">
+        <span class="name">身份证号</span>
+        <input class="input" type="text" placeholder="仅供测试用，一定要先填写后拍照" v-model="idcardFrontIdTest" v-on:focus="focus" v-on:blur="blur">
+      </div>
+    </div>
 
-    <router-link class="input-item" to="/personalCertificate/faceRecognition" replace style="margin-top: 17px;">
+    <router-link class="input-item" to="/personalCertificate/faceRecognition" style="margin-top: 17px;">
       <div class="input-item-l">
         <span class="name">活体识别</span>
         <input class="input" type="text" placeholder="前往拍摄" readonly>
@@ -83,8 +103,8 @@
     </router-link>
 
     <div class="loan-btn" style="margin-top: 42px;">
-      <!--<mt-button class="btn" @click="submit" :disabled="!applyQualificationAuthStatus">提交</mt-button>-->
-      <mt-button class="btn" @click="submit">提交</mt-button>
+      <mt-button class="btn" @click="submit" :disabled="!applyQualificationAuthStatus">提交</mt-button>
+      <!--<mt-button class="btn" @click="submit">提交</mt-button>-->
     </div>
 
     <mt-popup v-model="popupVisibleL" popup-transition="popup-fade" closeOnClickModal="true">
@@ -142,8 +162,11 @@
       return {
         popupVisibleL: false,
         popupVisibleR: false,
-        idcardFrontName: this.storageTextData.idCard.customerName,
-        idcardFrontId: this.storageTextData.idCard.idNo
+        idcardFrontImg: '',
+        idcardBackImg: '',
+        idcardFrontName: this.storageTextData.idCard ? this.storageTextData.idCard.customerName : '',
+        idcardFrontId: this.storageTextData.idCard ? this.storageTextData.idCard.idNo : '',
+        idcardFrontIdTest: ''
       }
     },
     props: {
@@ -151,16 +174,83 @@
         type: Object
       }
     },
+    mounted() {
+      console.log(this.storageTextData)
+      let that = this
+
+      this.app.InitCallBack = function() {
+        let isshow = true
+        if (that.storageTextData.errorid && that.storageTextData.idCard && that.storageTextData.idCard.idNo) {
+          if (that.storageTextData.errorid === that.storageTextData.idCard.idNo) {
+            that.$store.commit('idFrontShowSave', 2)
+            that.$store.commit('idBackShowSave', 2)
+            isshow = false
+          }
+        }
+        alert(1)
+        let idFile = that.app.getIdFile()
+        let idBackFile = that.app.getIdBackFile()
+        alert(idFile.length + '     ' + idBackFile.length)
+        if (that.storageTextData.idCard && !that.storageTextData.idCard.idNo) {
+          if (idFile) {
+            that.$store.commit('idFrontShowSave', 1)
+          }
+          if (idBackFile) {
+            that.$store.commit('idBackShowSave', 1)
+          }
+        }
+
+        if (that.$store.state.identity.idFrontApplyQualificationAuthStep === 8110) {
+          that.$store.commit('idFrontShowSave', 3)
+          that.$store.commit('idBackShowSave', 3)
+        }
+
+        if (that.sign > 822) {
+          that.$store.commit('idFrontShowSave', 3)
+          that.$store.commit('idBackShowSave', 3)
+        }
+
+        // 身份证正面
+        if (idFile) {
+          that.$refs.idcardFront_img.src = 'data:image/png;base64,' + idFile
+          if (isshow && that.sign === 822) {
+            that.$store.commit('idFrontShowSave', 1)
+          }
+        }
+        // 身份证反面
+        if (idBackFile) {
+          that.$refs.idcardBack_img.src = 'data:image/png;base64,' + idBackFile
+          if (isshow && that.sign === 822) {
+            that.$store.commit('idBackShowSave', 1)
+          }
+        }
+        // 活体识别
+        if (that.app.getLive()) {
+          that.$store.commit('faceRecognitionStepSave', 1)
+        }
+      }
+      this.app.page('identity')
+    },
     computed: {
+      idFrontShow() {
+        return this.$store.state.identity.idFrontShow
+      },
+      idBackShow() {
+        return this.$store.state.identity.idBackShow
+      },
+      sign() {
+        return this.$store.state.identity.sign
+      },
       applyQualificationAuthStatus() {
         return this.$store.state.identity.applyQualificationAuthStatus
+        // return true
       },
-      // idCardTxt() {
-      //   let idCard = this.storageTextData.idCard
-      //   if (idCard !== undefined) {
-      //     return idCard
-      //   }
-      // },
+      idFrontApplyQualificationAuthStep() {
+        return this.$store.state.identity.idFront_applyQualificationAuthStep
+      },
+      idBackApplyQualificationAuthStep() {
+        return this.$store.state.identity.idBack_applyQualificationAuthStep
+      },
 
       // 正面拍摄完成返回本地图片状态
       idcardFrontShotStatus() {
@@ -169,33 +259,6 @@
       // 服务器识别状态
       idcardFrontIdentifyStatus() {
         return this.$store.state.identity.idcardFront_identifyStatus
-      },
-      // idcardFrontName() {
-      //   // return this.$store.state.identity.idcardFront_name
-      //
-      //   return this.idCardTxt.customerName
-      // },
-      // idcardFrontName: {
-      //   get: function() {
-      //     return this.idCardTxt.customerName
-      //   },
-      //   set: function(newValue) {
-      //     console.log(newValue)
-      //   }
-      // },
-      // idcardFrontId() {
-      //   // return this.$store.state.identity.idcardFront_id
-      //
-      //   return this.idCardTxt.idNo
-      // },
-      idcardFrontImg() {
-        // return this.$store.state.identity.idcardFront_img
-
-        let idCard = this.app.getIdFile()
-        if (idCard !== '') {
-          this.$store.commit('idcardFrontShotStatusSave', true)
-          return 'data:image/png;base64,' + idCard
-        }
       },
 
       // 反面拍摄完成返回本地图片状态
@@ -206,51 +269,22 @@
       idcardBackIdentifyStatus() {
         return this.$store.state.identity.idcardBack_identifyStatus
       },
-      idcardBackImg() {
-        // return this.$store.state.identity.idcardBack_img
-
-        let idCard = this.app.getIdBackFile()
-        if (idCard !== '') {
-          this.$store.commit('idcardBackShotStatusSave', true)
-          return 'data:image/png;base64,' + idCard
-        }
-      },
+      // idcardBackImg: {
+      //   // return this.$store.state.identity.idcardBack_img
+      //   get: function() {
+      //     let idCard = this.app.getIdBackFile()
+      //     if (idCard !== '') {
+      //       this.$store.commit('idcardBackShotStatusSave', true)
+      //       return 'data:image/png;base64,' + idCard
+      //     }
+      //   },
+      //   set: function() {}
+      // },
       faceRecognitionStep() {
         return this.$store.state.identity.faceRecognitionStep
       }
     },
     methods: {
-      /**
-       * 检查申请资格认证状态并存储
-       * @return false未通过
-       * @return true 已通过
-       */
-      checkApplyQualificationAuthStatus() {
-        let that = this
-        let loginInfo = JSON.parse(this.app.isLogin())
-        if (loginInfo.Step === 0 && loginInfo.Result !== 0) { // 未登录
-          this.$router.push('/login')
-        } else if (loginInfo.Step === 0 && loginInfo.Result === 0) {
-          // 查询用户申请状态
-          this.app.AppStatus()
-          this.app.AppStatusCallBack = function(json) {
-            json = JSON.parse(json)
-            // console.log(json)
-            if (json.Step === 35 && json.Result === 0) {
-              let requires = JSON.parse(json.Msg)
-              if (requires.length > 0) {
-                // console.log(requires)
-                let keys = Object.keys(requires[0])
-                if (keys[0] === '822') {
-                  that.$store.commit('applyQualificationAuthStatusSave', false)
-                } else {
-                  that.$store.commit('applyQualificationAuthStatusSave', true)
-                }
-              }
-            }
-          }
-        }
-      },
       focus() {
         // let that = this
         // setTimeout(function() {
@@ -258,13 +292,17 @@
         //   pannel.scrollIntoView(true)
         //   pannel.scrollIntoViewIfNeeded()
         // }, 200)
-        this.$refs.idCard.style.display = 'none'
+        let el = this.$refs.idCard
+        el.style.display = 'none'
+        this.$store.commit('toggleViewSave', {
+          status: true,
+          target: [el]
+        })
       },
       blur() {
-        let that = this
-        this.app.ShowView(function() {
-          that.$refs.idCard.style.display = 'block'
-        })
+        // 仅供测试改身份证号用
+        this.app.updateIdCard('', this.idcardFrontIdTest)
+        // 仅供测试改身份证号用
       },
       showExampleL() {
         this.popupVisibleL = true
@@ -273,6 +311,7 @@
         this.popupVisibleR = true
       },
       idcardFront() {
+        this.$store.commit('idFrontIsOpetateSave', true)
         let that = this
         this.popupVisibleL = false
         this.app.idcardFront()
@@ -280,27 +319,24 @@
           json = JSON.parse(json)
           console.log(json)
           if (json.Step === 6 && json.Result === 0 && json.IdCardType === 0) {
-            // that.loading(json.Msg)
+            that.loading(json.Msg)
             // 正面拍摄完成返回本地图片状态
-            that.$store.commit('idcardFrontShotStatusSave', true)
-            that.$store.commit('idcardFrontImgSave', 'data:image/png;base64,' + json.Img)
+            that.$store.commit('idFrontApplyQualificationAuthStepSave', 60)
+            that.$refs.idcardFront_img.src = 'data:image/png;base64,' + json.Img
+            that.$store.commit('idFrontShowSave', 0)
           }
           if (json.Step === 7 && json.Result === 0 && json.IdCardType === 0) {
-            // that.closeLoading()
-            // Toast({
-            //   message: json.Msg,
-            //   duration: 3000
-            // })
+            that.closeLoading()
+            that.idcardFrontName = json.Name
+            that.idcardFrontId = json.Id
             // 服务器识别状态
             that.$store.commit('idcardFrontIdentifyStatusSave', true)
-            /**
-             * 检查申请资格认证状态
-             */
-            that.checkApplyQualificationAuthStatus()
-            // that.$store.commit('idcardFrontNameSave', json.Name)
-            // that.$store.commit('idcardFrontIdSave', json.Id)
+            that.$store.commit('idFrontApplyQualificationAuthStepSave', 70)
           } else if (json.Step === 7 && json.Result !== 0 && json.IdCardType === 0) {
             that.closeLoading()
+            that.$store.commit('idcardFrontIdentifyStatusSave', false)
+            // that.$store.commit('idFrontApplyQualificationAuthStepSave', 71)
+            that.$store.commit('idFrontShowSave', 1)
             Toast({
               message: json.Msg,
               duration: 3000
@@ -316,25 +352,22 @@
           json = JSON.parse(json)
           console.log(json)
           if (json.Step === 6 && json.Result === 0 && json.IdCardType === 1) {
-            // that.loading(json.Msg)
+            that.loading(json.Msg)
             // 反面拍摄完成返回本地图片状态
-            that.$store.commit('idcardBackShotStatusSave', true)
-            that.$store.commit('idcardBackImgSave', 'data:image/png;base64,' + json.Img)
+            that.$store.commit('idBackApplyQualificationAuthStepSave', 60)
+            that.$refs.idcardBack_img.src = 'data:image/png;base64,' + json.Img
+            that.$store.commit('idBackShowSave', 0)
           }
           if (json.Step === 7 && json.Result === 0 && json.IdCardType === 1) {
-            // that.closeLoading()
-            // Toast({
-            //   message: json.Msg,
-            //   duration: 3000
-            // })
+            that.closeLoading()
             // 服务器识别状态
             that.$store.commit('idcardBackIdentifyStatusSave', true)
-            /**
-             * 检查申请资格认证状态
-             */
-            that.checkApplyQualificationAuthStatus()
+            that.$store.commit('idBackApplyQualificationAuthStepSave', 70)
           } else if (json.Step === 7 && json.Result !== 0 && json.IdCardType === 1) {
             that.closeLoading()
+            that.$store.commit('idcardBackIdentifyStatusSave', true)
+            // that.$store.commit('idBackApplyQualificationAuthStepSave', 71)
+            that.$store.commit('idBackShowSave', 1)
             Toast({
               message: json.Msg,
               duration: 3000
@@ -345,17 +378,18 @@
       submit() {
         let that = this
         this.loading()
-        this.app.updateIdCard(this.idcardFrontName, this.idcardFrontId)
+        this.app.updateIdCard()
         this.app.UpdateIdCardCallBack = function(json) {
           that.closeLoading()
           json = JSON.parse(json)
           console.log(json)
           if (json.Step === 811 && json.Result === 0) {
-            Toast({
-              message: '请继续进行下一步',
-              duration: 3000
-            })
-          } else if (json.Step === 811 && json.Result === 0) {
+            // that.$router.push('/personalCertificate/bankCardInfo')
+            // that.$store.commit('personalCertificateSwiperProgressSave', 2)
+
+            // that.$emit('checkapplystatus')
+            that.applystatus()
+          } else if (json.Step === 811 && json.Result !== 0) {
             Toast({
               message: json.Msg,
               duration: 3000
@@ -403,7 +437,12 @@
     .shot-wrapper
       display: flex
       .shot-item
+        position: relative
         flex: 1
+        display:flex
+        flex-direction: column
+        width: 167px
+        /*height: 106px*/
         margin-right: 12px
         text-align: center
         &:last-child
@@ -411,6 +450,18 @@
         img
           width: 100%
           height: 100%
+        .idCard-outer
+          position: relative
+          width: 100%
+          height: 100%
+          .idCard-inner
+            position: absolute
+            top: 50%
+            left: 50%
+            width: 82px
+            height: 68px
+            transform: translate(-50%, -50%)
+            z-index: 99
         .explain
           display: inline-block
           margin: 10px 0 15px 0

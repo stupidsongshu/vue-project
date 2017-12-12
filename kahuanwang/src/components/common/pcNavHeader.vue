@@ -44,37 +44,12 @@
       curProgress: {
         type: Number
       }
-      // 申请资格认证状态
-      // applyQualificationAuthStatus: {
-      //   type: Boolean
-      // }
     },
     computed: {
       swiper() {
         return this.$refs.mySwiper.swiper
       }
-      // a() {
-      //   if (!this.applyQualificationAuthStatus) {
-      //     // 移除所有slide监听事件
-      //     this.swiper.detachEvents()
-      //   } else {
-      //     // 重新绑定所有监听事件
-      //     this.swiper.attachEvents()
-      //   }
-      // }
     },
-    // watch: {
-    //   applyQualificationAuthStatus(newValue) {
-    //     console.log(newValue)
-    //     if (!newValue) {
-    //       // 移除所有slide监听事件
-    //       this.swiper.detachEvents()
-    //     } else {
-    //       // 重新绑定所有监听事件
-    //       this.swiper.attachEvents()
-    //     }
-    //   }
-    // },
     methods: {
       // 身份信息
       identity() {

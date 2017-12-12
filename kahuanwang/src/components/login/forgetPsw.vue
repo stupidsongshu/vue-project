@@ -9,11 +9,13 @@
     <div class="form">
       <div class="form-item">
         <label class="icon icon-phone"></label>
-        <input type="number" placeholder="请输入手机号" v-model="mobileNo">
+        <input type="number" placeholder="请输入手机号" v-model="mobileNo" oninput=" if(value.length>11)
+        {value = value.slice(0,11)}">
       </div>
       <div class="form-item">
         <label class="icon icon-msg"></label>
-        <input type="text" placeholder="请输入短信验证码" v-model="vcode">
+        <input type="number" placeholder="请输入短信验证码" v-model="vcode" oninput=" if(value.length>4)
+        {value = value.slice(0,4)}">
         <label class="form-item-right code" @click="getCode(mobileNo)">发送验证码</label>
       </div>
       <div class="reset-psw-title">请重新设置密码</div>

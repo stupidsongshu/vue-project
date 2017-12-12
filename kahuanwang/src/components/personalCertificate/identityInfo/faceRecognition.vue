@@ -62,19 +62,18 @@
   import { Toast } from 'mint-ui'
 
   export default {
+    data() {
+      return {
+        faceRecognitionImg: this.app.getLive() ? 'data:image/png;base64,' + this.app.getLive() : ''
+      }
+    },
     computed: {
       faceRecognitionStep() {
         return this.$store.state.identity.faceRecognitionStep
-      },
-      faceRecognitionImg() {
-        // return this.$store.state.identity.faceRecognitionImg
-
-        return 'data:image/png;base64,' + this.app.getLive()
       }
     },
     created() {
-      // console.log(!!this.app.getLive() === true)
-      if (!!this.app.getLive() === true) {
+      if (this.app.getLive()) {
         this.$store.commit('faceRecognitionStepSave', 1)
       }
     },
@@ -98,6 +97,7 @@
               message: json.Msg,
               duration: 3000
             })
+            that.$store.commit('faceRecognitionStepSave', 2)
           }
           if (json.Step === 5 && json.Result === 0) {
             that.closeLoading()
@@ -105,15 +105,15 @@
               message: json.Msg,
               duration: 3000
             })
-            // that.$store.commit('faceRecognitionStepSave', 1)
-            // that.$store.commit('faceRecognitionImgSave', 'data:image/png;base64,' + json.Img)
+            that.$store.commit('faceRecognitionStepSave', 1)
+            that.faceRecognitionImg = 'data:image/png;base64,' + json.Img
           } else if (json.Step === 5 && json.Result !== 0) {
             that.closeLoading()
             Toast({
               message: json.Msg,
               duration: 3000
             })
-            // that.$store.commit('faceRecognitionStepSave', 2)
+            that.$store.commit('faceRecognitionStepSave', 2)
           }
         }
       }

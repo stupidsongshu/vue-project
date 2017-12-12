@@ -48,11 +48,22 @@
   export default {
     data() {
       return {
-        popupVisible: false
+        popupVisible: false,
+        videoImg: this.app.getVOW() ? 'data:image/png;base64,' + this.app.getVOW() : ''
       }
     },
     components: {
       pcNavHeader
+    },
+    created() {
+      if (this.app.getVOW()) {
+        this.$store.commit('videoAuthStepSave', 1)
+      }
+    },
+    computed: {
+      videoAuthStep() {
+        return this.$store.state.identity.videoAuthStep
+      }
     },
     methods: {
       back() {
@@ -74,8 +85,7 @@
               duration: 3000
             })
             that.$store.commit('videoAuthStepSave', 1)
-            that.$store.commit('videoAuthImgSave', 'data:image/png;base64,' + json.Img)
-            // that.videoImg = 'data:image/png;base64,' + json.Img
+            that.videoImg = 'data:image/png;base64,' + json.Img
           }
         }
       },
@@ -91,15 +101,13 @@
             message: json.Msg,
             duration: 3000
           })
+          if (json.Step === 826 && json.Result === 0) {
+            // that.$router.push('/personalCertificate/agreeAuth')
+
+            // that.$emit('checkApplyStatus')
+            that.applystatus()
+          }
         }
-      }
-    },
-    computed: {
-      videoAuthStep() {
-        return this.$store.state.identity.videoAuthStep
-      },
-      videoImg() {
-        return this.$store.state.identity.videoAuthImg
       }
     }
   }

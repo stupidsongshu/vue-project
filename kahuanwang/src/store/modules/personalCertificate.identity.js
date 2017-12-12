@@ -3,11 +3,18 @@
  */
 
 const state = {
+  idFrontShow: 0,
+  idBackShow: 0,
+  sign: 0,
   /**
    * 申请资格认证状态
    * applyQualificationAuthStatus: false未通过(默认) true已通过
+   * 申请资格认证进度
+   * applyQualificationAuthStep: 0未进行拍照操作(默认) 60拍照成功显示返回的本地base64图片 70服务器识别成功 71服务器识别失败显示重新拍摄 8110中银服务器通过申请资格认证显示通过 8111中银服务器拒绝申请资格认证显示请还身份证
    */
   applyQualificationAuthStatus: false,
+  idFront_applyQualificationAuthStep: 0,
+  idBack_applyQualificationAuthStep: 0,
   /**
    * 个人认证swiper
    * personalCertificateProgress: 认证进度
@@ -65,11 +72,26 @@ const state = {
 const getters = {}
 
 const mutations = {
+  idFrontShowSave(state, payload) {
+    state.idFrontShow = payload
+  },
+  idBackShowSave(state, payload) {
+    state.idBackShow = payload
+  },
+  signSave(state, payload) {
+    state.sign = payload
+  },
   /**
    * 申请资格认证状态
    */
   applyQualificationAuthStatusSave(state, payload) {
     state.applyQualificationAuthStatus = payload
+  },
+  idFrontApplyQualificationAuthStepSave(state, payload) {
+    state.idFront_applyQualificationAuthStep = payload
+  },
+  idBackApplyQualificationAuthStepSave(state, payload) {
+    state.idBack_applyQualificationAuthStep = payload
   },
   /**
    * 个人认证swiper

@@ -13,7 +13,8 @@
       </div>
       <div class="form-item">
         <label class="icon icon-msg"></label>
-        <input type="text" placeholder="请输入短信验证码" v-model="code">
+        <input type="text" placeholder="请输入短信验证码" v-model="code" oninput=" if(value.length>4)
+        {value = value.slice(0,4)}">
         <label class="form-item-right code" @click="getCode(mobile)" v-if="!hasGetCode">发送验证码</label>
         <label class="form-item-right code" v-if="hasGetCode">{{time}}s后重新获取</label>
       </div>

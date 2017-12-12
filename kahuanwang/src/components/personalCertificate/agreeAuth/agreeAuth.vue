@@ -13,11 +13,11 @@
       <p>卡还王祝你生活愉快！</p>
     </div>
     <div class="a">
-      <input type="checkbox"> 我同意并知晓<router-link to="">《中银消费新易贷-卡还王贷款合同》</router-link><router-link to="">《个人金融信息查询授权书》</router-link><router-link to="">《个人信息查询及使用授权书》</router-link>
+      <input type="checkbox" id="agreeCheckbox" :checked="checked" @click="toggleAgree"> <label for="agreeCheckbox">我同意并知晓</label><router-link to="">《中银消费新易贷-卡还王贷款合同》</router-link><router-link to="">《个人金融信息查询授权书》</router-link><router-link to="">《个人信息查询及使用授权书》</router-link>
     </div>
 
     <div class="loan-btn">
-      <mt-button class="btn" @click="submit">立即申请</mt-button>
+      <mt-button class="btn" @click="submit" :disabled="!checked">立即申请</mt-button>
     </div>
   </div>
 </template>
@@ -26,9 +26,17 @@
   import { Toast } from 'mint-ui'
 
   export default {
+    data() {
+      return {
+        checked: true
+      }
+    },
     methods: {
       back() {
         this.goback()
+      },
+      toggleAgree() {
+        this.checked = !this.checked
       },
       submit() {
         let that = this
