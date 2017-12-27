@@ -195,9 +195,12 @@
           }
         }
 
-        let idFile = that.app.getIdFile()
-        let idBackFile = that.app.getIdBackFile()
-        alert(idFile.length + '     ' + idBackFile.length)
+        // let idFile = that.app.getIdFile()
+        // let idBackFile = that.app.getIdBackFile()
+
+        let idFile = that.app.idf
+        let idBackFile = that.app.idb
+        // alert(idFile.length + '     ' + idBackFile.length)
         if (that.storageTextData.idCard && !that.storageTextData.idCard.idNo) {
           if (idFile) {
             that.$store.commit('idFrontShowSave', 1)

@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+	<title>书写规范</title>
+	<style>
+		*{padding: 0; margin: 0;}
+		body{
+			background-color: #f5f5f5;
+			font-family: "微软雅黑";
+		}
+		.section{
+			box-sizing: border-box;
+			margin: 10px 0;
+			background-color: #ffffff;
+		}
+		.section h3{
+			padding-left: 18px;
+			line-height: 44px;
+			border-bottom: 1px solid rgb(220,220,220);
+			font-weight: normal;
+		}
+		.li{
+			border-left: 2px solid rgb(100,200,100);
+			padding-right: 6px;
+		}
+		.content{padding: 0 18px;}
+		.p-header,.p-footer{
+			color: rgb(100,100,100);
+			padding: 10px 0;
+			line-height: 26px;
+		}
+		.p-main{
+			border-bottom: 1px solid rgb(230,230,230);
+			padding: 10px 0;
+			border-top: 1px solid rgb(230,230,230);
+		}
+		.p-main>span{
+			display: block;
+			line-height: 26px;
+			font-family: "微软雅黑 light";
+		}
+		.p-footer{
+			padding-bottom: 20px;
+		}
+	</style>
+	<script>
+		/*function gotoQQ(){
+            var type = undefined;
+            var param = "";
+            var sid = 1;
+            var rawuin = 4615158;//这里填写QQ号
+            var qsig = "undefined";
+            var QQApi = {
+                openURL: function(url){
+                    var i = document.createElement('iframe');
+                    i.style.display = 'none';
+                    i.onload = function() { i.parentNode.removeChild(i); };
+                    i.src = url;
+                    document.body.appendChild(i);
+
+                    var returnValue = QQApi.__RETURN_VALUE;
+                    QQApi.__RETURN_VALUE = undefined;
+                    return returnValue;
+                },
+
+                isAppInstalled: function(scheme) {
+                    var parameters = {'scheme':scheme};
+                    var r = QQApi.openURL('jsbridge://app/isInstalled_?p=' + encodeURIComponent(JSON.stringify(parameters)));
+                    return r ? r.result : null;
+                },
+
+                isQQWebView: function(){
+                    return QQApi.isAppInstalled('mqq') == true;
+                },
+
+                __RETURN_VALUE: undefined
+            };
+
+            var usa=navigator.userAgent;
+            var p;
+            var mobile_q_jump = {
+                android:"https://play.google.com/store/apps/details?id=com.tencent.mobileqq",
+                ios:"itms-apps://itunes.apple.com/cn/app/qq-2011/id444934666?mt=8",
+                winphone:"http://www.windowsphone.com/zh-cn/store/app/qq/b45f0a5f-13d8-422b-9be5-c750af531762",
+                pc:"http://mobile.qq.com/index.html"
+            };
+            var isMQ = 0;
+            if(typeof type == "undefined") type = 1;
+            if(usa.indexOf("Android")>-1){
+                p = "android";
+            }else if(usa.indexOf("iPhone")>-1 || usa.indexOf("iPad")>-1 || usa.indexOf("iPod")>-1){
+                p = "ios";
+            }else if(usa.indexOf("Windows Phone") > -1 || usa.indexOf("WPDesktop") > -1){
+                p = "winphone";
+            }else {
+                p = "pc";
+            }
+            alert(p);
+            if(p == "ios"){
+                //防止循环
+                if(history.pushState)
+                    history.pushState({},"t","#");
+                isMQ = QQApi.isQQWebView();
+                if (!isMQ){ 
+                    var sc = document.createElement("script");
+                    sc.src = "http://__.qq.com/api/qqapi.js";
+                    sc.onload = function(){
+                        if(window['iOSQQApi']){
+                            isMQ =iOSQQApi.device.isMobileQQ(); 
+                        }
+                    };
+                    document.body.appendChild(sc);
+                }
+            }else if(p == "pc" && qsig != "undefined"){
+                window.open(qsig,"_self");
+            }
+            if(type == 1){//手Q
+                var isSuccess = true;
+                var f = document.createElement("iframe");
+                f.style.display = "none";
+                document.body.appendChild(f);
+                f.onload = function(){
+                    isSuccess = false;
+                };
+                if(p != "pc"){
+                    var url = window.location.href.split("&");
+                    f.src = "mqqopensdkapi://bizAgent/qm/qr?url=" + encodeURIComponent(url[1]);
+                    alert("1111"+f.src);
+                }
+                if(p == "ios" && sid == 1){
+                    f.src = "mqqapi://card/show_pslcard?src_type=internal&version=1&uin="+ rawuin +"&card_type=person&source=qrcode";
+                    alert("2222"+f.src);
+                }
+                if(p == "ios" && sid == 2){//ios并且为群名片
+                    f.src = "mqqapi://card/show_pslcard?src_type=internal&version=1&uin="+ rawuin +"&card_type=person&source=qrcode";
+                    alert("3333"+f.src);
+                }
+                
+                if(p == "android" && sid == 1){
+                    f.src = "mqqapi://card/show_pslcard?src_type=internal&version=1&uin="+ rawuin +"&card_type=person&source=qrcode";
+                    alert("4444"+f.src);
+                }
+                if(p == "android" && sid == 2){//ios并且为群名片
+                    f.src = "mqqapi://card/show_pslcard?src_type=internal&version=1&uin="+ rawuin +"&card_type=person&source=qrcode";
+                    alert("5555"+f.src);
+                }
+                var now = Date.now();
+                setTimeout( function(){
+                    if((p == "ios" && !isMQ && Date.now() - now < 2000) || (p == "android" && !isSuccess) || ((p == "winphone" && Date.now() - now < 2000))){
+                        var jumpUrl = mobile_q_jump[p]; 
+                        if(jumpUrl) window.open(jumpUrl,"_self");
+                    }
+                } , 1500);
+
+            }
+        }*/
+	</script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="section">
+			<h3><span class="li"></span>地址填写规范</h3>
+			<div class="content">
+				<p class="p-header">
+					地址作为评估贷款额度的重要依据，需精确到门牌号，请按照以下格式填写：
+				</p>
+				<p class="p-main">
+					<span>小区类：××路××号××小区××栋××室</span>
+					<span>农村类：××县××镇××村××组</span>
+					<span>大厦类：××路××号××大厦××层××室</span>
+				</p>
+				<p class="p-footer">
+					如果无法精确到门牌号，可以按照以下格式填写：“××交叉口向东100米”、“××建筑物对面”等，尽量确认。
+				</p>
+			</div>
+		</div>
+		<div class="section">
+			<h3><span class="li"></span>单位名称填写规范</h3>
+			<div class="content">
+				<p class="p-header">
+					单位名称需为您所在的公司或实体店铺全称，用来评估您的偿还能力，请按照以下要求填写：
+				</p>
+				<p class="p-main">
+					<span>公司类：××××有限公司</span>
+					<span>实体店铺类：××××综合超市、××××餐厅</span>
+				</p>
+				<p class="p-footer">
+					有任何疑问请联系客服：
+					QQ(4615158)
+				</p>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

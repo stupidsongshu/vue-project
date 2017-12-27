@@ -184,10 +184,10 @@
       let debitCardList = this.storageTextData.debitCardList
       if (debitCardList) {
         let debitCard = debitCardList[0]
-        Toast({
-          message: this.storageTextData.debitCardList,
-          duration: 3000
-        })
+        // Toast({
+        //   message: this.storageTextData.debitCardList,
+        //   duration: 3000
+        // })
         this.debitCardno = debitCard.debitcardNo
         this.phoneNo = debitCard.debitcardPhoneNo
         this.openBank = debitCard.openBank

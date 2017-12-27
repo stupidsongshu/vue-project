@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/common.css">
+    <title>相关协议</title>
+</head>
+<body>
+    <div>
+        <ul class="agreement-wrapper">
+          <li class="agreement-item">申请相关协议</li>
+          <li class="agreement-item">
+            <a class="agreement-link" id="financeLink" href="http://www.kahuanwang.com/agreement/finance.html">《个人金融信息查询授权书》</a>
+          </li>
+          <li class="agreement-item">
+            <a class="agreement-link" id="infoLink" href="http://www.kahuanwang.com/agreement/info.html">《个人信息查询及使用授权书》</a>
+          </li>
+        </ul>
+
+        <ul class="agreement-wrapper">
+          <li class="agreement-item">借款相关协议</li>
+          <li class="agreement-item">
+            <a class="agreement-link" id="loanLink" href="http://www.kahuanwang.com/agreement/loan.html">《卡易还产品贷款协议》</a>
+          </li>
+        </ul>
+      </div>
+
+      <script>
+        var financeLink = document.getElementById('financeLink')
+        var infoLink = document.getElementById('infoLink')
+        var loanLink = document.getElementById('loanLink')
+
+        var ua = window.navigator.userAgent
+        if (/android/gi.test(ua)) {
+          financeLink.setAttribute('href', 'newtab:http://www.kahuanwang.com/agreement/finance.html')
+          infoLink.setAttribute('href', 'newtab:http://www.kahuanwang.com/agreement/info.html')
+          loanLink.setAttribute('href', 'newtab:http://www.kahuanwang.com/agreement/loan.html')
+        }
+      </script>
+</body>
+</html>

@@ -136,7 +136,7 @@
       </el-col>
     </el-row>
 
-    <h5>响应式布局xs<768 sm>=768 md>=992 lg>=1200 xl>=1920</h5>
+    <h5>响应式布局xs<h5>sm>=768 md>=992 lg>=1200 xl>=1920</h5>
     <el-row>
       <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1" class="hidden-xs-only">
         <div class="grid-content bg-purple"></div>

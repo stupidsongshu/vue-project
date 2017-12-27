@@ -43,6 +43,11 @@
     <div class="loan-btn">
       <mt-button class="btn" @click="loan">立即借款</mt-button>
     </div>
+    <a href="http://www.baidu.com">
+      <span class="icon icon-us"></span>
+      <span>百度</span>
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+    </a>
     <div class="footer-txt">"卡还王"由麦广互娱与中银消费金融联合打造</div>
   </div>
 </template>
