@@ -1,7 +1,7 @@
 <template>
   <div class="index no-header" :class="{'has-footer': footer}">
     <div class="banner-wrapper">
-      <div class="my"></div>
+      <router-link :to="{name: 'my'}" class="my"></router-link>
       <div class="kefu"></div>
 
       <div class="swiper-container banner-swiper-container">
@@ -53,19 +53,6 @@
     <mt-button class="loan-btn" @click="loan">立即借款</mt-button>
 
     <div class="footer-txt">"乐贷款"由麦广互娱与中银消费金融联合打造</div>
-
-    <!-- <mt-tabbar fixed v-if="deviceType === 'android'">
-      <mt-tab-item id="loan">
-        <div class="self-tab-item">
-          <span class="isSelected">借款</span>
-        </div>
-      </mt-tab-item>
-      <mt-tab-item id="my">
-        <div class="self-tab-item">
-          <span>我的</span>
-        </div>
-      </mt-tab-item>
-    </mt-tabbar> -->
   </div>
 </template>
 
@@ -81,27 +68,8 @@ export default {
   },
   data() {
     return {
-      bannerList: [],
-      swiperOption: {
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false
-        },
-        speed: 800,
-        loop: true,
-        pagination: {
-          el: ".swiper-pagination",
-          bulletActiveClass: "my-bullet-active"
-        },
-        observer: true,
-        observeParents: true
-      }
+      bannerList: []
     };
-  },
-  mounted() {
-    this.$http.get("http://ledaikuan.cn:8080/activity/Index/banner").then(res => {
-      this.bannerList = res.data;
-    });
   },
   computed: {
     // 设备类型
@@ -137,8 +105,13 @@ export default {
       return this.$store.state.common.activeTabIndex;
     }
   },
-  updated() {
-    this.swiperInit()
+  mounted() {
+    this.$http.get("http://ledaikuan.cn:8080/activity/Index/banner").then(res => {
+      this.bannerList = res.data;
+      this.$nextTick(() => {
+        this.swiperInit()
+      })
+    });
   },
   methods: {
     swiperInit() {
@@ -148,23 +121,10 @@ export default {
           disableOnInteraction: false
         },
         loop: true,
-  
-        // 如果需要分页器
         pagination: {
           el: '.swiper-pagination',
-          clickable: true,
-        },
-
-        // 如果需要前进后退按钮
-        // navigation: {
-        //   nextEl: '.swiper-button-next',
-        //   prevEl: '.swiper-button-prev',
-        // },
-
-        // 如果需要滚动条
-        // scrollbar: {
-        //   el: '.swiper-scrollbar',
-        // },
+          clickable: true
+        }
       })
     },
     bannerItemLink(e, imgUrl) {
@@ -190,13 +150,7 @@ export default {
         // 重新初始化 防止第一步获取开户状态接口失败
         this.init();
       }
-    },
-    // 进入贷前'我的'
-    // toMy() {
-    //   /* eslint-disable no-undef */
-    //   app.setLoanStatus(0);
-    //   this.app.toMy1();
-    // }
+    }
   }
 };
 </script>

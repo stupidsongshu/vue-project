@@ -26,6 +26,10 @@ import Video from '@/views/auth/video/video'
 import Summary from '@/views/auth/summary/summary'
 import WaitAudit from '@/views/auth/waitAudit/waitAudit'
 
+// 个人中心
+import My from '@/views/userCenter/my'
+import CardList from '@/views/userCenter/cardList/cardList'
+
 Vue.use(Router)
 
 /**
@@ -141,6 +145,17 @@ const routes = [
     path: '/waitAudit',
     name: 'waitAudit',
     component: WaitAudit
+  },
+  // 个人中心
+  {
+    path: '/my',
+    name: 'my',
+    component: My
+  },
+  {
+    path: '/cardList',
+    name: 'cardList',
+    component: CardList
   }
 ]
 

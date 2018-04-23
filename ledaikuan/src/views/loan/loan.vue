@@ -207,9 +207,8 @@
           event.preventDefault()
         }, false)
 
-        // fix 不打开popup借款用途默认无值,打开后必须选值
+        // 不打开popup借款用途默认无值,打开后必须选值
         if (this.loanPurposeValues.length > 10) {
-          // delete the first blank value
           this.loanPurposeValues.shift()
           this.loanPurposeSlot[0].values = this.loanPurposeValues
         }
@@ -273,7 +272,7 @@
           }
         ]
         function randomSort() {
-          return Math.random() > 0.5 ? -1 : 1
+          return Math.random() - 0.5
         }
         this.loanPurposeValues.sort(randomSort)
         this.loanPurposeValues.unshift({
@@ -414,8 +413,8 @@
           timestamp: timestamp
         })
 
-        that.loading()
-        that.$http.post(this.$store.state.common.common_api, paramString).then(res => {
+        this.loading()
+        this.$http.post(this.$store.state.common.common_api, paramString).then(res => {
           let data = res.data
           if (data.returnCode === '000000') {
             let dataS = data.response

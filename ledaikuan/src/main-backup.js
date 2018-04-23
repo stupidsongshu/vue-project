@@ -25,14 +25,9 @@ Vue.component(Range.name, Range)
 // var vConsole = new VConsole()
 
 if (process.env.NODE_ENV === 'development') {
-  // 开发环境
   store.commit('common_api_save', config.api.dev)
 } else if (process.env.NODE_ENV === 'production') {
-  // 测试环境
-  store.commit('common_api_save', config.api.dev)
-
-  // 生产环境
-  // store.commit('common_api_save', config.api.pro)
+  store.commit('common_api_save', config.api.pro)
 }
 console.log(store.state.common.common_api)
 
@@ -403,7 +398,7 @@ new Vue({
   components: { App },
   created() {
     // `timeout` 指定请求超时的毫秒数(0 表示无超时时间)，如果请求超过 `timeout` 的时间，请求将被中断
-    // axios.defaults.timeout = 20000
+    axios.defaults.timeout = 20000
 
     // axios.defaults.transformRequest = [function(data) {
     //   if (data) {
@@ -437,7 +432,7 @@ new Vue({
       return Promise.reject(error)
     })
 
-    // this.init()
+    this.init()
   }
 })
 

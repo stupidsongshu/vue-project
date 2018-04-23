@@ -17,6 +17,7 @@ export default {
   #app
     /*width: 10rem
     max-width: 600px*/
+    height: 100%
     min-height: 100%
     margin: 0 auto
     padding-top: 65px; /*no*/

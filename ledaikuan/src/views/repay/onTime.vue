@@ -69,8 +69,8 @@
           timestamp: timestamp
         })
 
-        that.loading()
-        that.$http.post(that.$store.state.common.common_api, paramString).then(res => {
+        this.loading()
+        this.$http.post(that.$store.state.common.common_api, paramString).then(res => {
           let data = res.data
           if (data.returnCode === '000000') {
             that.loanPlanListStatus = true

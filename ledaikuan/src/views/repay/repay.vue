@@ -64,22 +64,6 @@
       <img class="no-repay-img" src="../../assets/img/no-repay.png" alt="">
       <div class="no-repay-txt">暂无账单</div>
     </div>-->
-
-
-    <!--<mt-tabbar fixed v-if="deviceType === 'android'">
-      <mt-tab-item>
-        <div class="self-tab-item">
-          <img slot="icon" src="../../assets/img/bottom_icon_02_click.png">
-          <span class="isSelected">还款</span>
-        </div>
-      </mt-tab-item>
-      <mt-tab-item>
-        <div class="self-tab-item" @click="toMy">
-          <img slot="icon" src="../../assets/img/bottom_icon_03_nor.png">
-          <span>我的</span>
-        </div>
-      </mt-tab-item>
-    </mt-tabbar>-->
   </div>
 </template>
 
@@ -142,8 +126,8 @@
           timestamp: timestamp
         })
 
-        that.loading()
-        that.$http.post(this.$store.state.common.common_api, paramString).then(res => {
+        this.loading()
+        this.$http.post(that.$store.state.common.common_api, paramString).then(res => {
           let data = res.data
           if (data.returnCode === '000000') {
             // 未还本金
@@ -164,21 +148,21 @@
       },
       onTimeRepay() {
         if (this.transTime) {
-          this.$router.push('/repay/onTime')
+          this.$router.push({name: 'onTime'})
         } else {
           this.getCashExtractDetail()
         }
       },
       overdueTimeRepay() {
         if (this.transTime) {
-          this.$router.push('/repay/overdue')
+          this.$router.push({name: 'overdue'})
         } else {
           this.getCashExtractDetail()
         }
       },
       inAdvanceRepay() {
         if (this.transTime) {
-          this.$router.push('/repay/inAdvance')
+          this.$router.push({name: 'inAdvance'})
         } else {
           this.getCashExtractDetail()
         }

@@ -8,11 +8,11 @@
 
 		<div class="item">
 			<span class="icon-phone"></span>
-			<span>182******57</span>
+			<input type="number" placeholder="请输入手机号码" v-model="mobileNo">
 		</div>
 		<div class="item">
 			<span class="icon-message"></span>
-			<input class="code" type="text" placeholder="请输入验证码">
+			<input class="code" type="text" placeholder="请输入验证码" v-model="dynamicPwd">
 			<span class="get-code" v-if="!hasGetCode" @click="getCode">获取验证码</span>
 			<span class="get-code" v-if="hasGetCode">{{time}}s后重新获取</span>
 		</div>
@@ -29,7 +29,9 @@ export default {
   data() {
 		return {
 			time: 60,
-			hasGetCode: false
+			hasGetCode: false,
+			mobileNo: '',
+			dynamicPwd: ''
 		}
 	},
 	methods: {
@@ -72,7 +74,7 @@ export default {
 			height: 25px
 			margin-right: 15px
 			background: url(../../assets/img/icon_message.png) no-repeat center/25px 25px
-		.code
+		input
 			flex: 1
 			height: 100%
 			appearance: none

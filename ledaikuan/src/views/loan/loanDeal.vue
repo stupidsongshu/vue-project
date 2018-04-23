@@ -102,7 +102,7 @@
           timestamp: timestamp
         })
 
-        that.$http.post(this.$store.state.common.common_api, paramString).then(res => {
+        this.$http.post(this.$store.state.common.common_api, paramString).then(res => {
           // fix ios 底部tab空白
           setTimeout(function() {
             that.popupVisible = true
@@ -171,7 +171,7 @@
           timestamp: timestamp
         })
 
-        that.$http.post(this.$store.state.common.common_api, paramString).then(res => {
+        this.$http.post(this.$store.state.common.common_api, paramString).then(res => {
           let data = res.data
           if (data.returnCode === '000000') {
             let loanAcctInfo = data.response

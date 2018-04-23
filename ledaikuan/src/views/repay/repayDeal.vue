@@ -13,7 +13,7 @@
 
     <deal-step :status="status" :dealInfo="dealInfo"></deal-step>
 
-    <!-- animation -->
+    <!-- loading -->
     <div id="self-indicator-wrapper" class="self-indicator-wrapper" v-show="popupVisible">
       <span class="self-indicator-spin">
         <div class="self-spinner-fading-circle" style="width: 32px;height: 32px;">
@@ -105,10 +105,6 @@
           clearInterval(timer)
         }
       }, 3000)
-
-      window.onresize = function() {
-        console.log('onresize')
-      }
     },
     methods: {
       // 更新还款处理结果状态
@@ -364,7 +360,7 @@
           }).catch(err => {
             that.loanPlanListStatus = false
           })
-        } else { // common_cashExtractDetail单笔用款明细 缓存若不存在(用户退出重进),重新获取一遍单笔用款明细
+        } else { // common_cashExtractDetail单笔用款明细 缓存若不存在(如退出重进),需先重新获取单笔用款明细
           cashExtractDetail().then(data => {
             return getrepayPlan(data)
           }).then(data => {
