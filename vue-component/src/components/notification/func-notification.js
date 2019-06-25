@@ -41,6 +41,12 @@ export default {
       // TODO 未执行
       console.log('beforeDestroy')
       this.clearTimer()
+    },
+    mouseenter () {
+      this.clearTimer()
+    },
+    mouseleave () {
+      this.createTimer()
     }
   }
 }

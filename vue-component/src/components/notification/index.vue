@@ -8,6 +8,8 @@
       class="notification"
       :style="style"
       v-show="visible"
+      @mouseenter="mouseenter"
+      @mouseleave="mouseleave"
     >
       <span>{{content}}</span>
       <a class="btn" @click="handleClose">{{btn}}</a>
@@ -43,7 +45,7 @@ export default {
     afterEnter () {
       console.log('afterEnter index.vue')
       this.height = this.$el.offsetHeight
-      console.log('height:', this.height)
+      console.log('height index.vue:', this.height)
     },
     afterLeave () {
       console.log('afterLeave index.vue')

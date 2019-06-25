@@ -5,6 +5,7 @@
     <!-- <Notification content="hello vue" /> -->
 
     <button @click="notify">notify</button>
+    <h1>https://juejin.im/post/5d0e3f8f51882531c71d08c8</h1>
   </div>
 </template>
 
@@ -25,9 +26,14 @@ export default {
   },
   methods: {
     notify () {
-      this.$notify({
-        content: `${this.duration}s close`
-        // duration: 5000
+      let vm
+      if (vm) {
+        vm.close()
+        return
+      }
+      vm = this.$notify({
+        content: `${this.duration}s close`,
+        duration: 5000
       })
       this.countDown()
     },
@@ -42,6 +48,10 @@ export default {
       //     this.duration = 5
       //   }
       // }, 1000)
+
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
 
       this.timer = setInterval(() => {
         if (this.duration > 0) {
